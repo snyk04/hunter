@@ -1,15 +1,17 @@
-﻿using Hunter.Creatures;
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class MoverComponent : MonoBehaviour
+namespace Hunter.Creatures
 {
-    [SerializeField] private float _speed;
-    
-    public Mover Mover { get; private set; }
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class MoverComponent : MonoBehaviour
     {
-        Mover = new Mover(_speed, GetComponent<Rigidbody2D>());
+        [SerializeField] private float _speed;
+
+        public Mover Mover { get; private set; }
+
+        private void Awake()
+        {
+            Mover = new Mover(_speed, GetComponent<Rigidbody2D>());
+        }
     }
 }

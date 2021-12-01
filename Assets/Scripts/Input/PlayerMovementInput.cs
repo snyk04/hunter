@@ -6,13 +6,13 @@ namespace Hunter.Input
 {
     public class PlayerMovementInput
     {
-        private readonly Mover _mover;
         private readonly InputAction _inputAction;
+        private readonly Mover _mover;
 
         public PlayerMovementInput(InputAction inputAction, Mover mover)
         {
-            _mover = mover;
             _inputAction = inputAction;
+            _mover = mover;
             
             _inputAction.performed += Move;
             _inputAction.canceled += Stop;
