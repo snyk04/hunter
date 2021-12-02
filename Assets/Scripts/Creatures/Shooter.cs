@@ -12,6 +12,7 @@ namespace Hunter.Creatures
 
         private readonly GameObject _bulletPrefab;
         private readonly float _bulletSpeed;
+        private readonly int _bulletDamage;
         private readonly float _reloadTime;
         private readonly float _shotDelay;
         private readonly int _maxAmountOfBulletsInBackpack;
@@ -20,17 +21,18 @@ namespace Hunter.Creatures
 
         private DateTime _lastShotTime;
         private bool _isReloading;
-        
+
         public int AmountOfBulletsInBackpack { get; private set; }
         public int AmountOfBulletsInMagazine { get; private set; }
         public event Action OnShot;
         public event Action OnReload;
 
-        public Shooter(GameObject bulletPrefab, float bulletSpeed, float reloadTime, float shotDelay,
+        public Shooter(GameObject bulletPrefab, float bulletSpeed, int bulletDamage, float reloadTime, float shotDelay,
             int maxAmountOfBulletsInBackpack, int maxAmountOfBulletsInMagazine, Transform transform)
         {
             _bulletPrefab = bulletPrefab;
             _bulletSpeed = bulletSpeed;
+            _bulletDamage = bulletDamage;
             _reloadTime = reloadTime;
             _shotDelay = shotDelay;
             _maxAmountOfBulletsInBackpack = maxAmountOfBulletsInBackpack;
@@ -38,7 +40,7 @@ namespace Hunter.Creatures
             _transform = transform;
 
             _isReloading = false;
-            
+
             AmountOfBulletsInBackpack = maxAmountOfBulletsInBackpack;
             AmountOfBulletsInMagazine = maxAmountOfBulletsInMagazine;
         }
@@ -52,24 +54,20 @@ namespace Hunter.Creatures
 
             GameObject bullet = Object.Instantiate(_bulletPrefab, _transform.position, Quaternion.identity);
             bullet.name = BulletName;
+            bullet.GetComponent<BulletComponent>().Initialize(_bulletDamage, _transform.name);
             bullet.GetComponent<Rigidbody2D>().velocity = _transform.up * _bulletSpeed;
-            
+
             _lastShotTime = DateTime.Now;
             AmountOfBulletsInMagazine--;
             OnShot?.Invoke();
         }
         private bool CanShoot()
         {
-            if (_lastShotTime.GetPassedSeconds() < _shotDelay)
+            if (_lastShotTime.GetPassedSeconds() < _shotDelay || _isReloading)
             {
                 return false;
             }
-            
-            if (_isReloading)
-            {
-                return false;
-            }
-            
+
             if (AmountOfBulletsInMagazine < 1)
             {
                 StartReloading();
@@ -81,12 +79,7 @@ namespace Hunter.Creatures
 
         public void StartReloading()
         {
-            if (_isReloading)
-            {
-                return;
-            }
-            
-            if (AmountOfBulletsInBackpack < 1)
+            if (_isReloading || AmountOfBulletsInBackpack < 1)
             {
                 return;
             }
@@ -95,7 +88,6 @@ namespace Hunter.Creatures
             _transform.GetComponent<MonoBehaviour>().StartCoroutine(ReloadingRoutine());
             _isReloading = true;
         }
-
         private IEnumerator ReloadingRoutine()
         {
             yield return new WaitForSeconds(_reloadTime);
@@ -104,15 +96,10 @@ namespace Hunter.Creatures
         private void Reload()
         {
             int bulletsToReload = _maxAmountOfBulletsInMagazine - AmountOfBulletsInMagazine;
-            for (int i = 0; i < bulletsToReload; i++)
+            for (int i = 0; i < bulletsToReload && AmountOfBulletsInBackpack >= 1; i++)
             {
-                if (AmountOfBulletsInBackpack < 1)
-                {
-                    break;
-                }
-
-                AmountOfBulletsInBackpack -= 1;
-                AmountOfBulletsInMagazine += 1;
+                AmountOfBulletsInBackpack--;
+                AmountOfBulletsInMagazine++;
             }
 
             _isReloading = false;

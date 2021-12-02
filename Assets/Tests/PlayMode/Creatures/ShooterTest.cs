@@ -9,6 +9,7 @@ namespace Creatures
     public class ShooterTest
     {
         private const float BulletSpeed = 5;
+        private const int BulletDamage = 1;
         private const float ReloadTime = 2;
         private const float ShotDelay = 0.5f;
         private const int MaxAmountOfBulletsInBackpack = 25;
@@ -24,8 +25,8 @@ namespace Creatures
             transform = shooterObject.transform;
             shooterObject.AddComponent<ShooterComponent>();
 
-            shooter = new Shooter(bulletPrefab, BulletSpeed, ReloadTime, ShotDelay, MaxAmountOfBulletsInBackpack,
-                MaxAmountOfBulletsInMagazine, transform);
+            shooter = new Shooter(bulletPrefab, BulletSpeed, BulletDamage, ReloadTime, ShotDelay,
+                MaxAmountOfBulletsInBackpack, MaxAmountOfBulletsInMagazine, transform);
         }
         
         [UnityTest]

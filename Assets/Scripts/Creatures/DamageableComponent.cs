@@ -2,6 +2,7 @@
 
 namespace Hunter.Creatures
 {
+    [RequireComponent(typeof(Collider2D))]
     public class DamageableComponent : MonoBehaviour
     {
         [SerializeField] private int _amountOfHealth;
@@ -10,7 +11,12 @@ namespace Hunter.Creatures
 
         private void Awake()
         {
-            Damageable = new Damageable(_amountOfHealth, this);
+            Initialize(_amountOfHealth);
+        }
+
+        public void Initialize(int amountOfHealth)
+        {
+            Damageable = new Damageable(amountOfHealth, gameObject);
         }
     }
 }

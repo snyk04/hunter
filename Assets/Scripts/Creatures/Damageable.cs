@@ -5,12 +5,12 @@ namespace Hunter.Creatures
     public class Damageable
     {
         public int AmountOfHealth { get; private set; }
-        private readonly Object _object;
+        private readonly GameObject _gameObject;
 
-        public Damageable(int amountOfHealth, Object @object)
+        public Damageable(int amountOfHealth, GameObject gameObject)
         {
             AmountOfHealth = amountOfHealth;
-            _object = @object;
+            _gameObject = gameObject;
         }
 
         public void GetDamaged(int amountOfDamage)
@@ -25,7 +25,7 @@ namespace Hunter.Creatures
 
         private void Destroy()
         {
-            Object.Destroy(_object);
+            Object.Destroy(_gameObject);
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Hunter.Creatures
     {
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private float _bulletSpeed;
+        [SerializeField] private int _bulletDamage;
         [SerializeField] private float _reloadTime;
         [SerializeField] private float _shotDelay;
         [SerializeField] private int _maxAmountOfBulletsInBackpack;
@@ -15,8 +16,8 @@ namespace Hunter.Creatures
 
         private void Awake()
         {
-            Shooter = new Shooter(_bulletPrefab, _bulletSpeed, _reloadTime, _shotDelay, _maxAmountOfBulletsInBackpack,
-                _maxAmountOfBulletsInMagazine, transform);
+            Shooter = new Shooter(_bulletPrefab, _bulletSpeed, _bulletDamage, _reloadTime, _shotDelay,
+                _maxAmountOfBulletsInBackpack, _maxAmountOfBulletsInMagazine, transform);
         }
     }
 }
