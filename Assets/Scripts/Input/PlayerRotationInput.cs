@@ -1,5 +1,4 @@
-﻿using Hunter.Common;
-using Hunter.Creatures;
+﻿using Hunter.Creatures;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +6,8 @@ namespace Hunter.Input
 {
     public class PlayerRotationInput
     {
+        private const string MouseDeviceName = "Mouse";
+        
         private readonly InputAction _inputAction;
         private readonly Rotator _rotator;
 
@@ -34,10 +35,11 @@ namespace Hunter.Input
         private void Rotate(InputAction.CallbackContext context)
         {
             var direction = context.ReadValue<Vector2>();
-
-            if (direction.x < -1 || direction.x > 1 || direction.y < -1 || direction.y > 1)
+            
+            if (context.control.device.name == MouseDeviceName)
             {
-                direction = direction.ConvertMousePositionToNormalizedVector();
+                Vector3 pointerScenePosition = Camera.main.ScreenToWorldPoint(direction);
+                direction = pointerScenePosition - _rotator.Transform.position;
             }
             
             _rotator.LookAt(direction.normalized);
