@@ -16,8 +16,7 @@ namespace Hunter.Creatures
             // TODO : maybe delete that shit?
             direction.Normalize();
             
-            float degree = Vector2.SignedAngle(Vector2.up, direction);
-            _transform.rotation = Quaternion.Euler(0, 0, degree);
+            _transform.up = direction;
         }
     }
 }
