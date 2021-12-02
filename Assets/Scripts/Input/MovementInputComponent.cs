@@ -5,29 +5,29 @@ using UnityEngine.InputSystem;
 namespace Hunter.Input
 {
     [RequireComponent(typeof(MoverComponent))]
-    public class PlayerMovementInputComponent : MonoBehaviour
+    public class MovementInputComponent : MonoBehaviour
     {
-        private PlayerMovementInput _playerMovementInput;
+        private MovementInput _movementInput;
 
         private void Awake()
         {
             InputAction moveAction = new Controls().Player.Move;
             Mover mover = GetComponent<MoverComponent>().Mover;
             
-            _playerMovementInput = new PlayerMovementInput(moveAction, mover);
+            _movementInput = new MovementInput(moveAction, mover);
         }
         
         private void OnEnable()
         {
-            _playerMovementInput.OnEnable();
+            _movementInput.OnEnable();
         }
         private void OnDisable()
         {
-            _playerMovementInput.OnDisable();
+            _movementInput.OnDisable();
         }
         private void OnDestroy()
         {
-            _playerMovementInput.OnDestroy();
+            _movementInput.OnDestroy();
         }
     }
 }

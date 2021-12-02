@@ -3,12 +3,12 @@ using UnityEngine.InputSystem;
 
 namespace Hunter.Input
 {
-    public class PlayerShootingInput
+    public class ShootingInput
     {
         private readonly InputAction _inputAction;
         private readonly Shooter _shooter;
 
-        public PlayerShootingInput(InputAction inputAction, Shooter shooter)
+        public ShootingInput(InputAction inputAction, Shooter shooter)
         {
             _inputAction = inputAction;
             _shooter = shooter;

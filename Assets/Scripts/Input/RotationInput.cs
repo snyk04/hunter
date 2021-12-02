@@ -4,14 +4,14 @@ using UnityEngine.InputSystem;
 
 namespace Hunter.Input
 {
-    public class PlayerRotationInput
+    public class RotationInput
     {
         private const string MouseDeviceName = "Mouse";
         
         private readonly InputAction _inputAction;
         private readonly Rotator _rotator;
 
-        public PlayerRotationInput(InputAction inputAction, Rotator rotator)
+        public RotationInput(InputAction inputAction, Rotator rotator)
         {
             _inputAction = inputAction;
             _rotator = rotator;

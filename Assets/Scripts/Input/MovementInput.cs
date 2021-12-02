@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 
 namespace Hunter.Input
 {
-    public class PlayerMovementInput
+    public class MovementInput
     {
         private readonly InputAction _inputAction;
         private readonly Mover _mover;
 
-        public PlayerMovementInput(InputAction inputAction, Mover mover)
+        public MovementInput(InputAction inputAction, Mover mover)
         {
             _inputAction = inputAction;
             _mover = mover;

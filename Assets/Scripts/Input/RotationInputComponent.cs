@@ -5,29 +5,29 @@ using UnityEngine.InputSystem;
 namespace Hunter.Input
 {
     [RequireComponent(typeof(RotatorComponent))]
-    public class PlayerRotationInputComponent : MonoBehaviour
+    public class RotationInputComponent : MonoBehaviour
     {
-        private PlayerRotationInput _playerRotationInput;
+        private RotationInput _rotationInput;
 
         private void Awake()
         {
             InputAction moveAction = new Controls().Player.Look;
             Rotator rotator = GetComponent<RotatorComponent>().Rotator;
             
-            _playerRotationInput = new PlayerRotationInput(moveAction, rotator);
+            _rotationInput = new RotationInput(moveAction, rotator);
         }
         
         private void OnEnable()
         {
-            _playerRotationInput.OnEnable();
+            _rotationInput.OnEnable();
         }
         private void OnDisable()
         {
-            _playerRotationInput.OnDisable();
+            _rotationInput.OnDisable();
         }
         private void OnDestroy()
         {
-            _playerRotationInput.OnDestroy();
+            _rotationInput.OnDestroy();
         }
     }
 }
