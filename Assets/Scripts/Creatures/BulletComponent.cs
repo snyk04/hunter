@@ -8,9 +8,9 @@ namespace Hunter.Creatures
     {
         private Bullet _bullet;
         
-        public void Initialize(int damage, string shooterName)
+        public void Initialize(int damage, GameObject shooterObject)
         {
-            _bullet = new Bullet(damage, gameObject, shooterName);
+            _bullet = new Bullet(damage, gameObject, shooterObject);
         }
 
         private void OnTriggerEnter2D(Collider2D other)

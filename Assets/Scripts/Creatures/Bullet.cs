@@ -6,18 +6,18 @@ namespace Hunter.Creatures
     {
         private readonly int _damage;
         private readonly GameObject _gameObject;
-        private readonly string _shooterName; 
+        private readonly GameObject _shooterObject; 
 
-        public Bullet(int damage, GameObject gameObject, string shooterName)
+        public Bullet(int damage, GameObject gameObject, GameObject shooterObject)
         {
             _damage = damage;
             _gameObject = gameObject;
-            _shooterName = shooterName;
+            _shooterObject = shooterObject;
         }
         
         public void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.name == _shooterName)
+            if (other.gameObject == _shooterObject)
             {
                 return;
             }

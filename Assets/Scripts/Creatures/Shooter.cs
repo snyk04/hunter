@@ -54,7 +54,7 @@ namespace Hunter.Creatures
 
             GameObject bullet = Object.Instantiate(_bulletPrefab, _transform.position, Quaternion.identity);
             bullet.name = BulletName;
-            bullet.GetComponent<BulletComponent>().Initialize(_bulletDamage, _transform.name);
+            bullet.GetComponent<BulletComponent>().Initialize(_bulletDamage, _transform.gameObject);
             bullet.GetComponent<Rigidbody2D>().velocity = _transform.up * _bulletSpeed;
 
             _lastShotTime = DateTime.Now;

@@ -20,7 +20,7 @@ namespace Creatures
             damageable.Initialize(AmountOfHealth);
             
             var bulletObject = new GameObject();
-            var bullet = new Bullet(BulletDamage, bulletObject, "");
+            var bullet = new Bullet(BulletDamage, bulletObject, new GameObject());
             
             bullet.OnTriggerEnter2D(circleCollider2D);
             yield return null;
