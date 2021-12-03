@@ -4,22 +4,20 @@ namespace Hunter.Creatures.Common
 {
     public class Mover
     {
-        private readonly float _speed;
         private readonly Rigidbody2D _rigidbody;
 
-        public Mover(float speed, Rigidbody2D rigidbody)
+        public Mover(Rigidbody2D rigidbody)
         {
-            _speed = speed;
             _rigidbody = rigidbody;
         }
         
-        public void Move(Vector2 direction)
+        public void Move(Vector2 direction, float speed)
         {
-            _rigidbody.velocity = direction * _speed;
+            _rigidbody.velocity = direction * speed;
         }
         public void Stop()
         {
-            Move(Vector2.zero);
+            Move(Vector2.zero, 0);
         }
     }
 }

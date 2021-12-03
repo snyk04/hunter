@@ -383,7 +383,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af562fb361949ce917f2294900d9c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wanderingSpeed: 0.5
   _wanderingRadius: 3
+  _fleeSpeed: 1.5
   _pursuer: {fileID: 745570321}
 --- !u!212 &547218478
 SpriteRenderer:
@@ -448,7 +450,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e1fc0e0fdce405caad6e408b5008dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 1.5
 --- !u!50 &547218480
 Rigidbody2D:
   serializedVersion: 4
@@ -1205,6 +1206,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 513764796}
     m_Modifications:
+    - target: {fileID: 5166187241959285593, guid: fea2f8096c3b25e419c54b7b0d21a380, type: 3}
+      propertyPath: _speed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5166187241959285596, guid: fea2f8096c3b25e419c54b7b0d21a380, type: 3}
       propertyPath: m_Name
       value: Player

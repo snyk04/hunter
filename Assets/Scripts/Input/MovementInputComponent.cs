@@ -7,6 +7,8 @@ namespace Hunter.Input
     [RequireComponent(typeof(MoverComponent))]
     public class MovementInputComponent : MonoBehaviour
     {
+        [SerializeField] private float _speed;
+        
         private MovementInput _movementInput;
 
         private void Awake()
@@ -14,7 +16,7 @@ namespace Hunter.Input
             InputAction moveAction = new Controls().Player.Move;
             Mover mover = GetComponent<MoverComponent>().Mover;
             
-            _movementInput = new MovementInput(moveAction, mover);
+            _movementInput = new MovementInput(moveAction, mover, _speed);
         }
         
         private void OnEnable()

@@ -7,14 +7,16 @@ namespace Hunter.AI
     public class WanderingState : State
     {
         private const float AllowableErrorForPositionCheck = 0.5f;
-            
+
+        private readonly float _wanderingSpeed;
         private readonly float _wanderingRadius;
         
         private readonly Vector3 _startPosition; 
         private Vector3 _currentGoalPosition;
 
-        public WanderingState(IAnimal animal, float wanderingRadius, Transform transform, Mover mover) : base(animal, transform, mover)
+        public WanderingState(IAnimal animal, float wanderingSpeed, float wanderingRadius, Transform transform, Mover mover) : base(animal, transform, mover)
         {
+            _wanderingSpeed = wanderingSpeed;
             _wanderingRadius = wanderingRadius;
             
             _startPosition = transform.position;
@@ -38,7 +40,7 @@ namespace Hunter.AI
         private void MoveToCurrentGoal()
         {
             Vector2 moveDirection = _currentGoalPosition - Transform.position;
-            Mover.Move(moveDirection.normalized);
+            Mover.Move(moveDirection.normalized, _wanderingSpeed);
         }
     }
 }

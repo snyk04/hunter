@@ -7,9 +7,9 @@ namespace Hunter.AI
     { 
         private IState _state;
 
-        public Rabbit(float wanderingRadius, Transform transform, Mover mover)
+        public Rabbit(float wanderingSpeed, float wanderingRadius, float fleeSpeed, Transform transform, Mover mover)
         {
-            _state = new WanderingState(this, wanderingRadius, transform, mover);
+            _state = new WanderingState(this, wanderingSpeed, wanderingRadius, transform, mover);
         }
         
         public void Update()

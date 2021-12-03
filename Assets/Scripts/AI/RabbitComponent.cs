@@ -6,9 +6,14 @@ namespace Hunter.AI
     [RequireComponent(typeof(MoverComponent))]
     public class RabbitComponent : MonoBehaviour
     {
+        [Header("Wandering")]
+        [SerializeField] private float _wanderingSpeed;
         [SerializeField] private float _wanderingRadius;
-        [SerializeField] private Transform _pursuer;
         
+        [Header("Flee")]
+        [SerializeField] private float _fleeSpeed;
+        [SerializeField] private Transform _pursuer;
+
         public Rabbit Rabbit { get; private set; }
         
         private Mover _mover;
@@ -19,7 +24,7 @@ namespace Hunter.AI
         {
             _mover = GetComponent<MoverComponent>().Mover;
             
-            Rabbit = new Rabbit(_wanderingRadius, transform, _mover);
+            Rabbit = new Rabbit(_wanderingSpeed, _wanderingRadius, _fleeSpeed, transform, _mover);
 
             _startPosition = transform.position;
         }
@@ -35,7 +40,7 @@ namespace Hunter.AI
 
         public void StartAfraid()
         {
-            Rabbit.ChangeState(new FleeState(_pursuer, Rabbit, transform, _mover));
+            Rabbit.ChangeState(new FleeState(_fleeSpeed, _pursuer, Rabbit, transform, _mover));
         }
     }
 }

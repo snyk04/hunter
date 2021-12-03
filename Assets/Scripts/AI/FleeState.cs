@@ -5,18 +5,20 @@ namespace Hunter.AI
 {
     public class FleeState : State
     {
-        private Transform _pursuer;
+        private readonly float _fleeSpeed;
+        private readonly Transform _pursuer;
         
-        public FleeState(Transform pursuer, IAnimal animal, Transform transform, Mover mover) : base(animal, transform,
+        public FleeState(float fleeSpeed, Transform pursuer, IAnimal animal, Transform transform, Mover mover) : base(animal, transform,
             mover)
         {
+            _fleeSpeed = fleeSpeed;
             _pursuer = pursuer;
         }
 
         public override void Update()
         {
             Vector2 direction = Transform.position - _pursuer.position;
-            Mover.Move(direction.normalized);
+            Mover.Move(direction.normalized, _fleeSpeed);
         }
     }
 }

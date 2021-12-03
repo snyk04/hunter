@@ -15,7 +15,7 @@ namespace Creatures.Common
             rigidbody = gameObject.AddComponent<Rigidbody2D>();
             rigidbody.isKinematic = true;
 
-            mover = new Mover(Speed, rigidbody);
+            mover = new Mover(rigidbody);
         }
         
         [Test]
@@ -23,7 +23,7 @@ namespace Creatures.Common
         {
             CreateMover(out Mover mover, out Rigidbody2D rigidbody);
             
-            mover.Move(_direction);
+            mover.Move(_direction, Speed);
             Assert.AreEqual(_direction * Speed, rigidbody.velocity);
         }
         
@@ -32,7 +32,7 @@ namespace Creatures.Common
         {
             CreateMover(out Mover mover, out Rigidbody2D rigidbody);
             
-            mover.Move(_direction);
+            mover.Move(_direction, Speed);
             mover.Stop();
             Assert.AreEqual(Vector2.zero, rigidbody.velocity);
         }
