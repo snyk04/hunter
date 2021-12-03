@@ -19,7 +19,9 @@ namespace Creatures
         {
             var bulletPrefab = new GameObject();
             var rigidbody = bulletPrefab.AddComponent<Rigidbody2D>();
-            rigidbody.isKinematic = true;
+            bulletPrefab.AddComponent<BulletComponent>();
+            bulletPrefab.AddComponent<CircleCollider2D>();
+            rigidbody.gravityScale = 0;
 
             var shooterObject = new GameObject();
             transform = shooterObject.transform;
@@ -65,10 +67,10 @@ namespace Creatures
             for (int i = 0; i < MaxAmountOfBulletsInMagazine + 1; i++)
             {
                 yield return new WaitForSeconds(ShotDelay);
-                yield return null;
                 shooter.Shoot();
+                yield return null;
             }
-            
+
             yield return new WaitForSeconds(ReloadTime);
             yield return null;
             Assert.AreEqual(MaxAmountOfBulletsInMagazine, shooter.AmountOfBulletsInMagazine);
@@ -82,8 +84,8 @@ namespace Creatures
 
             for (int i = 0; i < MaxAmountOfBulletsInMagazine; i++)
             {
-                shooter.Shoot();
                 yield return new WaitForSeconds(ShotDelay);
+                shooter.Shoot();
                 yield return null;
             }
             
