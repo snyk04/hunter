@@ -5,7 +5,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Creatures
+namespace Creatures.Common
 {
     public class RotatorTest
     {
