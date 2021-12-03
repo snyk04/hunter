@@ -14,8 +14,7 @@ namespace Hunter.AI.Rabbit
         [Header("Flee")] 
         [SerializeField] private float _fleeSpeed;
         [SerializeField] private float _fleeStopDistance;
-        [SerializeField] private Transform _pursuer;
-
+        
         public Rabbit Rabbit { get; private set; }
         
         private void Awake()
@@ -28,11 +27,6 @@ namespace Hunter.AI.Rabbit
         private void Update()
         {
             Rabbit.Update();
-        }
-
-        public void StartAfraid()
-        {
-            Rabbit.ChangeState(new RabbitFleeState(Rabbit.AnimalInfo, _pursuer));
         }
     }
 }

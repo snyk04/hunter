@@ -1,5 +1,6 @@
 ﻿using Hunter.AI.Common;
 using Hunter.Common;
+using Hunter.Creatures.Common;
 using UnityEngine;
 
 namespace Hunter.AI.Rabbit
@@ -32,7 +33,7 @@ namespace Hunter.AI.Rabbit
         private void CheckForLiveBeingsNearby()
         {
             Collider2D nearbyLiveBeing = Physics2D.OverlapCircle(AnimalInfo.Transform.position, AnimalInfo.DetectionRadius);
-            if (nearbyLiveBeing != null)
+            if (nearbyLiveBeing != null && nearbyLiveBeing.TryGetComponent(out MoverComponent moverComponent))
             {
                 ChangeState(new RabbitFleeState(AnimalInfo, nearbyLiveBeing.transform));
             }
