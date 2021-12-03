@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using Hunter.UI;
+﻿using Hunter.UI;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace UI
 {
@@ -12,10 +10,10 @@ namespace UI
         private const bool FreezeY = false;
         private const bool FreezeZ = true;
 
-        private readonly Vector3 NewPosition = Vector3.up;
+        private readonly Vector3 _newPosition = Vector3.up;
         
-        [UnityTest]
-        public IEnumerator TestAlign()
+        [Test]
+        public void TestAlign()
         {
             Transform alignedObject = new GameObject().transform;
             Transform goalObject = new GameObject().transform;
@@ -24,9 +22,7 @@ namespace UI
             goalObject.transform.position = Vector3.up;
             aligner.Align();
             
-            Assert.AreEqual(NewPosition, alignedObject.transform.position);
-            
-            yield return null;
+            Assert.AreEqual(_newPosition, alignedObject.transform.position);
         }
     }
 }
