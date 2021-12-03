@@ -1,4 +1,4 @@
-﻿namespace Hunter.AI
+﻿namespace Hunter.AI.Common
 {
     public interface IAnimal
     {

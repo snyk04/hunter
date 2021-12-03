@@ -1,46 +1,38 @@
 ﻿using Hunter.Creatures.Common;
 using UnityEngine;
 
-namespace Hunter.AI
+namespace Hunter.AI.Rabbit
 {
     [RequireComponent(typeof(MoverComponent))]
     public class RabbitComponent : MonoBehaviour
     {
-        [Header("Wandering")]
+        [Header("Wandering")] 
         [SerializeField] private float _wanderingSpeed;
         [SerializeField] private float _wanderingRadius;
-        
-        [Header("Flee")]
+        [SerializeField] private float _detectionRadius;
+
+        [Header("Flee")] 
         [SerializeField] private float _fleeSpeed;
+        [SerializeField] private float _fleeStopDistance;
         [SerializeField] private Transform _pursuer;
 
         public Rabbit Rabbit { get; private set; }
         
-        private Mover _mover;
-
-        private Vector3 _startPosition; 
-
         private void Awake()
         {
-            _mover = GetComponent<MoverComponent>().Mover;
-            
-            Rabbit = new Rabbit(_wanderingSpeed, _wanderingRadius, _fleeSpeed, transform, _mover);
+            Mover mover = GetComponent<MoverComponent>().Mover;
 
-            _startPosition = transform.position;
+            Rabbit = new Rabbit(transform, mover, _wanderingSpeed, _wanderingRadius,
+                _detectionRadius, _fleeSpeed, _fleeStopDistance);
         }
         private void Update()
         {
             Rabbit.Update();
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(_startPosition, _wanderingRadius);
-        }
-
         public void StartAfraid()
         {
-            Rabbit.ChangeState(new FleeState(_fleeSpeed, _pursuer, Rabbit, transform, _mover));
+            Rabbit.ChangeState(new RabbitFleeState(Rabbit.AnimalInfo, _pursuer));
         }
     }
 }
