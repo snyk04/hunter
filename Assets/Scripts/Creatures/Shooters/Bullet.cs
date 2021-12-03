@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Hunter.Creatures.Common;
+using UnityEngine;
 
-namespace Hunter.Creatures
+namespace Hunter.Creatures.Shooters
 {
     public class Bullet
     {

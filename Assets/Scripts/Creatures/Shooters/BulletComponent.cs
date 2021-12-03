@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Hunter.Creatures
+namespace Hunter.Creatures.Shooters
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(CircleCollider2D))]

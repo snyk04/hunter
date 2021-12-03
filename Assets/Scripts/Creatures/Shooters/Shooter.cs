@@ -4,7 +4,7 @@ using Hunter.Common;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Hunter.Creatures
+namespace Hunter.Creatures.Shooters
 {
     public class Shooter
     {

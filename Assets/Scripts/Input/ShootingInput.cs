@@ -1,4 +1,4 @@
-﻿using Hunter.Creatures;
+﻿using Hunter.Creatures.Shooters;
 using UnityEngine.InputSystem;
 
 namespace Hunter.Input

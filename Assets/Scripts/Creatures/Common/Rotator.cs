@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Hunter.Creatures
+namespace Hunter.Creatures.Common
 {
     public class Rotator
     {

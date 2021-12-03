@@ -1,5 +1,5 @@
 using System.Collections;
-using Hunter.Creatures;
+using Hunter.Creatures.Common;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;

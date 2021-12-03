@@ -1,5 +1,4 @@
-﻿using System;
-using Hunter.Creatures;
+﻿using Hunter.Creatures.Shooters;
 using UnityEngine;
 using UnityEngine.UI;
 
