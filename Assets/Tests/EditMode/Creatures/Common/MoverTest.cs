@@ -1,8 +1,6 @@
-using System.Collections;
 using Hunter.Creatures.Common;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace Creatures.Common
 {
@@ -20,28 +18,23 @@ namespace Creatures.Common
             mover = new Mover(Speed, rigidbody);
         }
         
-        [UnityTest]
-        public IEnumerator TestMove()
+        [Test]
+        public void TestMove()
         {
             CreateMover(out Mover mover, out Rigidbody2D rigidbody);
             
             mover.Move(_direction);
-            yield return null;
             Assert.AreEqual(_direction * Speed, rigidbody.velocity);
-            yield return null;
         }
         
-        [UnityTest]
-        public IEnumerator TestStop()
+        [Test]
+        public void TestStop()
         {
             CreateMover(out Mover mover, out Rigidbody2D rigidbody);
             
             mover.Move(_direction);
-            yield return null;
             mover.Stop();
-            yield return null;
             Assert.AreEqual(Vector2.zero, rigidbody.velocity);
-            yield return null;
         }
     }
 }
