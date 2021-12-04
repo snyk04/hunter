@@ -2,11 +2,11 @@
 using Hunter.Creatures.Common;
 using UnityEngine;
 
-namespace Hunter.AI.RabbitBehaviour
+namespace Hunter.AI.WolfBehaviour
 {
-    public abstract class RabbitState : State
+    public abstract class WolfState : State
     {
-        protected RabbitState(AnimalInfo animalInfo) : base(animalInfo) { }
+        protected WolfState(AnimalInfo animaInfo) : base(animaInfo) { }
         
         protected bool LiveBeingNearby(out Transform liveBeing)
         {
