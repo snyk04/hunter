@@ -6,6 +6,8 @@ namespace Hunter.AI.RabbitBehaviour
     public class RabbitFleeState : RabbitState
     {
         private readonly Transform _pursuer;
+
+        private Vector2 FleeDirection => AnimalInfo.Transform.position - _pursuer.position;
         
         public RabbitFleeState(AnimalInfo animalInfo, Transform pursuer) : base(animalInfo)
         {
@@ -14,19 +16,23 @@ namespace Hunter.AI.RabbitBehaviour
 
         public override void Update()
         {
-            Vector2 fleeDirection = AnimalInfo.Transform.position - _pursuer.position;
-
-            if (InSafety(fleeDirection.magnitude))
+            if (InSafety())
             {
-                ChangeState(new RabbitWanderingState(AnimalInfo));
+                StartWandering();
+                return;
             }
             
-            AnimalInfo.Mover.Move(fleeDirection.normalized, AnimalInfo.FleeSpeed);
+            AnimalInfo.Mover.Move(FleeDirection.normalized, AnimalInfo.FleeSpeed);
         }
 
-        private bool InSafety(float distance)
+        private bool InSafety()
         {
-            if (distance < AnimalInfo.FleeStopDistance)
+            if (_pursuer == null)
+            {
+                return true;
+            }
+            
+            if (FleeDirection.magnitude < AnimalInfo.FleeStopDistance)
             {
                 return false;
             }
@@ -38,6 +44,11 @@ namespace Hunter.AI.RabbitBehaviour
             }
 
             return true;
+        }
+
+        private void StartWandering()
+        {
+            ChangeState(new RabbitWanderingState(AnimalInfo));
         }
     }
 }
