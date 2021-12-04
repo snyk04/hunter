@@ -21,7 +21,7 @@ namespace Hunter.AI.RabbitBehaviour
         {
             if (LiveBeingNearby(out Transform liveBeing))
             {
-                ChangeState(new RabbitFleeState(AnimalInfo, liveBeing));
+                ChangeAnimalState(new RabbitFleeState(AnimalInfo, liveBeing));
                 return;
             }
             

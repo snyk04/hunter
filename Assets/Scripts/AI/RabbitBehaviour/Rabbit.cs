@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace Hunter.AI.RabbitBehaviour
 {
-    public class Rabbit : IAnimal
-    { 
-        private IState _state;
-
+    public class Rabbit : Animal
+    {
         public Rabbit(Transform transform, Mover mover, float wanderingSpeed, float wanderingRadius,
             float detectionRadius, float fleeSpeed, float fleeStopDistance)
         {
@@ -22,17 +20,7 @@ namespace Hunter.AI.RabbitBehaviour
                 fleeStopDistance
             );
 
-            _state = new RabbitWanderingState(animalInfo);
-        }
-        
-        public void Update()
-        {
-            _state.Update();
-        }
-
-        public void ChangeState(IState state)
-        {
-            _state = state;
+            State = new RabbitWanderingState(animalInfo);
         }
     }
 }

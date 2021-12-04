@@ -11,7 +11,7 @@
         
         public abstract void Update();
 
-        protected void ChangeState(IState state)
+        protected void ChangeAnimalState(IState state)
         {
             AnimalInfo.Animal.ChangeState(state);
         }

@@ -39,7 +39,7 @@ namespace Hunter.AI.RabbitBehaviour
 
             if (LiveBeingNearby(out Transform liveBeing))
             {
-                ChangeState(new RabbitFleeState(AnimalInfo, liveBeing));
+                ChangeAnimalState(new RabbitFleeState(AnimalInfo, liveBeing));
                 return false;
             }
 
@@ -48,7 +48,7 @@ namespace Hunter.AI.RabbitBehaviour
 
         private void StartWandering()
         {
-            ChangeState(new RabbitWanderingState(AnimalInfo));
+            ChangeAnimalState(new RabbitWanderingState(AnimalInfo));
         }
     }
 }
