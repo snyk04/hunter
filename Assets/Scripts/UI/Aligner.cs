@@ -22,6 +22,12 @@ namespace Hunter.UI
 
         public void Align()
         {
+            // TODO : maybe destroy aligner object?
+            if (_goalObject == null)
+            {
+                return;
+            }
+            
             Vector3 alignedObjectPosition = _alignedObject.position;
             Vector3 goalObjectPosition = _goalObject.position;
             
