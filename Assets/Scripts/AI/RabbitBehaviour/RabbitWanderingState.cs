@@ -1,18 +1,17 @@
 ﻿using Hunter.AI.Common;
 using Hunter.Common;
-using Hunter.Creatures.Common;
 using UnityEngine;
 
-namespace Hunter.AI.Rabbit
+namespace Hunter.AI.RabbitBehaviour
 {
-    public class WanderingState : State
+    public class RabbitWanderingState : RabbitState
     {
         private const float AllowableErrorForPositionCheck = 0.5f;
 
         private readonly Vector3 _startPosition; 
         private Vector3 _currentGoalPosition;
 
-        public WanderingState(AnimalInfo animalInfo) : base(animalInfo)
+        public RabbitWanderingState(AnimalInfo animalInfo) : base(animalInfo)
         {
             _startPosition = animalInfo.Transform.position;
             _currentGoalPosition = _startPosition;
@@ -20,25 +19,24 @@ namespace Hunter.AI.Rabbit
         
         public override void Update()
         {
-            CheckForLiveBeingsNearby();
-            
-            if (AnimalInfo.Transform.position.ApproximatelyEquals(_currentGoalPosition, AllowableErrorForPositionCheck))
+            if (LiveBeingNearby(out Transform liveBeing))
             {
-                DecideWhereToMove();
+                ChangeState(new RabbitFleeState(AnimalInfo, liveBeing));
+                return;
             }
-
+            
+            DecideWhereToMove();
             MoveToCurrentGoal();
         }
-
-        private void CheckForLiveBeingsNearby()
+        
+        private void DecideWhereToMove()
         {
-            Collider2D nearbyLiveBeing = Physics2D.OverlapCircle(AnimalInfo.Transform.position, AnimalInfo.DetectionRadius);
-            if (nearbyLiveBeing != null && nearbyLiveBeing.TryGetComponent(out MoverComponent moverComponent))
+            if (AnimalInfo.Transform.position.ApproximatelyEquals(_currentGoalPosition, AllowableErrorForPositionCheck))
             {
-                ChangeState(new RabbitFleeState(AnimalInfo, nearbyLiveBeing.transform));
+                ChangeCurrentGoal();
             }
         }
-        private void DecideWhereToMove()
+        private void ChangeCurrentGoal()
         {
             _currentGoalPosition = _startPosition.Add(Random.insideUnitCircle * AnimalInfo.WanderingRadius);
         }

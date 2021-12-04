@@ -1,9 +1,9 @@
 ﻿using Hunter.AI.Common;
 using UnityEngine;
 
-namespace Hunter.AI.Rabbit
+namespace Hunter.AI.RabbitBehaviour
 {
-    public class RabbitFleeState : State
+    public class RabbitFleeState : RabbitState
     {
         private readonly Transform _pursuer;
         
@@ -14,19 +14,30 @@ namespace Hunter.AI.Rabbit
 
         public override void Update()
         {
-            Vector2 direction = AnimalInfo.Transform.position - _pursuer.position;
+            Vector2 fleeDirection = AnimalInfo.Transform.position - _pursuer.position;
 
-            CheckPursuerDistance(direction.magnitude);
+            if (InSafety(fleeDirection.magnitude))
+            {
+                ChangeState(new RabbitWanderingState(AnimalInfo));
+            }
             
-            AnimalInfo.Mover.Move(direction.normalized, AnimalInfo.FleeSpeed);
+            AnimalInfo.Mover.Move(fleeDirection.normalized, AnimalInfo.FleeSpeed);
         }
 
-        private void CheckPursuerDistance(float distance)
+        private bool InSafety(float distance)
         {
-            if (distance >= AnimalInfo.FleeStopDistance)
+            if (distance < AnimalInfo.FleeStopDistance)
             {
-                ChangeState(new WanderingState(AnimalInfo));
+                return false;
             }
+
+            if (LiveBeingNearby(out Transform liveBeing))
+            {
+                ChangeState(new RabbitFleeState(AnimalInfo, liveBeing));
+                return false;
+            }
+
+            return true;
         }
     }
 }

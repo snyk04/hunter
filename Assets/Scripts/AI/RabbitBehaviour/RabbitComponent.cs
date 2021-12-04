@@ -1,7 +1,7 @@
 ﻿using Hunter.Creatures.Common;
 using UnityEngine;
 
-namespace Hunter.AI.Rabbit
+namespace Hunter.AI.RabbitBehaviour
 {
     [RequireComponent(typeof(MoverComponent))]
     public class RabbitComponent : MonoBehaviour
@@ -14,19 +14,19 @@ namespace Hunter.AI.Rabbit
         [Header("Flee")] 
         [SerializeField] private float _fleeSpeed;
         [SerializeField] private float _fleeStopDistance;
-        
-        public Rabbit Rabbit { get; private set; }
+
+        private Rabbit _rabbit;
         
         private void Awake()
         {
             Mover mover = GetComponent<MoverComponent>().Mover;
 
-            Rabbit = new Rabbit(transform, mover, _wanderingSpeed, _wanderingRadius,
+            _rabbit = new Rabbit(transform, mover, _wanderingSpeed, _wanderingRadius,
                 _detectionRadius, _fleeSpeed, _fleeStopDistance);
         }
         private void Update()
         {
-            Rabbit.Update();
+            _rabbit.Update();
         }
     }
 }

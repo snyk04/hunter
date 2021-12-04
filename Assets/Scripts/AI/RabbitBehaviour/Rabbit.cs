@@ -2,18 +2,16 @@
 using Hunter.Creatures.Common;
 using UnityEngine;
 
-namespace Hunter.AI.Rabbit
+namespace Hunter.AI.RabbitBehaviour
 {
     public class Rabbit : IAnimal
     { 
         private IState _state;
-        
-        public AnimalInfo AnimalInfo { get; }
 
         public Rabbit(Transform transform, Mover mover, float wanderingSpeed, float wanderingRadius,
             float detectionRadius, float fleeSpeed, float fleeStopDistance)
         {
-            AnimalInfo = new AnimalInfo(
+            var animalInfo = new AnimalInfo(
                 this,
                 transform,
                 mover,
@@ -23,8 +21,8 @@ namespace Hunter.AI.Rabbit
                 fleeSpeed,
                 fleeStopDistance
             );
-            
-            _state = new WanderingState(AnimalInfo);
+
+            _state = new RabbitWanderingState(animalInfo);
         }
         
         public void Update()
