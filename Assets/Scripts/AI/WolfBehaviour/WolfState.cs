@@ -6,17 +6,32 @@ namespace Hunter.AI.WolfBehaviour
 {
     public abstract class WolfState : State
     {
-        protected WolfState(AnimalInfo animaInfo) : base(animaInfo) { }
+        private readonly Collider2D[] _nearbyObjects;
+
+        protected WolfState(AnimalInfo animaInfo) : base(animaInfo)
+        {
+            _nearbyObjects = new Collider2D[2];
+        }
         
         protected bool LiveBeingNearby(out Transform liveBeing)
         {
-            Collider2D nearbyObject = Physics2D.OverlapCircle(AnimalInfo.Transform.position, AnimalInfo.DetectionRadius);
-            
-            liveBeing = nearbyObject != null && nearbyObject.TryGetComponent(out MoverComponent _) && nearbyObject.gameObject != AnimalInfo.Transform.gameObject
-                ? nearbyObject.transform
-                : null;
+            Physics2D.OverlapCircleNonAlloc(AnimalInfo.Transform.position, AnimalInfo.DetectionRadius, _nearbyObjects);
 
-            return liveBeing != null;
+            foreach (Collider2D nearbyObject in _nearbyObjects)
+            {
+                if (nearbyObject == null 
+                    || nearbyObject.gameObject == AnimalInfo.Transform.gameObject 
+                    || !nearbyObject.TryGetComponent(out MoverComponent _))
+                {
+                    continue;
+                }
+
+                liveBeing = nearbyObject.transform;
+                return true;
+            }
+
+            liveBeing = null;
+            return false;
         }
     }
 }
