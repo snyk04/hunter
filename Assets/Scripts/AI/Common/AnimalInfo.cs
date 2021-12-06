@@ -7,7 +7,9 @@ namespace Hunter.AI.Common
     {
         public readonly IAnimal Animal;
         public readonly Transform Transform;
-        public readonly Mover Mover; 
+        public readonly Mover Mover;
+
+        public readonly Field Field;
         
         public readonly float WanderingSpeed;
         public readonly float WanderingRadius;
@@ -24,7 +26,7 @@ namespace Hunter.AI.Common
         public readonly int KillingAmountOfDamage;
         public readonly float KillingAttackDelay;
 
-        public AnimalInfo(IAnimal animal, Transform transform, Mover mover, 
+        public AnimalInfo(IAnimal animal, Transform transform, Mover mover, Field field,
             float wanderingSpeed = default, float wanderingRadius = default, float detectionRadius = default, 
             float fleeSpeed = default, float fleeStopDistance = default, 
             float seekSpeed = default, float seekStopDistance = default,
@@ -34,6 +36,8 @@ namespace Hunter.AI.Common
             Animal = animal;
             Transform = transform;
             Mover = mover;
+
+            Field = field;
             
             WanderingSpeed = wanderingSpeed;
             WanderingRadius = wanderingRadius;

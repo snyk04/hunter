@@ -13,7 +13,8 @@ namespace Hunter.AI.RabbitBehaviour
 
         public RabbitWanderingState(AnimalInfo animalInfo) : base(animalInfo)
         {
-            _startPosition = animalInfo.Transform.position;
+            _startPosition = CalculateStartPosition();
+
             _currentGoalPosition = _startPosition;
         }
         
@@ -27,6 +28,31 @@ namespace Hunter.AI.RabbitBehaviour
             
             DecideWhereToMove();
             MoveToCurrentGoal();
+        }
+
+        private Vector3 CalculateStartPosition()
+        {
+            Vector3 startPosition = AnimalInfo.Transform.position;
+            
+            if (startPosition.x + AnimalInfo.WanderingRadius > AnimalInfo.Field.XRightBorder)
+            {
+                startPosition.x = AnimalInfo.Field.XRightBorder - AnimalInfo.WanderingRadius;
+            }
+            else if (startPosition.x - AnimalInfo.WanderingRadius < AnimalInfo.Field.XLeftBorder)
+            {
+                startPosition.x = AnimalInfo.Field.XLeftBorder + AnimalInfo.WanderingRadius;
+            }
+            
+            if (startPosition.y + AnimalInfo.WanderingRadius > AnimalInfo.Field.YTopBorder)
+            {
+                startPosition.y = AnimalInfo.Field.YTopBorder - AnimalInfo.WanderingRadius;
+            }
+            else if (startPosition.y - AnimalInfo.WanderingRadius < AnimalInfo.Field.YBotBorder)
+            {
+                startPosition.y = AnimalInfo.Field.YBotBorder + AnimalInfo.WanderingRadius;
+            }
+
+            return startPosition;
         }
         
         private void DecideWhereToMove()

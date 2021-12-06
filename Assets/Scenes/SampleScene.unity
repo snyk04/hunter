@@ -540,8 +540,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1390227611}
   - component: {fileID: 1390227612}
+  - component: {fileID: 1390227613}
   m_Layer: 0
-  m_Name: Grass
+  m_Name: Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,6 +613,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1390227613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390227610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f862bcfff6fb49eaa0d05d2e5764dea2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _xLeftBorder: -12.5
+  _xRightBorder: 12.5
+  _yBotBorder: -12.5
+  _yTopBorder: 12.5
 --- !u!4 &1566032719 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2130543221010025381, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
@@ -754,17 +771,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wolf
       objectReference: {fileID: 0}
+    - target: {fileID: 2130543221010025380, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2130543221010025381, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2130543221010025381, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.28
+      value: 11.87
       objectReference: {fileID: 0}
     - target: {fileID: 2130543221010025381, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.02
+      value: 11.89
       objectReference: {fileID: 0}
     - target: {fileID: 2130543221010025381, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -798,6 +819,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2130543221010025403, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
+      propertyPath: _field
+      value: 
+      objectReference: {fileID: 1390227613}
     - target: {fileID: 2130543221010025406, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -811,17 +836,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 513764796}
     m_Modifications:
+    - target: {fileID: 2306019381638289450, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
+      propertyPath: _field
+      value: 
+      objectReference: {fileID: 1390227613}
+    - target: {fileID: 2306019381638289450, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
+      propertyPath: _fieldComponent
+      value: 
+      objectReference: {fileID: 1390227613}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.22
+      value: -12.18
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.02
+      value: 12.08
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_LocalPosition.z

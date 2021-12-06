@@ -6,7 +6,7 @@ namespace Hunter.AI.WolfBehaviour
 {
     public class Wolf : Animal
     {
-        public Wolf(Transform transform, Mover mover, 
+        public Wolf(Transform transform, Mover mover, Field field,
             float wanderingSpeed, float wanderingRadius, float detectionRadius, 
             float seekSpeed, float seekStopDistance,
             float killingStartDistance, float killingStopDistance, int killingAmountOfDamage, float killingAttackDelay)
@@ -15,6 +15,7 @@ namespace Hunter.AI.WolfBehaviour
                 this, 
                 transform, 
                 mover,
+                field,
                 wanderingSpeed,
                 wanderingRadius,
                 detectionRadius,
@@ -25,7 +26,7 @@ namespace Hunter.AI.WolfBehaviour
                 killingAmountOfDamage: killingAmountOfDamage,
                 killingAttackDelay: killingAttackDelay
                 );
-
+            
             State = new WolfWanderingState(animalInfo);
         }
     }
