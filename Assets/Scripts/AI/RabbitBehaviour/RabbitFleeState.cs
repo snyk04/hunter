@@ -16,12 +16,21 @@ namespace Hunter.AI.RabbitBehaviour
         {
             if (InSafety())
             {
-                StartWandering();
+                ChangeAnimalState(new RabbitWanderingState(AnimalInfo));
                 return;
             }
-
-            Vector2 fleeDirection = AnimalInfo.Transform.position - _pursuer.position;
-            AnimalInfo.Mover.Move(fleeDirection.normalized, AnimalInfo.FleeSpeed);
+            
+            if (AnimalInfo.Transform.position.x + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.XRightBorder
+                || AnimalInfo.Transform.position.x - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.XLeftBorder
+                || AnimalInfo.Transform.position.y + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.YTopBorder
+                || AnimalInfo.Transform.position.y - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.YBotBorder)
+            {
+                ChangeAnimalState(new RabbitAvoidBorderState(AnimalInfo, _pursuer));
+                return;
+            }
+            
+            Vector2 fleeDirection = (AnimalInfo.Transform.position - _pursuer.position).normalized;
+            AnimalInfo.Mover.Move(fleeDirection, AnimalInfo.FleeSpeed);
         }
 
         private bool InSafety()
@@ -45,11 +54,6 @@ namespace Hunter.AI.RabbitBehaviour
             }
 
             return true;
-        }
-
-        private void StartWandering()
-        {
-            ChangeAnimalState(new RabbitWanderingState(AnimalInfo));
         }
     }
 }

@@ -9,7 +9,8 @@ namespace Hunter.AI.RabbitBehaviour
         public Rabbit(Transform transform, Mover mover,
             Field field,
             float wanderingSpeed, float wanderingRadius, float detectionRadius,
-            float fleeSpeed, float fleeStopDistance)
+            float fleeSpeed, float fleeStopDistance,
+            float borderAvoidingStartDistance, float borderAvoidingStopDistance)
         {
             var animalInfo = new AnimalInfo(
                 this,
@@ -20,7 +21,9 @@ namespace Hunter.AI.RabbitBehaviour
                 wanderingRadius,
                 detectionRadius,
                 fleeSpeed,
-                fleeStopDistance
+                fleeStopDistance,
+                borderAvoidingStartDistance: borderAvoidingStartDistance,
+                borderAvoidingStopDistance: borderAvoidingStopDistance
             );
 
             State = new RabbitWanderingState(animalInfo);

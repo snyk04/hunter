@@ -25,13 +25,17 @@ namespace Hunter.AI.Common
         public readonly float KillingStopDistance;
         public readonly int KillingAmountOfDamage;
         public readonly float KillingAttackDelay;
+        
+        public readonly float BorderAvoidingStartDistance;
+        public readonly float BorderAvoidingStopDistance;
 
         public AnimalInfo(IAnimal animal, Transform transform, Mover mover, Field field,
             float wanderingSpeed = default, float wanderingRadius = default, float detectionRadius = default, 
             float fleeSpeed = default, float fleeStopDistance = default, 
             float seekSpeed = default, float seekStopDistance = default,
             float killingStartDistance = default, float killingStopDistance = default, int killingAmountOfDamage = default,
-                float killingAttackDelay = default)
+                float killingAttackDelay = default,
+            float borderAvoidingStartDistance = default, float borderAvoidingStopDistance = default)
         {
             Animal = animal;
             Transform = transform;
@@ -53,6 +57,9 @@ namespace Hunter.AI.Common
             KillingStopDistance = killingStopDistance;
             KillingAmountOfDamage = killingAmountOfDamage;
             KillingAttackDelay = killingAttackDelay;
+            
+            BorderAvoidingStartDistance = borderAvoidingStartDistance;
+            BorderAvoidingStopDistance = borderAvoidingStopDistance;
         }
     }
 }
