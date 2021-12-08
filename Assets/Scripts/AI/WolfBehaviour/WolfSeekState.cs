@@ -1,4 +1,5 @@
 ﻿using Hunter.AI.Common;
+using Hunter.Common;
 using UnityEngine;
 
 namespace Hunter.AI.WolfBehaviour
@@ -19,7 +20,7 @@ namespace Hunter.AI.WolfBehaviour
                 ChangeAnimalState(new WolfWanderingState(AnimalInfo));
             }
 
-            Vector2 seekDirection = _target.position - AnimalInfo.Transform.position;
+            Vector2 seekDirection = _target.Position() - AnimalInfo.Position;
             if (seekDirection.magnitude >= AnimalInfo.SeekStopDistance)
             {
                 ChangeAnimalState(new WolfWanderingState(AnimalInfo));

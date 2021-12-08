@@ -1,4 +1,5 @@
-﻿using Hunter.Creatures.Common;
+﻿using Hunter.Common;
+using Hunter.Creatures.Common;
 using UnityEngine;
 
 namespace Hunter.AI.Common
@@ -29,6 +30,8 @@ namespace Hunter.AI.Common
         public readonly float BorderAvoidingStartDistance;
         public readonly float BorderAvoidingStopDistance;
 
+        public Vector2 Position => Transform.Position();
+        
         public AnimalInfo(IAnimal animal, Transform transform, Mover mover, Field field,
             float wanderingSpeed = default, float wanderingRadius = default, float detectionRadius = default, 
             float fleeSpeed = default, float fleeStopDistance = default, 

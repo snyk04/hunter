@@ -1,4 +1,5 @@
 ﻿using Hunter.AI.Common;
+using Hunter.Common;
 using UnityEngine;
 
 namespace Hunter.AI.RabbitBehaviour
@@ -13,14 +14,14 @@ namespace Hunter.AI.RabbitBehaviour
         {
             _pursuer = pursuer;
             
-            _fleeDirection = (AnimalInfo.Transform.position - _pursuer.position).normalized;
-            if (AnimalInfo.Transform.position.x + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.XRightBorder 
-                || AnimalInfo.Transform.position.x - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.XLeftBorder)
+            _fleeDirection = (AnimalInfo.Position - _pursuer.Position()).normalized;
+            if (AnimalInfo.Position.x + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.XRightBorder 
+                || AnimalInfo.Position.x - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.XLeftBorder)
             {
                 _fleeDirection = Quaternion.Euler(0, 0, 90) * _fleeDirection;
             }
-            if (AnimalInfo.Transform.position.y + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.YTopBorder 
-                || AnimalInfo.Transform.position.y - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.YBotBorder)
+            if (AnimalInfo.Position.y + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.YTopBorder 
+                || AnimalInfo.Position.y - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.YBotBorder)
             {
                 _fleeDirection = Quaternion.Euler(0, 0, 90) * _fleeDirection;
             }
@@ -28,19 +29,19 @@ namespace Hunter.AI.RabbitBehaviour
 
         public override void Update()
         {
-            if (AnimalInfo.Transform.position.x + AnimalInfo.BorderAvoidingStopDistance < AnimalInfo.Field.XRightBorder
-                && AnimalInfo.Transform.position.x - AnimalInfo.BorderAvoidingStopDistance > AnimalInfo.Field.XLeftBorder
-                && AnimalInfo.Transform.position.y + AnimalInfo.BorderAvoidingStopDistance < AnimalInfo.Field.YTopBorder
-                && AnimalInfo.Transform.position.y - AnimalInfo.BorderAvoidingStopDistance > AnimalInfo.Field.YBotBorder)
+            if (AnimalInfo.Position.x + AnimalInfo.BorderAvoidingStopDistance < AnimalInfo.Field.XRightBorder
+                && AnimalInfo.Position.x - AnimalInfo.BorderAvoidingStopDistance > AnimalInfo.Field.XLeftBorder
+                && AnimalInfo.Position.y + AnimalInfo.BorderAvoidingStopDistance < AnimalInfo.Field.YTopBorder
+                && AnimalInfo.Position.y - AnimalInfo.BorderAvoidingStopDistance > AnimalInfo.Field.YBotBorder)
             {
                 ChangeAnimalState(new RabbitFleeState(AnimalInfo, _pursuer));
                 return;
             }
             
-            if (AnimalInfo.Transform.position.x + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.XRightBorder 
-                || AnimalInfo.Transform.position.x - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.XLeftBorder
-                || AnimalInfo.Transform.position.y + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.YTopBorder
-                || AnimalInfo.Transform.position.y - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.YBotBorder)
+            if (AnimalInfo.Position.x + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.XRightBorder 
+                || AnimalInfo.Position.x - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.XLeftBorder
+                || AnimalInfo.Position.y + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.YTopBorder
+                || AnimalInfo.Position.y - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.YBotBorder)
             {
                 ChangeAnimalState(new RabbitAvoidBorderState(AnimalInfo, _pursuer));
             }

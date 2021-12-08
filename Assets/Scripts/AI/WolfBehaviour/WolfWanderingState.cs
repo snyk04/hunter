@@ -8,8 +8,8 @@ namespace Hunter.AI.WolfBehaviour
     {
         private const float AllowableErrorForPositionCheck = 0.5f;
 
-        private readonly Vector3 _startPosition; 
-        private Vector3 _currentGoalPosition;
+        private readonly Vector2 _startPosition; 
+        private Vector2 _currentGoalPosition;
 
         public WolfWanderingState(AnimalInfo animalInfo) : base(animalInfo)
         {
@@ -29,9 +29,9 @@ namespace Hunter.AI.WolfBehaviour
             MoveToCurrentGoal();
         }
         
-        private Vector3 CalculateStartPosition()
+        private Vector2 CalculateStartPosition()
         {
-            Vector3 startPosition = AnimalInfo.Transform.position;
+            Vector2 startPosition = AnimalInfo.Position;
             
             if (startPosition.x + AnimalInfo.WanderingRadius > AnimalInfo.Field.XRightBorder)
             {
@@ -56,18 +56,18 @@ namespace Hunter.AI.WolfBehaviour
 
         private void DecideWhereToMove()
         {
-            if (AnimalInfo.Transform.position.ApproximatelyEquals(_currentGoalPosition, AllowableErrorForPositionCheck))
+            if (AnimalInfo.Position.ApproximatelyEquals(_currentGoalPosition, AllowableErrorForPositionCheck))
             {
                 ChangeCurrentGoal();
             }
         }
         private void ChangeCurrentGoal()
         {
-            _currentGoalPosition = _startPosition.Add(Random.insideUnitCircle * AnimalInfo.WanderingRadius);
+            _currentGoalPosition = _startPosition + Random.insideUnitCircle * AnimalInfo.WanderingRadius;
         }
         private void MoveToCurrentGoal()
         {
-            Vector2 moveDirection = _currentGoalPosition - AnimalInfo.Transform.position;
+            Vector2 moveDirection = _currentGoalPosition - AnimalInfo.Position;
             AnimalInfo.Mover.Move(moveDirection.normalized, AnimalInfo.WanderingSpeed);
         }
     }

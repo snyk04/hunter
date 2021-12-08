@@ -27,7 +27,7 @@ namespace Hunter.AI.WolfBehaviour
                 return;
             }
             
-            Vector2 wolfToTargetVector = _target.position - AnimalInfo.Transform.position;
+            Vector2 wolfToTargetVector = _target.Position() - AnimalInfo.Position;
             if (wolfToTargetVector.magnitude >= AnimalInfo.KillingStopDistance)
             {
                 ChangeAnimalState(new WolfSeekState(AnimalInfo, _target));

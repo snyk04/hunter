@@ -1,4 +1,5 @@
 ﻿using Hunter.AI.Common;
+using Hunter.Common;
 using UnityEngine;
 
 namespace Hunter.AI.RabbitBehaviour
@@ -20,16 +21,16 @@ namespace Hunter.AI.RabbitBehaviour
                 return;
             }
             
-            if (AnimalInfo.Transform.position.x + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.XRightBorder
-                || AnimalInfo.Transform.position.x - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.XLeftBorder
-                || AnimalInfo.Transform.position.y + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.YTopBorder
-                || AnimalInfo.Transform.position.y - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.YBotBorder)
+            if (AnimalInfo.Position.x + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.XRightBorder
+                || AnimalInfo.Position.x - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.XLeftBorder
+                || AnimalInfo.Position.y + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.YTopBorder
+                || AnimalInfo.Position.y - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.YBotBorder)
             {
                 ChangeAnimalState(new RabbitAvoidBorderState(AnimalInfo, _pursuer));
                 return;
             }
             
-            Vector2 fleeDirection = (AnimalInfo.Transform.position - _pursuer.position).normalized;
+            Vector2 fleeDirection = (AnimalInfo.Position - _pursuer.Position()).normalized;
             AnimalInfo.Mover.Move(fleeDirection, AnimalInfo.FleeSpeed);
         }
 
@@ -40,7 +41,7 @@ namespace Hunter.AI.RabbitBehaviour
                 return true;
             }
             
-            Vector2 fleeDirection = AnimalInfo.Transform.position - _pursuer.position;
+            Vector2 fleeDirection = AnimalInfo.Position - _pursuer.Position();
             if (fleeDirection.magnitude < AnimalInfo.FleeStopDistance)
             {
                 return false;

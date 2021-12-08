@@ -15,7 +15,7 @@ namespace Hunter.AI.RabbitBehaviour
         
         protected bool LiveBeingNearby(out Transform liveBeing)
         {
-            Physics2D.OverlapCircleNonAlloc(AnimalInfo.Transform.position, AnimalInfo.DetectionRadius, _nearbyObjects);
+            Physics2D.OverlapCircleNonAlloc(AnimalInfo.Position, AnimalInfo.DetectionRadius, _nearbyObjects);
 
             foreach (Collider2D nearbyObject in _nearbyObjects)
             {

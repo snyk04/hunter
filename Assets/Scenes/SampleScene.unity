@@ -305,7 +305,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837391401}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 4.09, y: -2.1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2105073173}
@@ -346,7 +346,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13.5
+  orthographic size: 2.5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _alignedObject: {fileID: 837391402}
-  _goalObject: {fileID: 745570321}
+  _goalObject: {fileID: 547218476}
   _freezeX: 0
   _freezeY: 0
   _freezeZ: 1
@@ -785,7 +785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130543221010025381, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2130543221010025381, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -825,7 +825,7 @@ PrefabInstance:
       objectReference: {fileID: 1390227613}
     - target: {fileID: 2130543221010025403, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
       propertyPath: _seekSpeed
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2130543221010025403, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
       propertyPath: _detectionRadius
@@ -858,7 +858,7 @@ PrefabInstance:
       objectReference: {fileID: 1390227613}
     - target: {fileID: 2306019381638289450, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: _fleeSpeed
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289450, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: _fieldComponent
@@ -874,15 +874,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289450, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: _fleeStopDistance
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289450, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: _borderAvoidingStopDistance
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289450, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: _borderAvoidingStartDistance
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_RootOrder
@@ -890,11 +890,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4.07
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.24
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_LocalPosition.z
