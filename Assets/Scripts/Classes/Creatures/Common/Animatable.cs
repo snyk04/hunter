@@ -4,7 +4,7 @@ using Random = System.Random;
 
 namespace Hunter.Creatures.Common
 {
-    public class Animatable
+    public class Animatable : IDisposable
     {
         private const string MoveTopName = "MoveTop";
         private const string MoveRightName = "MoveRight";
@@ -12,90 +12,62 @@ namespace Hunter.Creatures.Common
         private const string MoveLeftName = "MoveLeft";
         
         private readonly Animator _animator;
-        private readonly Rigidbody2D _rigidbody2D;
+        private readonly Mover _mover;
 
         private readonly Random _random;
-        private Vector2 _lastVelocity;
+        private Vector2 _lastDirection;
+        private float _lastSpeed;
 
-        public Animatable(Animator animator, Rigidbody2D rigidbody2D)
+        public Animatable(Animator animator, Mover mover)
         {
             _animator = animator;
-            _rigidbody2D = rigidbody2D;
+            _mover = mover;
 
             _random = new Random();
-        }
+            _lastDirection = default;
+            _lastSpeed = default;
 
-        public void Update()
-        {
-            Animate();
+            _mover.OnMove += Animate;
         }
-
-        private void Animate()
+        
+        private void Animate(Vector2 direction, float speed)
         {
-            Vector2 currentVelocity = _rigidbody2D.velocity;
             bool moveTop = false;
             bool moveRight = false;
             bool moveBot = false;
             bool moveLeft = false;
             
-            if (currentVelocity == _lastVelocity)
+            if (direction == _lastDirection && Math.Abs(speed - _lastSpeed) < 0.01)
             {
                 return;
             }
-            _lastVelocity = currentVelocity;
-
-            float moverSpeed = Math.Max(currentVelocity.x / currentVelocity.normalized.x,
-                currentVelocity.y / currentVelocity.normalized.y);
-            _animator.speed = !float.IsNaN(moverSpeed) || moverSpeed != 0 
-                ? 1 
-                : moverSpeed;
+            _lastDirection = direction;
+            _lastSpeed = speed;
             
-            if (Math.Abs(currentVelocity.x) > Math.Abs(currentVelocity.y))
+            _animator.speed = speed;
+            
+            if (Math.Abs(direction.x) > Math.Abs(direction.y))
             {
-                if (currentVelocity.x > 0)
-                {
-                    moveRight = true;
-                }
-                else
-                {
-                    moveLeft = true;
-                }
+                moveRight = direction.x > 0;
+                moveLeft = direction.x < 0;
             }
-            else if (Math.Abs(currentVelocity.x) < Math.Abs(currentVelocity.y))
+            else if (Math.Abs(direction.x) < Math.Abs(direction.y))
             {
-                if (currentVelocity.y > 0)
-                {
-                    moveTop = true;
-                }
-                else
-                {
-                    moveBot = true;
-                }
+                moveTop = direction.y > 0;
+                moveBot = direction.y < 0;
             }
-            else if (Math.Abs(currentVelocity.x - currentVelocity.y) < 0.01 && currentVelocity.x != 0 && currentVelocity.y != 0)
+            else if (direction.x == direction.y && direction.x != 0 && direction.y != 0)
             {
                 double value = _random.NextDouble();
                 if (value > 0.5)
                 {
-                    if (currentVelocity.x > 0)
-                    {
-                        moveRight = true;
-                    }
-                    else
-                    {
-                        moveLeft = true;
-                    }
+                    moveRight = direction.x > 0;
+                    moveLeft = direction.x < 0;
                 }
                 else
                 {
-                    if (currentVelocity.y > 0)
-                    {
-                        moveTop = true;
-                    }
-                    else
-                    {
-                        moveBot = true;
-                    }
+                    moveTop = direction.y > 0;
+                    moveBot = direction.y < 0;
                 }
             }
             
@@ -103,6 +75,11 @@ namespace Hunter.Creatures.Common
             _animator.SetBool(MoveRightName, moveRight);
             _animator.SetBool(MoveBotName, moveBot);
             _animator.SetBool(MoveLeftName, moveLeft);
+        }
+
+        public void Dispose()
+        {
+            _mover.OnMove -= Animate;
         }
     }
 }
