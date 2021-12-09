@@ -6,6 +6,8 @@ namespace Hunter.Creatures.Common
 {
     public class Animatable : IDisposable
     {
+        private const float ZeroSpeedThreshold = 0.01f;
+        
         private const string MoveTopName = "MoveTop";
         private const string MoveRightName = "MoveRight";
         private const string MoveBotName = "MoveBot";
@@ -44,7 +46,7 @@ namespace Hunter.Creatures.Common
             _lastDirection = direction;
             _lastSpeed = speed;
             
-            _animator.speed = speed;
+            _animator.speed = Math.Abs(speed) < ZeroSpeedThreshold ? 1 : speed;
             
             if (Math.Abs(direction.x) > Math.Abs(direction.y))
             {

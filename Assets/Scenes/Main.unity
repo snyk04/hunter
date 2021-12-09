@@ -868,17 +868,21 @@ PrefabInstance:
       propertyPath: _wanderingSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2306019381638289450, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
+      propertyPath: _wanderingRadius
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.45
+      value: -21.221
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.77
+      value: -1.119
       objectReference: {fileID: 0}
     - target: {fileID: 2306019381638289451, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
       propertyPath: m_LocalPosition.z
