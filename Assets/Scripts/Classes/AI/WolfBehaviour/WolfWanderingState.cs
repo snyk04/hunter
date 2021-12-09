@@ -1,19 +1,26 @@
-﻿using Hunter.AI.Common;
+﻿using System;
+using Hunter.AI.Common;
 using Hunter.Common;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Hunter.AI.WolfBehaviour
 {
     public class WolfWanderingState : WolfState
     {
+        private const float WanderingArrivalDistance = 1;
+        private const float ChangeCurrentGoalDelay = 5;
         private const float AllowableErrorForPositionCheck = 0.5f;
 
         private readonly Vector2 _startPosition; 
         private Vector2 _currentGoalPosition;
+        private DateTime _lastTimeGoalChanged;
+        private bool _isWaiting;
 
         public WolfWanderingState(AnimalInfo animalInfo) : base(animalInfo)
         {
             _startPosition = CalculateStartPosition();
+            
             _currentGoalPosition = _startPosition;
         }
         
@@ -58,7 +65,17 @@ namespace Hunter.AI.WolfBehaviour
         {
             if (AnimalInfo.Position.ApproximatelyEquals(_currentGoalPosition, AllowableErrorForPositionCheck))
             {
-                ChangeCurrentGoal();
+                if (!_isWaiting)
+                {
+                    _lastTimeGoalChanged = DateTime.Now;
+                    _isWaiting = true;
+                }
+
+                if (_lastTimeGoalChanged.GetPassedSeconds() > ChangeCurrentGoalDelay)
+                {
+                    ChangeCurrentGoal();
+                    _isWaiting = false;
+                }
             }
         }
         private void ChangeCurrentGoal()
@@ -68,7 +85,12 @@ namespace Hunter.AI.WolfBehaviour
         private void MoveToCurrentGoal()
         {
             Vector2 moveDirection = _currentGoalPosition - AnimalInfo.Position;
-            AnimalInfo.Mover.Move(moveDirection.normalized, AnimalInfo.WanderingSpeed);
+            moveDirection = moveDirection.magnitude > AllowableErrorForPositionCheck ? moveDirection : Vector2.zero;
+
+            float temp = moveDirection.magnitude / WanderingArrivalDistance;
+            float speed = Mathf.Min(temp, 1);
+            
+            AnimalInfo.Mover.Move(moveDirection.normalized, AnimalInfo.WanderingSpeed * speed);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Hunter.Creatures.Common
 {
     public class Animatable : IDisposable
     {
-        private const float ZeroSpeedThreshold = 0.01f;
+        private const float ZeroSpeedThreshold = 0.1f;
         
         private const string MoveTopName = "MoveTop";
         private const string MoveRightName = "MoveRight";
