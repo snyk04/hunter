@@ -7,6 +7,8 @@ namespace Hunter.AI.RabbitBehaviour
     public class RabbitFleeState : RabbitState
     {
         private readonly Transform _pursuer;
+
+        private Vector2 _currentVelocity;
         
         public RabbitFleeState(AnimalInfo animalInfo, Transform pursuer) : base(animalInfo)
         {
@@ -15,46 +17,39 @@ namespace Hunter.AI.RabbitBehaviour
 
         public override void Update()
         {
-            if (InSafety())
+            if (_pursuer == null)
             {
                 ChangeAnimalState(new RabbitWanderingState(AnimalInfo));
                 return;
             }
             
-            if (AnimalInfo.Position.x + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.XRightBorder
-                || AnimalInfo.Position.x - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.XLeftBorder
-                || AnimalInfo.Position.y + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.YTopBorder
-                || AnimalInfo.Position.y - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.YBotBorder)
+            Vector2 fleeDirection = AnimalInfo.Position - _pursuer.Position();
+            if (fleeDirection.magnitude > AnimalInfo.FleeStopDistance)
             {
-                ChangeAnimalState(new RabbitAvoidBorderState(AnimalInfo, _pursuer));
+                ChangeAnimalState(new RabbitWanderingState(AnimalInfo));
                 return;
             }
-            
-            Vector2 fleeDirection = (AnimalInfo.Position - _pursuer.Position()).normalized;
-            AnimalInfo.Mover.Move(fleeDirection, AnimalInfo.FleeSpeed);
-        }
 
-        private bool InSafety()
-        {
-            if (_pursuer == null)
+            if (PursuerNearby(out Transform pursuer))
             {
-                return true;
+                if (pursuer != _pursuer)
+                {
+                    ChangeAnimalState(new RabbitFleeState(AnimalInfo, pursuer));
+                    return;
+                }
             }
             
-            Vector2 fleeDirection = AnimalInfo.Position - _pursuer.Position();
-            if (fleeDirection.magnitude < AnimalInfo.FleeStopDistance)
-            {
-                return false;
-            }
+            // TODO : rigidbody in Mover or AnimalInfo
+            _currentVelocity = AnimalInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
+            _currentVelocity += (AnimalInfo.Position - _pursuer.Position()).normalized;
 
-            if (LiveBeingNearby(out Transform liveBeing))
+            // TODO : to const
+            while (!AnimalInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
             {
-                // TODO : multiple Move() calls
-                ChangeAnimalState(new RabbitFleeState(AnimalInfo, liveBeing));
-                return false;
+                _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }
-
-            return true;
+            
+            AnimalInfo.Mover.Move(_currentVelocity.normalized, AnimalInfo.FleeSpeed);
         }
     }
 }

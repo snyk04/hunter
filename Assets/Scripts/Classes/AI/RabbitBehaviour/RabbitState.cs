@@ -13,7 +13,7 @@ namespace Hunter.AI.RabbitBehaviour
             _nearbyObjects = new Collider2D[2];
         }
         
-        protected bool LiveBeingNearby(out Transform liveBeing)
+        protected bool PursuerNearby(out Transform pursuer)
         {
             Physics2D.OverlapCircleNonAlloc(AnimalInfo.Position, AnimalInfo.DetectionRadius, _nearbyObjects);
 
@@ -26,12 +26,17 @@ namespace Hunter.AI.RabbitBehaviour
                     continue;
                 }
 
-                liveBeing = nearbyObject.transform;
+                pursuer = nearbyObject.transform;
                 return true;
             }
 
-            liveBeing = null;
+            pursuer = null;
             return false;
+        }
+        
+        protected Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
+        {
+            return AnimalInfo.Position + currentVelocity * distanceFromCurrentPosition;
         }
     }
 }
