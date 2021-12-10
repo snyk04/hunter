@@ -1,96 +1,32 @@
-﻿using System;
-using Hunter.AI.Common;
-using Hunter.Common;
+﻿using Hunter.AI.Common;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Hunter.AI.WolfBehaviour
 {
     public class WolfWanderingState : WolfState
     {
-        private const float WanderingArrivalDistance = 1;
-        private const float ChangeCurrentGoalDelay = 5;
-        private const float AllowableErrorForPositionCheck = 0.5f;
+        private Vector2 _currentVelocity;
 
-        private readonly Vector2 _startPosition; 
-        private Vector2 _currentGoalPosition;
-        private DateTime _lastTimeGoalChanged;
-        private bool _isWaiting;
-
-        public WolfWanderingState(AnimalInfo animalInfo) : base(animalInfo)
-        {
-            _startPosition = CalculateStartPosition();
-            
-            _currentGoalPosition = _startPosition;
-        }
+        public WolfWanderingState(AnimalInfo animalInfo) : base(animalInfo) { }
         
         public override void Update()
         {
-            if (LiveBeingNearby(out Transform liveBeing))
+            if (TargetNearby(out Transform pursuer))
             {
-                ChangeAnimalState(new WolfSeekState(AnimalInfo, liveBeing));
+                ChangeAnimalState(new WolfSeekState(AnimalInfo, pursuer));
                 return;
             }
             
-            DecideWhereToMove();
-            MoveToCurrentGoal();
-        }
-        
-        private Vector2 CalculateStartPosition()
-        {
-            Vector2 startPosition = AnimalInfo.Position;
-            
-            if (startPosition.x + AnimalInfo.WanderingRadius > AnimalInfo.Field.XRightBorder)
+            // TODO : rigidbody in Mover or AnimalInfo
+            _currentVelocity = AnimalInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
+
+            // TODO : to const
+            while (!AnimalInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
             {
-                startPosition.x = AnimalInfo.Field.XRightBorder - AnimalInfo.WanderingRadius;
-            }
-            else if (startPosition.x - AnimalInfo.WanderingRadius < AnimalInfo.Field.XLeftBorder)
-            {
-                startPosition.x = AnimalInfo.Field.XLeftBorder + AnimalInfo.WanderingRadius;
-            }
-            
-            if (startPosition.y + AnimalInfo.WanderingRadius > AnimalInfo.Field.YTopBorder)
-            {
-                startPosition.y = AnimalInfo.Field.YTopBorder - AnimalInfo.WanderingRadius;
-            }
-            else if (startPosition.y - AnimalInfo.WanderingRadius < AnimalInfo.Field.YBotBorder)
-            {
-                startPosition.y = AnimalInfo.Field.YBotBorder + AnimalInfo.WanderingRadius;
+                _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }
 
-            return startPosition;
-        }
-
-        private void DecideWhereToMove()
-        {
-            if (AnimalInfo.Position.ApproximatelyEquals(_currentGoalPosition, AllowableErrorForPositionCheck))
-            {
-                if (!_isWaiting)
-                {
-                    _lastTimeGoalChanged = DateTime.Now;
-                    _isWaiting = true;
-                }
-
-                if (_lastTimeGoalChanged.GetPassedSeconds() > ChangeCurrentGoalDelay)
-                {
-                    ChangeCurrentGoal();
-                    _isWaiting = false;
-                }
-            }
-        }
-        private void ChangeCurrentGoal()
-        {
-            _currentGoalPosition = _startPosition + Random.insideUnitCircle * AnimalInfo.WanderingRadius;
-        }
-        private void MoveToCurrentGoal()
-        {
-            Vector2 moveDirection = _currentGoalPosition - AnimalInfo.Position;
-            moveDirection = moveDirection.magnitude > AllowableErrorForPositionCheck ? moveDirection : Vector2.zero;
-
-            float temp = moveDirection.magnitude / WanderingArrivalDistance;
-            float speed = Mathf.Min(temp, 1);
-            
-            AnimalInfo.Mover.Move(moveDirection.normalized, AnimalInfo.WanderingSpeed * speed);
+            AnimalInfo.Mover.Move(_currentVelocity.normalized, AnimalInfo.WanderingSpeed);
         }
     }
 }

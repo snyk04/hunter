@@ -13,7 +13,7 @@ namespace Hunter.AI.WolfBehaviour
             _nearbyObjects = new Collider2D[2];
         }
         
-        protected bool LiveBeingNearby(out Transform liveBeing)
+        protected bool TargetNearby(out Transform target)
         {
             Physics2D.OverlapCircleNonAlloc(AnimalInfo.Position, AnimalInfo.DetectionRadius, _nearbyObjects);
 
@@ -26,12 +26,17 @@ namespace Hunter.AI.WolfBehaviour
                     continue;
                 }
 
-                liveBeing = nearbyObject.transform;
+                target = nearbyObject.transform;
                 return true;
             }
 
-            liveBeing = null;
+            target = null;
             return false;
+        }
+        
+        protected Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
+        {
+            return AnimalInfo.Position + currentVelocity * distanceFromCurrentPosition;
         }
     }
 }

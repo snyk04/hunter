@@ -8,6 +8,8 @@ namespace Hunter.AI.WolfBehaviour
     {
         private readonly Transform _target;
 
+        private Vector2 _currentVelocity;
+
         public WolfSeekState(AnimalInfo animaInfo, Transform target) : base(animaInfo)
         {
             _target = target;
@@ -29,6 +31,16 @@ namespace Hunter.AI.WolfBehaviour
             if (seekDirection.magnitude <= AnimalInfo.KillingStartDistance)
             {
                 ChangeAnimalState(new WolfKillingState(AnimalInfo, _target));
+            }
+            
+            // TODO : rigidbody in Mover or AnimalInfo
+            _currentVelocity = AnimalInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
+            _currentVelocity += seekDirection.normalized;
+
+            // TODO : to const
+            while (!AnimalInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
+            {
+                _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }
             
             AnimalInfo.Mover.Move(seekDirection.normalized, AnimalInfo.SeekSpeed);
