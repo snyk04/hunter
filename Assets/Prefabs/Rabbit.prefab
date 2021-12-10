@@ -139,8 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _field: {fileID: 0}
-  _wanderingSpeed: 0.5
-  _wanderingRadius: 2
+  _wanderingSpeed: 1
+  _wanderingRadius: 4
   _detectionRadius: 4
   _fleeSpeed: 3
   _fleeStopDistance: 9
