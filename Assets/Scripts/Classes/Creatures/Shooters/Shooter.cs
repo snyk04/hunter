@@ -79,11 +79,11 @@ namespace Hunter.Creatures.Shooters
 
         public void StartReloading()
         {
-            if (_isReloading || AmountOfBulletsInBackpack < 1)
+            if (_isReloading || AmountOfBulletsInBackpack < 1 || AmountOfBulletsInMagazine == _maxAmountOfBulletsInMagazine)
             {
                 return;
             }
-
+            
             // TODO : think about it
             _transform.GetComponent<MonoBehaviour>().StartCoroutine(ReloadingRoutine());
             _isReloading = true;

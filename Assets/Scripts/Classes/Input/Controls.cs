@@ -55,6 +55,15 @@ namespace Hunter.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""39414bcd-4c85-419b-8233-8c9a65ae6c86"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -275,6 +284,17 @@ namespace Hunter.Input
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2088da57-b9e3-49ff-b31b-814b20abc13c"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -865,6 +885,7 @@ namespace Hunter.Input
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+            m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -939,6 +960,7 @@ namespace Hunter.Input
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Look;
         private readonly InputAction m_Player_Fire;
+        private readonly InputAction m_Player_Reload;
         public struct PlayerActions
         {
             private @Controls m_Wrapper;
@@ -946,6 +968,7 @@ namespace Hunter.Input
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Look => m_Wrapper.m_Player_Look;
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
+            public InputAction @Reload => m_Wrapper.m_Player_Reload;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -964,6 +987,9 @@ namespace Hunter.Input
                     @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                     @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                     @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                    @Reload.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                    @Reload.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                    @Reload.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -977,6 +1003,9 @@ namespace Hunter.Input
                     @Fire.started += instance.OnFire;
                     @Fire.performed += instance.OnFire;
                     @Fire.canceled += instance.OnFire;
+                    @Reload.started += instance.OnReload;
+                    @Reload.performed += instance.OnReload;
+                    @Reload.canceled += instance.OnReload;
                 }
             }
         }
@@ -1136,6 +1165,7 @@ namespace Hunter.Input
             void OnMove(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
+            void OnReload(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
