@@ -1,4 +1,6 @@
-﻿namespace Hunter.AI.Common
+﻿using UnityEngine;
+
+namespace Hunter.AI.Common
 {
     public class Field
     {
@@ -13,6 +15,14 @@
             XRightBorder = xRightBorder;
             YBotBorder = yBotBorder;
             YTopBorder = yTopBorder;
+        }
+
+        public bool Contains(Vector2 point)
+        {
+            return point.x > XLeftBorder
+                   && point.x < XRightBorder
+                   && point.y > YBotBorder
+                   && point.y < YTopBorder;
         }
     }
 }

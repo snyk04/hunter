@@ -7,6 +7,8 @@ namespace Hunter.AI.DeerBehaviour
     public class DeerFleeState : DeerState
     {
         private readonly Transform _pursuer;
+
+        private Vector2 _currentVelocity;
         
         public DeerFleeState(AnimalInfo animalInfo, Transform pursuer) : base(animalInfo)
         {
@@ -15,46 +17,61 @@ namespace Hunter.AI.DeerBehaviour
 
         public override void Update()
         {
-            if (InSafety())
+            if (_pursuer == null)
             {
                 ChangeAnimalState(new DeerWanderingState(AnimalInfo));
                 return;
             }
             
-            if (AnimalInfo.Position.x + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.XRightBorder
-                || AnimalInfo.Position.x - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.XLeftBorder
-                || AnimalInfo.Position.y + AnimalInfo.BorderAvoidingStartDistance >= AnimalInfo.Field.YTopBorder
-                || AnimalInfo.Position.y - AnimalInfo.BorderAvoidingStartDistance <= AnimalInfo.Field.YBotBorder)
+            Vector2 fleeDirection = AnimalInfo.Position - _pursuer.Position();
+            if (fleeDirection.magnitude > AnimalInfo.FleeStopDistance)
             {
-                ChangeAnimalState(new DeerAvoidBorderState(AnimalInfo, _pursuer));
+                ChangeAnimalState(new DeerWanderingState(AnimalInfo));
                 return;
             }
-            
-            Vector2 fleeDirection = (AnimalInfo.Position - _pursuer.Position()).normalized;
-            AnimalInfo.Mover.Move(fleeDirection, AnimalInfo.FleeSpeed);
-        }
 
-        private bool InSafety()
-        {
-            if (_pursuer == null)
+            if (PursuerNearby(out Transform pursuer))
             {
-                return true;
+                if (pursuer != _pursuer)
+                {
+                    ChangeAnimalState(new DeerFleeState(AnimalInfo, pursuer));
+                    return;
+                }
             }
             
-            Vector2 fleeDirection = AnimalInfo.Position - _pursuer.Position();
-            if (fleeDirection.magnitude < AnimalInfo.FleeStopDistance)
+            // TODO : rigidbody in Mover or AnimalInfo
+            _currentVelocity = AnimalInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
+            _currentVelocity += (AnimalInfo.Position - _pursuer.Position()).normalized;
+            if (DeerNearby(out Deer[] deer))
             {
-                return false;
-            }
+                Vector2 separation = ComputeSeparation(deer);
+                Vector2 alignment = ComputeAlignment(deer);
+                Vector2 cohesion = ComputeCohesion(deer);
 
-            if (LiveBeingNearby(out Transform liveBeing))
+                _currentVelocity += separation * SeparationForce
+                                    + alignment * AlignmentForce 
+                                    + cohesion * CohesionForce;
+            }
+            
+            // TODO : to const
+            while (!AnimalInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
             {
-                // TODO : multiple Move() calls
-                ChangeAnimalState(new DeerFleeState(AnimalInfo, liveBeing));
-                return false;
+                _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }
-
-            return true;
+            
+            // // TODO : to const
+            // if (AnimalInfo.Position.x - 5 <= AnimalInfo.Field.XLeftBorder 
+            //     || AnimalInfo.Position.x + 5 >= AnimalInfo.Field.XRightBorder)
+            // {
+            //     Vector2 wallAvoidVector = new Vector2(-_currentVelocity.x, _currentVelocity.y).normalized;
+            // }
+            // if (AnimalInfo.Position.y - 5 <= AnimalInfo.Field.YBotBorder 
+            //     || AnimalInfo.Position.y + 5 >= AnimalInfo.Field.YTopBorder)
+            // { 
+            //     Vector2 wallAvoidVector = new Vector2(_currentVelocity.x, -_currentVelocity.y).normalized; 
+            // }
+            
+            AnimalInfo.Mover.Move(_currentVelocity.normalized, AnimalInfo.FleeSpeed);
         }
     }
 }

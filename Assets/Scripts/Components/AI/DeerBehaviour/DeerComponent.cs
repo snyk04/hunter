@@ -22,20 +22,20 @@ namespace Hunter.AI.DeerBehaviour
         [SerializeField] private float _borderAvoidingStartDistance;
         [SerializeField] private float _borderAvoidingStopDistance;
 
-        private Deer _deer;
+        public Deer Deer { get; private set; }
         
         private void Awake()
         {
             Mover mover = GetComponent<MoverComponent>().Mover;
 
-            _deer = new Deer(transform, mover, _field.Field, 
+            Deer = new Deer(transform, mover, _field.Field, 
                 _wanderingSpeed, _wanderingRadius, _detectionRadius,
                 _fleeSpeed, _fleeStopDistance,
                 _borderAvoidingStartDistance, _borderAvoidingStopDistance);
         }
         private void Update()
         {
-            _deer.Update();
+            Deer.Update();
         }
     }
 }

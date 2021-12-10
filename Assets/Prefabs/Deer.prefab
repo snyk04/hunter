@@ -162,7 +162,7 @@ MonoBehaviour:
   _wanderingRadius: 4
   _detectionRadius: 4
   _fleeSpeed: 3
-  _fleeStopDistance: 9
+  _fleeStopDistance: 11
   _borderAvoidingStartDistance: 2
   _borderAvoidingStopDistance: 4
 --- !u!114 &1640396546547421941

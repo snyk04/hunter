@@ -6,13 +6,16 @@ namespace Hunter.AI.DeerBehaviour
 {
     public class Deer : Animal
     {
+        // TODO : to abstract class
+        public AnimalInfo AnimalInfo { get; }
+        
         public Deer(Transform transform, Mover mover,
             Field field,
             float wanderingSpeed, float wanderingRadius, float detectionRadius,
             float fleeSpeed, float fleeStopDistance,
             float borderAvoidingStartDistance, float borderAvoidingStopDistance)
         {
-            var animalInfo = new AnimalInfo(
+            AnimalInfo = new AnimalInfo(
                 this,
                 transform,
                 mover,
@@ -26,7 +29,7 @@ namespace Hunter.AI.DeerBehaviour
                 borderAvoidingStopDistance: borderAvoidingStopDistance
             );
 
-            State = new DeerWanderingState(animalInfo);
+            State = new DeerWanderingState(AnimalInfo);
         }
     }
 }
