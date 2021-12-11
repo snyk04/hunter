@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Hunter.Creatures.Common
 {
@@ -6,6 +8,8 @@ namespace Hunter.Creatures.Common
     {
         public int AmountOfHealth { get; private set; }
         private readonly GameObject _gameObject;
+
+        public event Action OnDestroy;
 
         public Damageable(int amountOfHealth, GameObject gameObject)
         {
@@ -25,6 +29,7 @@ namespace Hunter.Creatures.Common
 
         private void Destroy()
         {
+            OnDestroy?.Invoke();
             Object.Destroy(_gameObject);
         }
     }

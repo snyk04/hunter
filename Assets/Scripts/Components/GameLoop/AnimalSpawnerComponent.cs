@@ -2,7 +2,7 @@
 using Hunter.AI.Common;
 using UnityEngine;
 
-namespace Components.GameLoop
+namespace Hunter.GameLoop
 {
     public class AnimalSpawnerComponent : MonoBehaviour
     {

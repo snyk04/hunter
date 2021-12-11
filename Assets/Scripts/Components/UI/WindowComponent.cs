@@ -5,10 +5,10 @@ namespace Hunter.UI
 {
     public class WindowComponent : MonoBehaviour
     {
-        [SerializeField] private GameObject[] _interfaceElements;
-        [SerializeField] private Button _buttonToSelect;
+        [SerializeField] protected GameObject[] _interfaceElements;
+        [SerializeField] protected Button _buttonToSelect;
 
-        public Window Window { get; private set; }
+        public Window Window { get; protected set; }
         
         private void Awake()
         {
