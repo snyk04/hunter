@@ -2428,7 +2428,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2074548435}
         m_TargetAssemblyTypeName: Hunter.UI.SceneLoaderComponent, Scripts
         m_MethodName: Quit
         m_Mode: 1
