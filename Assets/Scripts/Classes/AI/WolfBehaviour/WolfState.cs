@@ -21,7 +21,8 @@ namespace Hunter.AI.WolfBehaviour
             {
                 if (nearbyObject == null 
                     || nearbyObject.gameObject == AnimalInfo.Transform.gameObject 
-                    || !nearbyObject.TryGetComponent(out MoverComponent _))
+                    || !nearbyObject.TryGetComponent(out MoverComponent _)
+                    || nearbyObject.TryGetComponent(out WolfComponent wolfComponent))
                 {
                     continue;
                 }
