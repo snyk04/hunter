@@ -27,7 +27,7 @@ namespace Hunter.Creatures.Common
             }
         }
 
-        private void Destroy()
+        public void Destroy()
         {
             OnDestroy?.Invoke();
             Object.Destroy(_gameObject);
