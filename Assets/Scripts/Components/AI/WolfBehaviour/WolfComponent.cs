@@ -25,19 +25,20 @@ namespace Hunter.AI.WolfBehaviour
         [SerializeField] private float _killingAttackDelay;
 
         private Wolf _wolf;
-
-        private void Awake()
-        {
-            Mover mover = GetComponent<MoverComponent>().Mover;
-
-            _wolf = new Wolf(transform, mover, _field.Field,
-                _wanderingSpeed, _wanderingRadius, _detectionRadius,
-                _seekSpeed, _seekStopDistance,
-                _killingStartDistance, _killingStopDistance, _killingAmountOfDamage, _killingAttackDelay);
-        }
+        
         private void Update()
         {
             _wolf.Update();
+        }
+
+        public void Initialize(Field field)
+        {
+            Mover mover = GetComponent<MoverComponent>().Mover;
+
+            _wolf = new Wolf(transform, mover, field,
+                _wanderingSpeed, _wanderingRadius, _detectionRadius,
+                _seekSpeed, _seekStopDistance,
+                _killingStartDistance, _killingStopDistance, _killingAmountOfDamage, _killingAttackDelay);
         }
     }
 }

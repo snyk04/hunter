@@ -24,18 +24,19 @@ namespace Hunter.AI.RabbitBehaviour
 
         private Rabbit _rabbit;
         
-        private void Awake()
-        {
-            Mover mover = GetComponent<MoverComponent>().Mover;
-
-            _rabbit = new Rabbit(transform, mover, _field.Field, 
-                _wanderingSpeed, _wanderingRadius, _detectionRadius,
-                _fleeSpeed, _fleeStopDistance,
-                _borderAvoidingStartDistance, _borderAvoidingStopDistance);
-        }
         private void Update()
         {
             _rabbit.Update();
+        }
+
+        public void Initialize(Field field)
+        {
+            Mover mover = GetComponent<MoverComponent>().Mover;
+
+            _rabbit = new Rabbit(transform, mover, field, 
+                _wanderingSpeed, _wanderingRadius, _detectionRadius,
+                _fleeSpeed, _fleeStopDistance,
+                _borderAvoidingStartDistance, _borderAvoidingStopDistance);
         }
     }
 }

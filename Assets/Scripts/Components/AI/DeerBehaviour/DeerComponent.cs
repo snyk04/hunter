@@ -24,18 +24,19 @@ namespace Hunter.AI.DeerBehaviour
 
         public Deer Deer { get; private set; }
         
-        private void Awake()
-        {
-            Mover mover = GetComponent<MoverComponent>().Mover;
-
-            Deer = new Deer(transform, mover, _field.Field, 
-                _wanderingSpeed, _wanderingRadius, _detectionRadius,
-                _fleeSpeed, _fleeStopDistance,
-                _borderAvoidingStartDistance, _borderAvoidingStopDistance);
-        }
         private void Update()
         {
             Deer.Update();
+        }
+
+        public void Initialize(Field field)
+        {
+            Mover mover = GetComponent<MoverComponent>().Mover;
+
+            Deer = new Deer(transform, mover, field, 
+                _wanderingSpeed, _wanderingRadius, _detectionRadius,
+                _fleeSpeed, _fleeStopDistance,
+                _borderAvoidingStartDistance, _borderAvoidingStopDistance);
         }
     }
 }
