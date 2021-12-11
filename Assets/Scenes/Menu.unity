@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 112161323}
   - component: {fileID: 112161324}
   m_Layer: 5
-  m_Name: GameSettingsButtonContainer
+  m_Name: GameSettingsWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -308,9 +308,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3cd2aa47ac54cb4acb4ae608d6a314d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
-  - {fileID: 0}
-  - {fileID: 185916219}
+  _interfaceElements:
+  - {fileID: 739938885}
+  - {fileID: 6736129}
+  - {fileID: 1754016241}
+  - {fileID: 1306914110}
+  - {fileID: 185916217}
+  _buttonToSelect: {fileID: 1306914112}
 --- !u!1 &142174978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,7 +1080,7 @@ GameObject:
   - component: {fileID: 886159012}
   - component: {fileID: 886159013}
   m_Layer: 5
-  m_Name: MainButtonContainer
+  m_Name: MainWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1139,9 +1143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3cd2aa47ac54cb4acb4ae608d6a314d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
-  - {fileID: 1418083967}
-  - {fileID: 1467232283}
+  _interfaceElements:
+  - {fileID: 1418083965}
+  - {fileID: 1467232281}
+  _buttonToSelect: {fileID: 1418083967}
 --- !u!1 &910963396
 GameObject:
   m_ObjectHideFlags: 0
