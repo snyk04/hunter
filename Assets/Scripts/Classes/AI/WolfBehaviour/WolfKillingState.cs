@@ -21,6 +21,8 @@ namespace Hunter.AI.WolfBehaviour
 
         public override void Update()
         {
+            base.Update();
+
             if (_target == null)
             {
                 ChangeAnimalState(new WolfWanderingState(AnimalInfo));

@@ -11,6 +11,8 @@ namespace Hunter.AI.WolfBehaviour
         
         public override void Update()
         {
+            base.Update();
+            
             if (TargetNearby(out Transform pursuer))
             {
                 ChangeAnimalState(new WolfSeekState(AnimalInfo, pursuer));

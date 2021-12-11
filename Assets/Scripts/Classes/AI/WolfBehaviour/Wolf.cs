@@ -9,7 +9,8 @@ namespace Hunter.AI.WolfBehaviour
         public Wolf(Transform transform, Mover mover, Field field,
             float wanderingSpeed, float wanderingRadius, float detectionRadius, 
             float seekSpeed, float seekStopDistance,
-            float killingStartDistance, float killingStopDistance, int killingAmountOfDamage, float killingAttackDelay)
+            float killingStartDistance, float killingStopDistance, int killingAmountOfDamage, float killingAttackDelay,
+            float starvingDeathTime)
         {
             var animalInfo = new AnimalInfo(
                 this, 
@@ -24,7 +25,8 @@ namespace Hunter.AI.WolfBehaviour
                 killingStartDistance: killingStartDistance,
                 killingStopDistance: killingStopDistance,
                 killingAmountOfDamage: killingAmountOfDamage,
-                killingAttackDelay: killingAttackDelay
+                killingAttackDelay: killingAttackDelay,
+                starvingDeathTime: starvingDeathTime
                 );
             
             State = new WolfWanderingState(animalInfo);

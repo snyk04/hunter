@@ -1,4 +1,6 @@
-﻿using Hunter.AI.Common;
+﻿using System;
+using Hunter.AI.Common;
+using Hunter.Common;
 using Hunter.Creatures.Common;
 using UnityEngine;
 
@@ -8,9 +10,21 @@ namespace Hunter.AI.WolfBehaviour
     {
         private readonly Collider2D[] _nearbyObjects;
 
+        protected DateTime _lastMealTime;
+
         protected WolfState(AnimalInfo animaInfo) : base(animaInfo)
         {
             _nearbyObjects = new Collider2D[2];
+            _lastMealTime = DateTime.Now;
+        }
+
+        public override void Update()
+        {
+            if (_lastMealTime.GetPassedSeconds() >= AnimalInfo.StarvingDeathTime)
+            {
+                // TODO : hardcode!!!
+                AnimalInfo.Transform.GetComponent<DamageableComponent>().Damageable.Destroy();
+            }
         }
         
         protected bool TargetNearby(out Transform target)

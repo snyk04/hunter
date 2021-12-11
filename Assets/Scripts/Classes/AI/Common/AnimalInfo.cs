@@ -30,6 +30,8 @@ namespace Hunter.AI.Common
         public readonly float BorderAvoidingStartDistance;
         public readonly float BorderAvoidingStopDistance;
 
+        public readonly float StarvingDeathTime;
+
         public Vector2 Position => Transform.Position();
         
         public AnimalInfo(IAnimal animal, Transform transform, Mover mover, Field field,
@@ -38,7 +40,8 @@ namespace Hunter.AI.Common
             float seekSpeed = default, float seekStopDistance = default,
             float killingStartDistance = default, float killingStopDistance = default, int killingAmountOfDamage = default,
                 float killingAttackDelay = default,
-            float borderAvoidingStartDistance = default, float borderAvoidingStopDistance = default)
+            float borderAvoidingStartDistance = default, float borderAvoidingStopDistance = default,
+            float starvingDeathTime = default)
         {
             Animal = animal;
             Transform = transform;
@@ -63,6 +66,8 @@ namespace Hunter.AI.Common
             
             BorderAvoidingStartDistance = borderAvoidingStartDistance;
             BorderAvoidingStopDistance = borderAvoidingStopDistance;
+
+            StarvingDeathTime = starvingDeathTime;
         }
     }
 }

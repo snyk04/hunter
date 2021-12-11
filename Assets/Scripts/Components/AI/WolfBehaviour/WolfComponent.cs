@@ -23,6 +23,7 @@ namespace Hunter.AI.WolfBehaviour
         [SerializeField] private float _killingStopDistance;
         [SerializeField] private int _killingAmountOfDamage;
         [SerializeField] private float _killingAttackDelay;
+        [SerializeField] private float _starvingDeathTime;
 
         private Wolf _wolf;
         
@@ -38,7 +39,8 @@ namespace Hunter.AI.WolfBehaviour
             _wolf = new Wolf(transform, mover, field,
                 _wanderingSpeed, _wanderingRadius, _detectionRadius,
                 _seekSpeed, _seekStopDistance,
-                _killingStartDistance, _killingStopDistance, _killingAmountOfDamage, _killingAttackDelay);
+                _killingStartDistance, _killingStopDistance, _killingAmountOfDamage, _killingAttackDelay,
+                _starvingDeathTime);
         }
     }
 }
