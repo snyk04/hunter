@@ -60,17 +60,8 @@ namespace Hunter.Creatures.Common
             }
             else if (direction.x == direction.y && direction.x != 0 && direction.y != 0)
             {
-                double value = _random.NextDouble();
-                if (value > 0.5)
-                {
-                    moveRight = direction.x > 0;
-                    moveLeft = direction.x < 0;
-                }
-                else
-                {
-                    moveTop = direction.y > 0;
-                    moveBot = direction.y < 0;
-                }
+                moveRight = direction.x > 0;
+                moveLeft = direction.x < 0;
             }
             
             _animator.SetBool(MoveTopName, moveTop);
