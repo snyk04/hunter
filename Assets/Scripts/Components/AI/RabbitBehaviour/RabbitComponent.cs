@@ -1,4 +1,5 @@
-﻿using Hunter.AI.Common;
+﻿using System.Collections;
+using Hunter.AI.Common;
 using Hunter.Creatures.Common;
 using UnityEngine;
 
@@ -19,11 +20,6 @@ namespace Hunter.AI.RabbitBehaviour
         [SerializeField] private float _borderAvoidingStartDistance; 
 
         private Rabbit _rabbit;
-        
-        private void Update()
-        {
-            _rabbit.Update();
-        }
 
         public void Initialize(Field field)
         {
@@ -41,6 +37,17 @@ namespace Hunter.AI.RabbitBehaviour
                 _fleeStartDistance, 
                 _fleeStopDistance
             );
+            
+            StartCoroutine(UpdateRoutine());
+        }
+        
+        private IEnumerator UpdateRoutine()
+        {
+            while (true)
+            {
+                _rabbit.Update();
+                yield return new WaitForSeconds(1 / 15f);
+            }
         }
     }
 }

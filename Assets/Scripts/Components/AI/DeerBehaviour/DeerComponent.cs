@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Hunter.AI.Common;
 using Hunter.Creatures.Common;
 using UnityEngine;
@@ -25,11 +26,6 @@ namespace Hunter.AI.DeerBehaviour
         [SerializeField] private float _borderAvoidingStartDistance;
 
         public Deer Deer { get; private set; }
-        
-        private void Update()
-        {
-            Deer.Update();
-        }
 
         public void Initialize(Field field, DeerGroup deerGroup)
         {
@@ -51,6 +47,17 @@ namespace Hunter.AI.DeerBehaviour
                 _cohesionForce,
                 deerGroup
                 );
+            
+            StartCoroutine(UpdateRoutine());
+        }
+        
+        private IEnumerator UpdateRoutine()
+        {
+            while (true)
+            {
+                Deer.Update();
+                yield return new WaitForSeconds(1 / 15f);
+            }
         }
     }
 }

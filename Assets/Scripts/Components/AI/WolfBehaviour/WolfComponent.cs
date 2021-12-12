@@ -1,4 +1,5 @@
-﻿using Hunter.AI.Common;
+﻿using System.Collections;
+using Hunter.AI.Common;
 using Hunter.Creatures.Common;
 using UnityEngine;
 
@@ -27,11 +28,6 @@ namespace Hunter.AI.WolfBehaviour
 
         private Wolf _wolf;
 
-        private void Update()
-        {
-            _wolf.Update();
-        }
-
         public void Initialize(Field field)
         {
             Mover mover = GetComponent<MoverComponent>().Mover;
@@ -55,6 +51,17 @@ namespace Hunter.AI.WolfBehaviour
                 _killingAttackDelay,
                 _starvingDeathTime
             );
+
+            StartCoroutine(UpdateRoutine());
+        }
+
+        private IEnumerator UpdateRoutine()
+        {
+            while (true)
+            {
+                _wolf.Update();
+                yield return new WaitForSeconds(1 / 15f);
+            }
         }
     }
 }
