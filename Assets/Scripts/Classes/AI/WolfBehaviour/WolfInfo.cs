@@ -6,6 +6,8 @@ namespace Hunter.AI.WolfBehaviour
 {
     public class WolfInfo : AnimalInfo
     {
+        public readonly Damageable Damageable;
+        
         public readonly float WanderingSpeed;
 
         public readonly float SeekSpeed;
@@ -20,6 +22,7 @@ namespace Hunter.AI.WolfBehaviour
         public readonly float StarvingDeathTime;
         
         public WolfInfo(IAnimal animal, Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field,
+            Damageable damageable,
             float borderAvoidingStartDistance,
             float wanderingSpeed, 
             float seekSpeed, float seekStartDistance, float seekStopDistance, 
@@ -27,6 +30,8 @@ namespace Hunter.AI.WolfBehaviour
             float starvingDeathTime) 
             : base(animal, transform, mover, rigidbody2D, field, borderAvoidingStartDistance)
         {
+            Damageable = damageable;
+            
             WanderingSpeed = wanderingSpeed;
             
             SeekSpeed = seekSpeed;

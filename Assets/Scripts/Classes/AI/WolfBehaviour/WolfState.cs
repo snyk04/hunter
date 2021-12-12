@@ -25,8 +25,7 @@ namespace Hunter.AI.WolfBehaviour
         {
             if (LastMealTime.GetPassedSeconds() >= WolfInfo.StarvingDeathTime)
             {
-                // TODO : hardcode!!!
-                WolfInfo.Transform.GetComponent<DamageableComponent>().Damageable.Destroy();
+                WolfInfo.Damageable.Destroy();
             }
         }
         

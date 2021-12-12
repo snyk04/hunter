@@ -36,12 +36,14 @@ namespace Hunter.AI.WolfBehaviour
         {
             Mover mover = GetComponent<MoverComponent>().Mover;
             var rb2D = GetComponent<Rigidbody2D>();
+            Damageable damageable = GetComponent<DamageableComponent>().Damageable;
 
             _wolf = new Wolf(
                 transform,
                 mover,
                 rb2D,
                 field,
+                damageable,
                 _borderAvoidingStartDistance,
                 _wanderingSpeed,
                 _seekSpeed,
