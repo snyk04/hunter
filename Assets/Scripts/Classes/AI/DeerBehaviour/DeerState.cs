@@ -11,7 +11,7 @@ namespace Hunter.AI.DeerBehaviour
     {
         protected DeerInfo DeerInfo { get; }
         protected Vector2 CurrentVelocity;
-        
+
         private readonly Collider2D[] _nearbyObjects;
 
         protected DeerState(DeerInfo deerInfo)
@@ -49,13 +49,34 @@ namespace Hunter.AI.DeerBehaviour
             Vector2 deerGroupVelocity = Vector2.zero;
             if (DeerNearby(out DeerInfo[] deerInfos))
             {
+                float maxDistance = 0;
+                foreach (DeerInfo neighbourDeer in deerInfos)
+                {
+                    float distanceBetweenDeer = (neighbourDeer.Position - DeerInfo.Position).magnitude;
+                    if (distanceBetweenDeer > maxDistance)
+                    {
+                        maxDistance = distanceBetweenDeer;
+                    }
+                }
+                
                 Vector2 separation = ComputeSeparation(deerInfos);
                 Vector2 alignment = ComputeAlignment(deerInfos);
                 Vector2 cohesion = ComputeCohesion(deerInfos);
 
-                deerGroupVelocity += separation * DeerInfo.SeparationForce
-                                     + alignment * DeerInfo.AlignmentForce 
-                                     + cohesion * DeerInfo.CohesionForce;
+                float separationForce = DeerInfo.SeparationForce;
+                float alignmentForce = DeerInfo.AlignmentForce;
+                float cohesionForce = DeerInfo.CohesionForce;
+
+                // TODO : to const
+                if (maxDistance > 5)
+                {
+                    alignmentForce = 0;
+                    cohesionForce *= 2;
+                }
+
+                deerGroupVelocity += separation * separationForce
+                                     + alignment * alignmentForce
+                                     + cohesion * cohesionForce;
             }
 
             return deerGroupVelocity;

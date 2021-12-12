@@ -1463,9 +1463,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03f409096644c6cb2e45e56b212cc19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amountOfDeerGroups: 1
-  _amountOfRabbits: 0
-  _amountOfWolves: 1
+  _amountOfDeerGroups: 5
+  _amountOfRabbits: 5
+  _amountOfWolves: 5
   _deerPrefab: {fileID: 981767668487683288, guid: 37505ca296a3d2840b66fa0d33c08b88, type: 3}
   _rabbitPrefab: {fileID: 2306019381638289452, guid: 39fbae3e884fe984080a76a5076d02b2, type: 3}
   _wolfPrefab: {fileID: 2130543221010025380, guid: 5d9efa70eea2ad14cabaf2ed80d4399a, type: 3}
