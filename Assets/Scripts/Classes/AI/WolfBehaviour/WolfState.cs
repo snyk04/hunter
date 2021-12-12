@@ -11,20 +11,19 @@ namespace Hunter.AI.WolfBehaviour
         protected WolfInfo WolfInfo { get; }
         
         private readonly Collider2D[] _nearbyObjects;
-        // TODO : update after killing
-        protected DateTime _lastMealTime;
+        protected DateTime LastMealTime;
 
         protected WolfState(WolfInfo wolfInfo)
         {
             WolfInfo = wolfInfo;
             
             _nearbyObjects = new Collider2D[2];
-            _lastMealTime = DateTime.Now;
+            LastMealTime = DateTime.Now;
         }
 
         public override void Update()
         {
-            if (_lastMealTime.GetPassedSeconds() >= WolfInfo.StarvingDeathTime)
+            if (LastMealTime.GetPassedSeconds() >= WolfInfo.StarvingDeathTime)
             {
                 // TODO : hardcode!!!
                 WolfInfo.Transform.GetComponent<DamageableComponent>().Damageable.Destroy();

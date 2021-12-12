@@ -26,6 +26,7 @@ namespace Hunter.AI.WolfBehaviour
             if (_target == null)
             {
                 WolfInfo.Animal.ChangeState(new WolfWanderingState(WolfInfo));
+                LastMealTime = DateTime.Now;
                 return;
             }
             
