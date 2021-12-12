@@ -43,7 +43,24 @@ namespace Hunter.AI.DeerBehaviour
             pursuers = pursuersList.ToArray();
             return pursuersList.Any();
         }
-        protected bool DeerNearby(out DeerInfo[] deerInfos)
+
+        protected Vector2 ComputeDeerGroupVelocity()
+        {
+            Vector2 deerGroupVelocity = Vector2.zero;
+            if (DeerNearby(out DeerInfo[] deerInfos))
+            {
+                Vector2 separation = ComputeSeparation(deerInfos);
+                Vector2 alignment = ComputeAlignment(deerInfos);
+                Vector2 cohesion = ComputeCohesion(deerInfos);
+
+                deerGroupVelocity += separation * DeerInfo.SeparationForce
+                                     + alignment * DeerInfo.AlignmentForce 
+                                     + cohesion * DeerInfo.CohesionForce;
+            }
+
+            return deerGroupVelocity;
+        }
+        private bool DeerNearby(out DeerInfo[] deerInfos)
         {
             var deerInfoList = new List<DeerInfo>(DeerInfo.DeerGroup.DeerInfos);
             
@@ -68,25 +85,7 @@ namespace Hunter.AI.DeerBehaviour
             deerInfos = deerInfoList.ToArray();
             return deerInfoList.Any();
         }
-        
-        protected Vector2 ComputeDeerGroupVelocity()
-        {
-            Vector2 deerGroupVelocity = Vector2.zero;
-            if (DeerNearby(out DeerInfo[] deerInfos))
-            {
-                Vector2 separation = ComputeSeparation(deerInfos);
-                Vector2 alignment = ComputeAlignment(deerInfos);
-                Vector2 cohesion = ComputeCohesion(deerInfos);
-
-                deerGroupVelocity += separation * DeerInfo.SeparationForce
-                                     + alignment * DeerInfo.AlignmentForce 
-                                     + cohesion * DeerInfo.CohesionForce;
-            }
-
-            return deerGroupVelocity;
-        }
-        
-        protected Vector2 ComputeSeparation(IEnumerable<DeerInfo> deerInfos)
+        private Vector2 ComputeSeparation(IEnumerable<DeerInfo> deerInfos)
         {
             Vector2 separation = Vector2.zero;
             foreach (DeerInfo neighbourDeer in deerInfos)
@@ -97,7 +96,7 @@ namespace Hunter.AI.DeerBehaviour
             separation *= -1;
             return separation.normalized;
         }
-        protected Vector2 ComputeAlignment(DeerInfo[] deerInfos)
+        private Vector2 ComputeAlignment(DeerInfo[] deerInfos)
         {
             Vector2 alignment = Vector2.zero;
             foreach (DeerInfo neighbourDeer in deerInfos)
@@ -108,7 +107,7 @@ namespace Hunter.AI.DeerBehaviour
 
             return alignment.normalized;
         }
-        protected Vector2 ComputeCohesion(DeerInfo[] deerInfos)
+        private Vector2 ComputeCohesion(DeerInfo[] deerInfos)
         {
             Vector2 cohesion = Vector2.zero;
             foreach (DeerInfo neighbourDeer in deerInfos)
@@ -121,17 +120,16 @@ namespace Hunter.AI.DeerBehaviour
             return cohesion.normalized;
         }
         
-        protected Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
-        {
-            return DeerInfo.Position + currentVelocity * distanceFromCurrentPosition;
-        }
-        
         protected void AvoidBorders()
         {
             while (!DeerInfo.Field.Contains(PredictPosition(CurrentVelocity.normalized, DeerInfo.BorderAvoidingStartDistance)))
             {
                 CurrentVelocity = Quaternion.Euler(0, 0, 15) * CurrentVelocity;
             }
+        }
+        private Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
+        {
+            return DeerInfo.Position + currentVelocity * distanceFromCurrentPosition;
         }
     }
 }
