@@ -85,7 +85,7 @@ namespace Hunter.AI.DeerBehaviour
                 desiredVelocity += pursuerToRabbitVector.normalized * coefficient;
             }
 
-            return (desiredVelocity.normalized - CurrentVelocity).normalized;
+            return desiredVelocity.normalized - CurrentVelocity;
         }
         
         private void Move()

@@ -88,7 +88,7 @@ namespace Hunter.AI.RabbitBehaviour
                 desiredVelocity += pursuerToRabbitVector.normalized * coefficient;
             }
 
-            return (desiredVelocity.normalized - _currentVelocity).normalized;
+            return desiredVelocity.normalized - _currentVelocity;
         }
 
         private void AvoidWalls()
