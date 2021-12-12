@@ -161,6 +161,7 @@ MonoBehaviour:
   _fleeSpeed: 3
   _fleeStartDistance: 5
   _fleeStopDistance: 9
+  _borderAvoidingStartDistance: 5
 --- !u!114 &1640396546547421941
 MonoBehaviour:
   m_ObjectHideFlags: 0

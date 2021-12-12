@@ -22,6 +22,7 @@ namespace Hunter.AI.WolfBehaviour
         [SerializeField] private float _killingAttackDelay;
 
         [Header("Other")] 
+        [SerializeField] private float _borderAvoidingStartDistance;
         [SerializeField] private float _starvingDeathTime;
 
         private Wolf _wolf;
@@ -41,6 +42,7 @@ namespace Hunter.AI.WolfBehaviour
                 mover,
                 rb2D,
                 field,
+                _borderAvoidingStartDistance,
                 _wanderingSpeed,
                 _seekSpeed,
                 _seekStartDistance,

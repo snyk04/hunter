@@ -38,8 +38,7 @@ namespace Hunter.AI.WolfBehaviour
             _currentVelocity = WolfInfo.Rigidbody2D.velocity.normalized;
             _currentVelocity += seekDirection.normalized;
 
-            // TODO : to const
-            while (!WolfInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
+            while (!WolfInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, WolfInfo.BorderAvoidingStartDistance)))
             {
                 _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }

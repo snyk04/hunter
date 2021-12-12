@@ -20,11 +20,12 @@ namespace Hunter.AI.WolfBehaviour
         public readonly float StarvingDeathTime;
         
         public WolfInfo(IAnimal animal, Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field,
+            float borderAvoidingStartDistance,
             float wanderingSpeed, 
             float seekSpeed, float seekStartDistance, float seekStopDistance, 
             float killingStartDistance, float killingStopDistance, int killingAmountOfDamage, float killingAttackDelay, 
             float starvingDeathTime) 
-            : base(animal, transform, mover, rigidbody2D, field)
+            : base(animal, transform, mover, rigidbody2D, field, borderAvoidingStartDistance)
         {
             WanderingSpeed = wanderingSpeed;
             

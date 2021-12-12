@@ -19,8 +19,7 @@ namespace Hunter.AI.RabbitBehaviour
             
             _currentVelocity = RabbitInfo.Rigidbody2D.velocity.normalized;
 
-            // TODO : to const
-            while (!RabbitInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
+            while (!RabbitInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, RabbitInfo.BorderAvoidingStartDistance)))
             {
                 _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }

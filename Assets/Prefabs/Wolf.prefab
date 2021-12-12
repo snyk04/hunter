@@ -165,6 +165,7 @@ MonoBehaviour:
   _killingStopDistance: 1
   _killingAmountOfDamage: 1
   _killingAttackDelay: 1
+  _borderAvoidingStartDistance: 5
   _starvingDeathTime: 60
 --- !u!114 &9169194268372144376
 MonoBehaviour:

@@ -14,6 +14,9 @@ namespace Hunter.AI.DeerBehaviour
         [SerializeField] private float _fleeSpeed;
         [SerializeField] private float _fleeStartDistance;
         [SerializeField] private float _fleeStopDistance;
+        
+        [Header("Other")]
+        [SerializeField] private float _borderAvoidingStartDistance;
 
         public Deer Deer { get; private set; }
         
@@ -32,6 +35,7 @@ namespace Hunter.AI.DeerBehaviour
                 mover, 
                 rb2D, 
                 field,
+                _borderAvoidingStartDistance,
                 _wanderingSpeed,
                 _fleeSpeed, 
                 _fleeStartDistance, 

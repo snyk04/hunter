@@ -9,6 +9,7 @@ namespace Hunter.AI.DeerBehaviour
         public DeerInfo DeerInfo { get; }
         
         public Deer(Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field,
+            float borderAvoidingStartDistance,
             float wanderingSpeed,
             float fleeSpeed, float fleeStartDistance, float fleeStopDistance)
         {
@@ -18,6 +19,7 @@ namespace Hunter.AI.DeerBehaviour
                 mover,
                 rigidbody2D,
                 field,
+                borderAvoidingStartDistance,
                 wanderingSpeed,
                 fleeSpeed,
                 fleeStartDistance,

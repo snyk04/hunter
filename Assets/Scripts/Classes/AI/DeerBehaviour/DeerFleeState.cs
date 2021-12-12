@@ -108,8 +108,7 @@ namespace Hunter.AI.DeerBehaviour
         
         private void AvoidWalls()
         {
-            // TODO : to const
-            while (!DeerInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
+            while (!DeerInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, DeerInfo.BorderAvoidingStartDistance)))
             {
                 _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }

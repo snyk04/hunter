@@ -7,6 +7,7 @@ namespace Hunter.AI.WolfBehaviour
     public class Wolf : Animal
     {
         public Wolf(Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field,
+            float borderAvoidingStartDistance,
             float wanderingSpeed,
             float seekSpeed, float seekStartDistance, float seekStopDistance,
             float killingStartDistance, float killingStopDistance, int killingAmountOfDamage, float killingAttackDelay,
@@ -18,6 +19,7 @@ namespace Hunter.AI.WolfBehaviour
                 mover,
                 rigidbody2D,
                 field,
+                borderAvoidingStartDistance,
                 wanderingSpeed,
                 seekSpeed,
                 seekStartDistance,

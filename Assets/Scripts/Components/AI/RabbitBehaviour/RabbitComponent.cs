@@ -15,6 +15,9 @@ namespace Hunter.AI.RabbitBehaviour
         [SerializeField] private float _fleeStartDistance;
         [SerializeField] private float _fleeStopDistance;
 
+        [Header("Other")] 
+        [SerializeField] private float _borderAvoidingStartDistance; 
+
         private Rabbit _rabbit;
         
         private void Update()
@@ -32,6 +35,7 @@ namespace Hunter.AI.RabbitBehaviour
                 mover, 
                 rb2D, 
                 field,
+                _borderAvoidingStartDistance,
                 _wanderingSpeed,
                 _fleeSpeed, 
                 _fleeStartDistance, 

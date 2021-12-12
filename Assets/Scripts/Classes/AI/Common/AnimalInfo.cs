@@ -12,15 +12,20 @@ namespace Hunter.AI.Common
         public readonly Rigidbody2D Rigidbody2D;
         public readonly Field Field;
 
+        public readonly float BorderAvoidingStartDistance;
+
         public Vector2 Position => Transform.Position();
         
-        public AnimalInfo(IAnimal animal, Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field)
+        public AnimalInfo(IAnimal animal, Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field,
+            float borderAvoidingStartDistance)
         {
             Animal = animal;
             Transform = transform;
             Mover = mover;
             Rigidbody2D = rigidbody2D;
             Field = field;
+
+            BorderAvoidingStartDistance = borderAvoidingStartDistance;
         }
     }
 }

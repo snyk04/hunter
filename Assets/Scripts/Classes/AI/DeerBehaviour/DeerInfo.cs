@@ -13,9 +13,10 @@ namespace Hunter.AI.DeerBehaviour
         public readonly float FleeStopDistance;
         
         public DeerInfo(IAnimal animal, Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field,
+            float borderAvoidingStartDistance,
             float wanderingSpeed,
             float fleeSpeed, float fleeStartDistance, float fleeStopDistance)
-            : base(animal, transform, mover, rigidbody2D, field)
+            : base(animal, transform, mover, rigidbody2D, field, borderAvoidingStartDistance)
         {
             WanderingSpeed = wanderingSpeed;
 
