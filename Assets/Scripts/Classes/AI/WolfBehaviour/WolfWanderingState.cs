@@ -18,8 +18,7 @@ namespace Hunter.AI.WolfBehaviour
                 return;
             }
             
-            // TODO : rigidbody in Mover or AnimalInfo
-            _currentVelocity = WolfInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
+            _currentVelocity = WolfInfo.Rigidbody2D.velocity.normalized;
 
             // TODO : to const
             while (!WolfInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))

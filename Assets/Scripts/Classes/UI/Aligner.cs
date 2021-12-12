@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace Hunter.UI
 {
@@ -22,7 +23,6 @@ namespace Hunter.UI
 
         public void Align()
         {
-            // TODO : maybe destroy aligner object?
             if (_goalObject == null)
             {
                 return;

@@ -35,8 +35,7 @@ namespace Hunter.AI.WolfBehaviour
                 WolfInfo.Animal.ChangeState(new WolfKillingState(WolfInfo, _target));
             }
             
-            // TODO : rigidbody in Mover or AnimalInfo
-            _currentVelocity = WolfInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
+            _currentVelocity = WolfInfo.Rigidbody2D.velocity.normalized;
             _currentVelocity += seekDirection.normalized;
 
             // TODO : to const

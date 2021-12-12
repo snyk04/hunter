@@ -13,10 +13,7 @@ namespace Hunter.Creatures.Common
         
         public void LookAt(Vector2 direction)
         {
-            // TODO : maybe delete that shit?
-            direction.Normalize();
-            
-            Transform.up = direction;
+            Transform.up = direction.normalized;
         }
     }
 }
