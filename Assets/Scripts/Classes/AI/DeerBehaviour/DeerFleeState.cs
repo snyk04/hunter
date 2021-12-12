@@ -8,8 +8,6 @@ namespace Hunter.AI.DeerBehaviour
     public class DeerFleeState : DeerState
     {
         private readonly List<Transform> _pursuers;
-
-        private Vector2 _currentVelocity;
         
         public DeerFleeState(DeerInfo deerInfo, IEnumerable<Transform> pursuers) : base(deerInfo)
         {
@@ -26,11 +24,11 @@ namespace Hunter.AI.DeerBehaviour
 
             TryToAddNewPursuers();
             
-            _currentVelocity = DeerInfo.Rigidbody2D.velocity.normalized;
-            _currentVelocity += ComputeFleeVelocity();
-            _currentVelocity += ComputeDeerGroupVelocity();
+            CurrentVelocity = DeerInfo.Rigidbody2D.velocity.normalized;
+            CurrentVelocity += ComputeFleeVelocity();
+            CurrentVelocity += ComputeDeerGroupVelocity();
             
-            AvoidWalls();
+            AvoidBorders();
             Move();
         }
         
@@ -87,35 +85,12 @@ namespace Hunter.AI.DeerBehaviour
                 desiredVelocity += pursuerToRabbitVector.normalized * coefficient;
             }
 
-            return (desiredVelocity.normalized - _currentVelocity).normalized;
-        }
-        private Vector2 ComputeDeerGroupVelocity()
-        {
-            Vector2 deerGroupVelocity = Vector2.zero;
-            if (DeerNearby(out DeerInfo[] deerInfos))
-            {
-                Vector2 separation = ComputeSeparation(deerInfos);
-                Vector2 alignment = ComputeAlignment(deerInfos);
-                Vector2 cohesion = ComputeCohesion(deerInfos);
-
-                deerGroupVelocity += separation * DeerInfo.SeparationForce
-                                     + alignment * DeerInfo.AlignmentForce 
-                                     + cohesion * DeerInfo.CohesionForce;
-            }
-
-            return deerGroupVelocity;
+            return (desiredVelocity.normalized - CurrentVelocity).normalized;
         }
         
-        private void AvoidWalls()
-        {
-            while (!DeerInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, DeerInfo.BorderAvoidingStartDistance)))
-            {
-                _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
-            }
-        }
         private void Move()
         {
-            DeerInfo.Mover.Move(_currentVelocity.normalized, DeerInfo.FleeSpeed);
+            DeerInfo.Mover.Move(CurrentVelocity.normalized, DeerInfo.FleeSpeed);
         }
     }
 }

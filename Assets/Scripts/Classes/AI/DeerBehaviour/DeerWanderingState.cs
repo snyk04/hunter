@@ -4,8 +4,6 @@ namespace Hunter.AI.DeerBehaviour
 {
     public class DeerWanderingState : DeerState
     {
-        private Vector2 _currentVelocity;
-
         public DeerWanderingState(DeerInfo deerInfo) : base(deerInfo) { }
         
         public override void Update()
@@ -16,24 +14,16 @@ namespace Hunter.AI.DeerBehaviour
                 return;
             }
             
-            _currentVelocity = DeerInfo.Rigidbody2D.velocity.normalized;
-            if (DeerNearby(out DeerInfo[] deerInfos))
-            {
-                Vector2 separation = ComputeSeparation(deerInfos);
-                Vector2 alignment = ComputeAlignment(deerInfos);
-                Vector2 cohesion = ComputeCohesion(deerInfos);
-
-                _currentVelocity += separation * DeerInfo.SeparationForce
-                                    + alignment * DeerInfo.AlignmentForce 
-                                    + cohesion * DeerInfo.CohesionForce;
-            }
+            CurrentVelocity = DeerInfo.Rigidbody2D.velocity.normalized;
+            CurrentVelocity += ComputeDeerGroupVelocity();
             
-            while (!DeerInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, DeerInfo.BorderAvoidingStartDistance)))
-            {
-                _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
-            }
+            AvoidBorders();
+            Move();
+        }
 
-            DeerInfo.Mover.Move(_currentVelocity.normalized, DeerInfo.WanderingSpeed);
+        private void Move()
+        {
+            DeerInfo.Mover.Move(CurrentVelocity.normalized, DeerInfo.WanderingSpeed);
         }
     }
 }

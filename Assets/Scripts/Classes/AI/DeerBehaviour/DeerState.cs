@@ -10,6 +10,7 @@ namespace Hunter.AI.DeerBehaviour
     public abstract class DeerState : State
     {
         protected DeerInfo DeerInfo { get; }
+        protected Vector2 CurrentVelocity;
         
         private readonly Collider2D[] _nearbyObjects;
 
@@ -68,6 +69,23 @@ namespace Hunter.AI.DeerBehaviour
             return deerInfoList.Any();
         }
         
+        protected Vector2 ComputeDeerGroupVelocity()
+        {
+            Vector2 deerGroupVelocity = Vector2.zero;
+            if (DeerNearby(out DeerInfo[] deerInfos))
+            {
+                Vector2 separation = ComputeSeparation(deerInfos);
+                Vector2 alignment = ComputeAlignment(deerInfos);
+                Vector2 cohesion = ComputeCohesion(deerInfos);
+
+                deerGroupVelocity += separation * DeerInfo.SeparationForce
+                                     + alignment * DeerInfo.AlignmentForce 
+                                     + cohesion * DeerInfo.CohesionForce;
+            }
+
+            return deerGroupVelocity;
+        }
+        
         protected Vector2 ComputeSeparation(IEnumerable<DeerInfo> deerInfos)
         {
             Vector2 separation = Vector2.zero;
@@ -86,7 +104,7 @@ namespace Hunter.AI.DeerBehaviour
             {
                 alignment += neighbourDeer.Transform.GetComponent<Rigidbody2D>().velocity;
             }
-            alignment /= deerInfos.Count();
+            alignment /= deerInfos.Length;
 
             return alignment.normalized;
         }
@@ -106,6 +124,14 @@ namespace Hunter.AI.DeerBehaviour
         protected Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
         {
             return DeerInfo.Position + currentVelocity * distanceFromCurrentPosition;
+        }
+        
+        protected void AvoidBorders()
+        {
+            while (!DeerInfo.Field.Contains(PredictPosition(CurrentVelocity.normalized, DeerInfo.BorderAvoidingStartDistance)))
+            {
+                CurrentVelocity = Quaternion.Euler(0, 0, 15) * CurrentVelocity;
+            }
         }
     }
 }
