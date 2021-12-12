@@ -1,4 +1,6 @@
-﻿using Hunter.AI.Common;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Hunter.AI.Common;
 using Hunter.Creatures.Common;
 using UnityEngine;
 
@@ -13,10 +15,11 @@ namespace Hunter.AI.RabbitBehaviour
             _nearbyObjects = new Collider2D[2];
         }
         
-        protected bool PursuerNearby(out Transform pursuer)
+        protected bool PursuersNearby(out Transform[] pursuers)
         {
+            var pursuersList = new List<Transform>();
+            
             Physics2D.OverlapCircleNonAlloc(AnimalInfo.Position, AnimalInfo.DetectionRadius, _nearbyObjects);
-
             foreach (Collider2D nearbyObject in _nearbyObjects)
             {
                 if (nearbyObject == null 
@@ -26,12 +29,11 @@ namespace Hunter.AI.RabbitBehaviour
                     continue;
                 }
 
-                pursuer = nearbyObject.transform;
-                return true;
+                pursuersList.Add(nearbyObject.transform);
             }
 
-            pursuer = null;
-            return false;
+            pursuers = pursuersList.ToArray();
+            return pursuersList.Any();
         }
         
         protected Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)

@@ -11,9 +11,9 @@ namespace Hunter.AI.DeerBehaviour
         
         public override void Update()
         {
-            if (PursuerNearby(out Transform pursuer))
+            if (PursuersNearby(out Transform[] pursuers))
             {
-                ChangeAnimalState(new DeerFleeState(AnimalInfo, pursuer));
+                ChangeAnimalState(new DeerFleeState(AnimalInfo, pursuers));
                 return;
             }
             

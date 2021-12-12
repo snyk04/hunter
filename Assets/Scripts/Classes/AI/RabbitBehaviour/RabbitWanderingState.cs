@@ -1,4 +1,5 @@
-﻿using Hunter.AI.Common;
+﻿using System.Collections.Generic;
+using Hunter.AI.Common;
 using UnityEngine;
 
 namespace Hunter.AI.RabbitBehaviour
@@ -11,9 +12,9 @@ namespace Hunter.AI.RabbitBehaviour
         
         public override void Update()
         {
-            if (PursuerNearby(out Transform pursuer))
+            if (PursuersNearby(out Transform[] pursuers))
             {
-                ChangeAnimalState(new RabbitFleeState(AnimalInfo, pursuer));
+                ChangeAnimalState(new RabbitFleeState(AnimalInfo, pursuers));
                 return;
             }
             

@@ -10,9 +10,9 @@ namespace Hunter.AI.DeerBehaviour
     public abstract class DeerState : State
     {
         // TODO : to AnimalInfo
-        protected const float SeparationForce = 1.15f;
+        protected const float SeparationForce = 1;
         protected const float AlignmentForce = 1;
-        protected const float CohesionForce = 1.1f;
+        protected const float CohesionForce = 1;
         
         private const float FriendsDetectionRadius = 50;
         
@@ -23,10 +23,11 @@ namespace Hunter.AI.DeerBehaviour
             _nearbyObjects = new Collider2D[12];
         }
         
-        protected bool PursuerNearby(out Transform pursuer)
+        protected bool PursuersNearby(out Transform[] pursuers)
         {
+            var pursuersList = new List<Transform>();
+            
             Physics2D.OverlapCircleNonAlloc(AnimalInfo.Position, AnimalInfo.DetectionRadius, _nearbyObjects);
-
             foreach (Collider2D nearbyObject in _nearbyObjects)
             {
                 if (nearbyObject == null 
@@ -38,12 +39,11 @@ namespace Hunter.AI.DeerBehaviour
                     continue;
                 }
 
-                pursuer = nearbyObject.transform;
-                return true;
+                pursuersList.Add(nearbyObject.transform);
             }
-
-            pursuer = null;
-            return false;
+            
+            pursuers = pursuersList.ToArray();
+            return pursuersList.Any();
         }
         protected bool DeerNearby(out Deer[] deer)
         {
