@@ -160,7 +160,7 @@ MonoBehaviour:
   _wanderingSpeed: 1
   _fleeSpeed: 3
   _fleeStartDistance: 5
-  _fleeStopDistance: 9
+  _fleeStopDistance: 8
   _separationForce: 1.25
   _alignmentForce: 1
   _cohesionForce: 1
