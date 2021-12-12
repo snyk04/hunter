@@ -7,20 +7,13 @@ namespace Hunter.AI.RabbitBehaviour
     [RequireComponent(typeof(MoverComponent))]
     public class RabbitComponent : MonoBehaviour
     {
-        [SerializeField] private FieldComponent _field;
-        
         [Header("Wandering")] 
         [SerializeField] private float _wanderingSpeed;
-        [SerializeField] private float _wanderingRadius;
-        [SerializeField] private float _detectionRadius;
 
         [Header("Flee")] 
         [SerializeField] private float _fleeSpeed;
+        [SerializeField] private float _fleeStartDistance;
         [SerializeField] private float _fleeStopDistance;
-
-        [Header("Border avoiding")] 
-        [SerializeField] private float _borderAvoidingStartDistance;
-        [SerializeField] private float _borderAvoidingStopDistance;
 
         private Rabbit _rabbit;
         
@@ -32,11 +25,18 @@ namespace Hunter.AI.RabbitBehaviour
         public void Initialize(Field field)
         {
             Mover mover = GetComponent<MoverComponent>().Mover;
+            var rb2D = GetComponent<Rigidbody2D>();
 
-            _rabbit = new Rabbit(transform, mover, field, 
-                _wanderingSpeed, _wanderingRadius, _detectionRadius,
-                _fleeSpeed, _fleeStopDistance,
-                _borderAvoidingStartDistance, _borderAvoidingStopDistance);
+            _rabbit = new Rabbit(
+                transform, 
+                mover, 
+                rb2D, 
+                field,
+                _wanderingSpeed,
+                _fleeSpeed, 
+                _fleeStartDistance, 
+                _fleeStopDistance
+            );
         }
     }
 }

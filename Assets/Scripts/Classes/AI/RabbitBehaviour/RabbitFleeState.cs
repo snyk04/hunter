@@ -12,7 +12,7 @@ namespace Hunter.AI.RabbitBehaviour
 
         private Vector2 _currentVelocity;
         
-        public RabbitFleeState(AnimalInfo animalInfo, IEnumerable<Transform> pursuers) : base(animalInfo)
+        public RabbitFleeState(RabbitInfo rabbitInfo, IEnumerable<Transform> pursuers) : base(rabbitInfo)
         {
             _pursuers = pursuers.ToList();
         }
@@ -21,15 +21,13 @@ namespace Hunter.AI.RabbitBehaviour
         {
             if (AllPursuersAreNull() || AllPursuersAreFarAway())
             {
-                ChangeAnimalState(new RabbitWanderingState(AnimalInfo));
+                RabbitInfo.Animal.ChangeState(new RabbitWanderingState(RabbitInfo));
                 return;
             }
 
             TryToAddNewPursuers();
             
-            // TODO : rigidbody in Mover or AnimalInfo
-            _currentVelocity = AnimalInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
-            
+            _currentVelocity = RabbitInfo.Rigidbody2D.velocity.normalized;
             _currentVelocity += ComputeFleeVelocity();
 
             AvoidWalls();
@@ -54,8 +52,9 @@ namespace Hunter.AI.RabbitBehaviour
         {
             for (int i = _pursuers.Count - 1; i >= 0; i--)
             {
-                Vector2 pursuerToRabbitVector = AnimalInfo.Position - _pursuers[i].Position();
-                if (pursuerToRabbitVector.magnitude > AnimalInfo.FleeStopDistance)
+                // TODO : possible NullReferenceException
+                Vector2 pursuerToRabbitVector = RabbitInfo.Position - _pursuers[i].Position();
+                if (pursuerToRabbitVector.magnitude > RabbitInfo.FleeStopDistance)
                 {
                     _pursuers.RemoveAt(i);
                 }
@@ -84,8 +83,8 @@ namespace Hunter.AI.RabbitBehaviour
             Vector2 desiredVelocity = Vector2.zero;
             foreach (Transform pursuer in _pursuers)
             {
-                Vector2 pursuerToRabbitVector = AnimalInfo.Position - pursuer.Position();
-                float coefficient = -pursuerToRabbitVector.magnitude / AnimalInfo.FleeStopDistance + 1;
+                Vector2 pursuerToRabbitVector = RabbitInfo.Position - pursuer.Position();
+                float coefficient = -pursuerToRabbitVector.magnitude / RabbitInfo.FleeStopDistance + 1;
                 desiredVelocity += pursuerToRabbitVector.normalized * coefficient;
             }
 
@@ -95,14 +94,14 @@ namespace Hunter.AI.RabbitBehaviour
         private void AvoidWalls()
         {
             // TODO : to const
-            while (!AnimalInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
+            while (!RabbitInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
             {
                 _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }
         }
         private void Move()
         {
-            AnimalInfo.Mover.Move(_currentVelocity.normalized, AnimalInfo.FleeSpeed);
+            RabbitInfo.Mover.Move(_currentVelocity.normalized, RabbitInfo.FleeSpeed);
         }
     }
 }

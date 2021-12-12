@@ -1,5 +1,4 @@
-﻿using Hunter.AI.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Hunter.AI.WolfBehaviour
 {
@@ -7,7 +6,7 @@ namespace Hunter.AI.WolfBehaviour
     {
         private Vector2 _currentVelocity;
 
-        public WolfWanderingState(AnimalInfo animalInfo) : base(animalInfo) { }
+        public WolfWanderingState(WolfInfo wolfInfo) : base(wolfInfo) { }
         
         public override void Update()
         {
@@ -15,20 +14,20 @@ namespace Hunter.AI.WolfBehaviour
             
             if (TargetNearby(out Transform pursuer))
             {
-                ChangeAnimalState(new WolfSeekState(AnimalInfo, pursuer));
+                WolfInfo.Animal.ChangeState(new WolfSeekState(WolfInfo, pursuer));
                 return;
             }
             
             // TODO : rigidbody in Mover or AnimalInfo
-            _currentVelocity = AnimalInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
+            _currentVelocity = WolfInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
 
             // TODO : to const
-            while (!AnimalInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
+            while (!WolfInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
             {
                 _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }
 
-            AnimalInfo.Mover.Move(_currentVelocity.normalized, AnimalInfo.WanderingSpeed);
+            WolfInfo.Mover.Move(_currentVelocity.normalized, WolfInfo.WanderingSpeed);
         }
     }
 }

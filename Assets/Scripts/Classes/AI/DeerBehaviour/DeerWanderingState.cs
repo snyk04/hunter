@@ -1,5 +1,4 @@
-﻿using Hunter.AI.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Hunter.AI.DeerBehaviour
 {
@@ -7,18 +6,17 @@ namespace Hunter.AI.DeerBehaviour
     {
         private Vector2 _currentVelocity;
 
-        public DeerWanderingState(AnimalInfo animalInfo) : base(animalInfo) { }
+        public DeerWanderingState(DeerInfo deerInfo) : base(deerInfo) { }
         
         public override void Update()
         {
             if (PursuersNearby(out Transform[] pursuers))
             {
-                ChangeAnimalState(new DeerFleeState(AnimalInfo, pursuers));
+                DeerInfo.Animal.ChangeState(new DeerFleeState(DeerInfo, pursuers));
                 return;
             }
             
-            // TODO : rigidbody in Mover or AnimalInfo
-            _currentVelocity = AnimalInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
+            _currentVelocity = DeerInfo.Rigidbody2D.velocity.normalized;
             if (DeerNearby(out Deer[] deer))
             {
                 Vector2 separation = ComputeSeparation(deer);
@@ -31,12 +29,12 @@ namespace Hunter.AI.DeerBehaviour
             }
             
             // TODO : to const
-            while (!AnimalInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
+            while (!DeerInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
             {
                 _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }
 
-            AnimalInfo.Mover.Move(_currentVelocity.normalized, AnimalInfo.WanderingSpeed);
+            DeerInfo.Mover.Move(_currentVelocity.normalized, DeerInfo.WanderingSpeed);
         }
     }
 }

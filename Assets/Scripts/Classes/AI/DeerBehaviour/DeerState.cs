@@ -9,17 +9,21 @@ namespace Hunter.AI.DeerBehaviour
 {
     public abstract class DeerState : State
     {
-        // TODO : to AnimalInfo
+        // TODO : to DeerInfo
         protected const float SeparationForce = 1;
         protected const float AlignmentForce = 1;
         protected const float CohesionForce = 1;
         
         private const float FriendsDetectionRadius = 50;
         
+        protected DeerInfo DeerInfo { get; }
+        
         private readonly Collider2D[] _nearbyObjects;
 
-        protected DeerState(AnimalInfo animalInfo) : base(animalInfo)
+        protected DeerState(DeerInfo deerInfo)
         {
+            DeerInfo = deerInfo;
+            
             _nearbyObjects = new Collider2D[12];
         }
         
@@ -27,11 +31,11 @@ namespace Hunter.AI.DeerBehaviour
         {
             var pursuersList = new List<Transform>();
             
-            Physics2D.OverlapCircleNonAlloc(AnimalInfo.Position, AnimalInfo.DetectionRadius, _nearbyObjects);
+            Physics2D.OverlapCircleNonAlloc(DeerInfo.Position, DeerInfo.FleeStartDistance, _nearbyObjects);
             foreach (Collider2D nearbyObject in _nearbyObjects)
             {
                 if (nearbyObject == null 
-                    || nearbyObject.gameObject == AnimalInfo.Transform.gameObject 
+                    || nearbyObject.gameObject == DeerInfo.Transform.gameObject 
                     || !nearbyObject.TryGetComponent(out MoverComponent mover)
                     || nearbyObject.TryGetComponent(out DeerComponent deer)
                     || nearbyObject.TryGetComponent(out RabbitComponent rabbit))
@@ -49,12 +53,12 @@ namespace Hunter.AI.DeerBehaviour
         {
             var deerList = new List<Deer>();
             
-            Physics2D.OverlapCircleNonAlloc(AnimalInfo.Position, FriendsDetectionRadius, _nearbyObjects);
+            Physics2D.OverlapCircleNonAlloc(DeerInfo.Position, FriendsDetectionRadius, _nearbyObjects);
             
             foreach (Collider2D nearbyObject in _nearbyObjects)
             {
                 if (nearbyObject == null 
-                    || nearbyObject.gameObject == AnimalInfo.Transform.gameObject 
+                    || nearbyObject.gameObject == DeerInfo.Transform.gameObject 
                     || !nearbyObject.TryGetComponent(out DeerComponent deerComponent))
                 {
                     continue;
@@ -73,7 +77,7 @@ namespace Hunter.AI.DeerBehaviour
             Vector2 separation = Vector2.zero;
             foreach (Deer neighbourDeer in deer)
             {
-                separation += neighbourDeer.AnimalInfo.Position - AnimalInfo.Position;
+                separation += neighbourDeer.DeerInfo.Position - DeerInfo.Position;
             }
 
             separation *= -1;
@@ -84,7 +88,7 @@ namespace Hunter.AI.DeerBehaviour
             Vector2 alignment = Vector2.zero;
             foreach (Deer neighbourDeer in deer)
             {
-                alignment += neighbourDeer.AnimalInfo.Transform.GetComponent<Rigidbody2D>().velocity;
+                alignment += neighbourDeer.DeerInfo.Transform.GetComponent<Rigidbody2D>().velocity;
             }
             alignment /= deer.Count();
 
@@ -95,17 +99,17 @@ namespace Hunter.AI.DeerBehaviour
             Vector2 cohesion = Vector2.zero;
             foreach (Deer neighbourDeer in deer)
             {
-                cohesion += neighbourDeer.AnimalInfo.Position;
+                cohesion += neighbourDeer.DeerInfo.Position;
             }
             cohesion /= deer.Count();
-            cohesion -= AnimalInfo.Position;
+            cohesion -= DeerInfo.Position;
 
             return cohesion.normalized;
         }
         
         protected Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
         {
-            return AnimalInfo.Position + currentVelocity * distanceFromCurrentPosition;
+            return DeerInfo.Position + currentVelocity * distanceFromCurrentPosition;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Hunter.AI.WolfBehaviour
 
         private Vector2 _currentVelocity;
 
-        public WolfSeekState(AnimalInfo animaInfo, Transform target) : base(animaInfo)
+        public WolfSeekState(WolfInfo wolfInfo, Transform target) : base(wolfInfo)
         {
             _target = target;
         }
@@ -21,31 +21,31 @@ namespace Hunter.AI.WolfBehaviour
 
             if (_target == null)
             {
-                ChangeAnimalState(new WolfWanderingState(AnimalInfo));
+                WolfInfo.Animal.ChangeState(new WolfWanderingState(WolfInfo));
             }
 
-            Vector2 seekDirection = _target.Position() - AnimalInfo.Position;
-            if (seekDirection.magnitude >= AnimalInfo.SeekStopDistance)
+            Vector2 seekDirection = _target.Position() - WolfInfo.Position;
+            if (seekDirection.magnitude >= WolfInfo.SeekStopDistance)
             {
-                ChangeAnimalState(new WolfWanderingState(AnimalInfo));
+                WolfInfo.Animal.ChangeState(new WolfWanderingState(WolfInfo));
             }
 
-            if (seekDirection.magnitude <= AnimalInfo.KillingStartDistance)
+            if (seekDirection.magnitude <= WolfInfo.KillingStartDistance)
             {
-                ChangeAnimalState(new WolfKillingState(AnimalInfo, _target));
+                WolfInfo.Animal.ChangeState(new WolfKillingState(WolfInfo, _target));
             }
             
             // TODO : rigidbody in Mover or AnimalInfo
-            _currentVelocity = AnimalInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
+            _currentVelocity = WolfInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
             _currentVelocity += seekDirection.normalized;
 
             // TODO : to const
-            while (!AnimalInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
+            while (!WolfInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
             {
                 _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }
             
-            AnimalInfo.Mover.Move(seekDirection.normalized, AnimalInfo.SeekSpeed);
+            WolfInfo.Mover.Move(seekDirection.normalized, WolfInfo.SeekSpeed);
         }
     }
 }

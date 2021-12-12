@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 2306019381638289449}
   - component: {fileID: 2306019381638289463}
   - component: {fileID: 2306019381638289462}
+  - component: {fileID: 1553900689268231546}
   - component: {fileID: 2306019381638289450}
   - component: {fileID: 7244748573183470655}
   - component: {fileID: 2306019381638289461}
   - component: {fileID: 2306019381638289448}
-  - component: {fileID: 1553900689268231546}
   m_Layer: 0
   m_Name: Rabbit
   m_TagString: Untagged
@@ -126,6 +126,25 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.135
+--- !u!95 &1553900689268231546
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2306019381638289452}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9abf1ec15f59b1045a5bd952b8e3990b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &2306019381638289450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,14 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af562fb361949ce917f2294900d9c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _field: {fileID: 0}
   _wanderingSpeed: 1
-  _wanderingRadius: 4
-  _detectionRadius: 4
   _fleeSpeed: 3
-  _fleeStopDistance: 9
-  _borderAvoidingStartDistance: 2
-  _borderAvoidingStopDistance: 4
+  _fleeStartDistance: 3
+  _fleeStopDistance: 7
 --- !u!114 &7244748573183470655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,22 +198,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e1fc0e0fdce405caad6e408b5008dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &1553900689268231546
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2306019381638289452}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9abf1ec15f59b1045a5bd952b8e3990b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0

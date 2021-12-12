@@ -157,14 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88c2783d0ec45049de03f83cfa3e3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _field: {fileID: 0}
   _wanderingSpeed: 1
-  _wanderingRadius: 4
-  _detectionRadius: 4
   _fleeSpeed: 3
-  _fleeStopDistance: 11
-  _borderAvoidingStartDistance: 2
-  _borderAvoidingStopDistance: 4
+  _fleeStartDistance: 5
+  _fleeStopDistance: 9
 --- !u!114 &1640396546547421941
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,30 +6,30 @@ namespace Hunter.AI.WolfBehaviour
 {
     public class Wolf : Animal
     {
-        public Wolf(Transform transform, Mover mover, Field field,
-            float wanderingSpeed, float wanderingRadius, float detectionRadius, 
-            float seekSpeed, float seekStopDistance,
+        public Wolf(Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field,
+            float wanderingSpeed,
+            float seekSpeed, float seekStartDistance, float seekStopDistance,
             float killingStartDistance, float killingStopDistance, int killingAmountOfDamage, float killingAttackDelay,
             float starvingDeathTime)
         {
-            var animalInfo = new AnimalInfo(
+            var wolfInfo = new WolfInfo(
                 this, 
                 transform, 
                 mover,
+                rigidbody2D,
                 field,
                 wanderingSpeed,
-                wanderingRadius,
-                detectionRadius,
-                seekSpeed: seekSpeed,
-                seekStopDistance: seekStopDistance,
-                killingStartDistance: killingStartDistance,
-                killingStopDistance: killingStopDistance,
-                killingAmountOfDamage: killingAmountOfDamage,
-                killingAttackDelay: killingAttackDelay,
-                starvingDeathTime: starvingDeathTime
-                );
+                seekSpeed,
+                seekStartDistance,
+                seekStopDistance,
+                killingStartDistance,
+                killingStopDistance,
+                killingAmountOfDamage,
+                killingAttackDelay,
+                starvingDeathTime
+            );
             
-            State = new WolfWanderingState(animalInfo);
+            State = new WolfWanderingState(wolfInfo);
         }
     }
 }

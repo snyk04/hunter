@@ -13,7 +13,7 @@ namespace Hunter.AI.WolfBehaviour
 
         private DateTime _lastAttackTime;
 
-        public WolfKillingState(AnimalInfo animaInfo, Transform target) : base(animaInfo)
+        public WolfKillingState(WolfInfo wolfInfo, Transform target) : base(wolfInfo)
         {
             _target = target;
             _targetDamageable = _target.GetComponent<DamageableComponent>().Damageable;
@@ -25,20 +25,20 @@ namespace Hunter.AI.WolfBehaviour
 
             if (_target == null)
             {
-                ChangeAnimalState(new WolfWanderingState(AnimalInfo));
+                WolfInfo.Animal.ChangeState(new WolfWanderingState(WolfInfo));
                 return;
             }
             
-            Vector2 wolfToTargetVector = _target.Position() - AnimalInfo.Position;
-            if (wolfToTargetVector.magnitude >= AnimalInfo.KillingStopDistance)
+            Vector2 wolfToTargetVector = _target.Position() - WolfInfo.Position;
+            if (wolfToTargetVector.magnitude >= WolfInfo.KillingStopDistance)
             {
-                ChangeAnimalState(new WolfSeekState(AnimalInfo, _target));
+                WolfInfo.Animal.ChangeState(new WolfSeekState(WolfInfo, _target));
                 return;
             }
 
-            if (_lastAttackTime.GetPassedSeconds() >= AnimalInfo.KillingAttackDelay)
+            if (_lastAttackTime.GetPassedSeconds() >= WolfInfo.KillingAttackDelay)
             {
-                _targetDamageable.GetDamaged(AnimalInfo.KillingAmountOfDamage);
+                _targetDamageable.GetDamaged(WolfInfo.KillingAmountOfDamage);
                 _lastAttackTime = DateTime.Now;
             }
         }

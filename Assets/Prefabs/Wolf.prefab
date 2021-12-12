@@ -157,12 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142d42889f3847cb811ed950e76a0d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _field: {fileID: 0}
   _wanderingSpeed: 1
-  _wanderingRadius: 5
-  _detectionRadius: 6
   _seekSpeed: 2
-  _seekStopDistance: 11
+  _seekStartDistance: 4
+  _seekStopDistance: 8
   _killingStartDistance: 0.5
   _killingStopDistance: 1
   _killingAmountOfDamage: 1

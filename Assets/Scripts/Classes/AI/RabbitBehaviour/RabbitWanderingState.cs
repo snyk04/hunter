@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Hunter.AI.Common;
+﻿using Hunter.AI.Common;
 using UnityEngine;
 
 namespace Hunter.AI.RabbitBehaviour
@@ -8,26 +7,25 @@ namespace Hunter.AI.RabbitBehaviour
     {
         private Vector2 _currentVelocity;
 
-        public RabbitWanderingState(AnimalInfo animalInfo) : base(animalInfo) { }
+        public RabbitWanderingState(RabbitInfo rabbitInfo) : base(rabbitInfo) { }
         
         public override void Update()
         {
             if (PursuersNearby(out Transform[] pursuers))
             {
-                ChangeAnimalState(new RabbitFleeState(AnimalInfo, pursuers));
+                RabbitInfo.Animal.ChangeState(new RabbitFleeState(RabbitInfo, pursuers));
                 return;
             }
             
-            // TODO : rigidbody in Mover or AnimalInfo
-            _currentVelocity = AnimalInfo.Transform.GetComponent<Rigidbody2D>().velocity.normalized;
+            _currentVelocity = RabbitInfo.Rigidbody2D.velocity.normalized;
 
             // TODO : to const
-            while (!AnimalInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
+            while (!RabbitInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, 5)))
             {
                 _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
             }
 
-            AnimalInfo.Mover.Move(_currentVelocity.normalized, AnimalInfo.WanderingSpeed);
+            RabbitInfo.Mover.Move(_currentVelocity.normalized, RabbitInfo.WanderingSpeed);
         }
     }
 }

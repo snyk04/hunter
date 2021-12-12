@@ -6,27 +6,23 @@ namespace Hunter.AI.RabbitBehaviour
 {
     public class Rabbit : Animal
     {
-        public Rabbit(Transform transform, Mover mover,
-            Field field,
-            float wanderingSpeed, float wanderingRadius, float detectionRadius,
-            float fleeSpeed, float fleeStopDistance,
-            float borderAvoidingStartDistance, float borderAvoidingStopDistance)
+        public Rabbit(Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field,
+            float wanderingSpeed,
+            float fleeSpeed, float fleeStartDistance, float fleeStopDistance)
         {
-            var animalInfo = new AnimalInfo(
+            var rabbitInfo = new RabbitInfo(
                 this,
                 transform,
                 mover,
+                rigidbody2D,
                 field,
                 wanderingSpeed,
-                wanderingRadius,
-                detectionRadius,
                 fleeSpeed,
-                fleeStopDistance,
-                borderAvoidingStartDistance: borderAvoidingStartDistance,
-                borderAvoidingStopDistance: borderAvoidingStopDistance
-            );
+                fleeStartDistance,
+                fleeStopDistance
+                );
 
-            State = new RabbitWanderingState(animalInfo);
+            State = new RabbitWanderingState(rabbitInfo);
         }
     }
 }
