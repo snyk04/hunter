@@ -68,7 +68,6 @@ namespace Hunter.AI.DeerBehaviour
             {
                 if (deerInfoList[i].Transform == null)
                 {
-                    Debug.Log("deleted");
                     deerInfoList.RemoveAt(i);
                     DeerInfo.DeerGroup.DeerInfos.RemoveAt(i);
                 }
