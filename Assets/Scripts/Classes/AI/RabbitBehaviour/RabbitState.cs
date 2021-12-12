@@ -47,6 +47,30 @@ namespace Hunter.AI.RabbitBehaviour
         
         protected void AvoidBorders()
         {
+            // Vector2 desiredVelocity = Vector2.zero;
+            // if (RabbitInfo.Position.x - RabbitInfo.BorderAvoidingStartDistance <= RabbitInfo.Field.XLeftBorder)
+            // {
+            //     desiredVelocity += Vector2.right;
+            // }
+            // if (RabbitInfo.Position.x + RabbitInfo.BorderAvoidingStartDistance >= RabbitInfo.Field.XRightBorder)
+            // {
+            //     desiredVelocity += Vector2.left;
+            // }
+            // if (RabbitInfo.Position.y - RabbitInfo.BorderAvoidingStartDistance <= RabbitInfo.Field.YBotBorder)
+            // {
+            //     desiredVelocity += Vector2.up;
+            // }
+            // if (RabbitInfo.Position.y + RabbitInfo.BorderAvoidingStartDistance >= RabbitInfo.Field.YTopBorder)
+            // {
+            //     desiredVelocity += Vector2.down;
+            // }
+            //
+            // if (desiredVelocity != Vector2.zero)
+            // {
+            //     CurrentVelocity += (desiredVelocity - CurrentVelocity) / 5;
+            //     Debug.Log($"{CurrentVelocity}");
+            // }
+            
             while (!RabbitInfo.Field.Contains(PredictPosition(CurrentVelocity.normalized, RabbitInfo.BorderAvoidingStartDistance)))
             {
                 CurrentVelocity = Quaternion.Euler(0, 0, 15) * CurrentVelocity;
