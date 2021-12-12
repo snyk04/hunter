@@ -18,7 +18,8 @@ namespace Hunter.Creatures.Shooters
         private readonly int _maxAmountOfBulletsInBackpack;
         private readonly int _maxAmountOfBulletsInMagazine;
         private readonly Transform _transform;
-
+        private readonly MonoBehaviour _coroutineStarter;
+        
         private DateTime _lastShotTime;
         private bool _isReloading;
 
@@ -38,6 +39,7 @@ namespace Hunter.Creatures.Shooters
             _maxAmountOfBulletsInBackpack = maxAmountOfBulletsInBackpack;
             _maxAmountOfBulletsInMagazine = maxAmountOfBulletsInMagazine;
             _transform = transform;
+            _coroutineStarter = _transform.GetComponent<MonoBehaviour>();
 
             _isReloading = false;
 
@@ -84,8 +86,7 @@ namespace Hunter.Creatures.Shooters
                 return;
             }
             
-            // TODO : think about it
-            _transform.GetComponent<MonoBehaviour>().StartCoroutine(ReloadingRoutine());
+            _coroutineStarter.StartCoroutine(ReloadingRoutine());
             _isReloading = true;
         }
         private IEnumerator ReloadingRoutine()
