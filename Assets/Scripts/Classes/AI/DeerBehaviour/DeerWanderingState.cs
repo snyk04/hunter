@@ -23,9 +23,9 @@ namespace Hunter.AI.DeerBehaviour
                 Vector2 alignment = ComputeAlignment(deer);
                 Vector2 cohesion = ComputeCohesion(deer);
 
-                _currentVelocity += separation * SeparationForce
-                                    + alignment * AlignmentForce 
-                                    + cohesion * CohesionForce;
+                _currentVelocity += separation * DeerInfo.SeparationForce
+                                    + alignment * DeerInfo.AlignmentForce 
+                                    + cohesion * DeerInfo.CohesionForce;
             }
             
             while (!DeerInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, DeerInfo.BorderAvoidingStartDistance)))

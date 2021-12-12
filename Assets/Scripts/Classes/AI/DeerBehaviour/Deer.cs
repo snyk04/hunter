@@ -11,7 +11,8 @@ namespace Hunter.AI.DeerBehaviour
         public Deer(Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field,
             float borderAvoidingStartDistance,
             float wanderingSpeed,
-            float fleeSpeed, float fleeStartDistance, float fleeStopDistance)
+            float fleeSpeed, float fleeStartDistance, float fleeStopDistance,
+            float separationForce, float alignmentForce, float cohesionForce)
         {
             DeerInfo = new DeerInfo(
                 this,
@@ -23,7 +24,10 @@ namespace Hunter.AI.DeerBehaviour
                 wanderingSpeed,
                 fleeSpeed,
                 fleeStartDistance,
-                fleeStopDistance
+                fleeStopDistance,
+                separationForce,
+                alignmentForce,
+                cohesionForce
             );
 
             State = new DeerWanderingState(DeerInfo);

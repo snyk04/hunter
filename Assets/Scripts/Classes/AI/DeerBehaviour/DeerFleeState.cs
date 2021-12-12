@@ -98,9 +98,9 @@ namespace Hunter.AI.DeerBehaviour
                 Vector2 alignment = ComputeAlignment(deer);
                 Vector2 cohesion = ComputeCohesion(deer);
 
-                deerGroupVelocity += separation * SeparationForce
-                                     + alignment * AlignmentForce 
-                                     + cohesion * CohesionForce;
+                deerGroupVelocity += separation * DeerInfo.SeparationForce
+                                     + alignment * DeerInfo.AlignmentForce 
+                                     + cohesion * DeerInfo.CohesionForce;
             }
 
             return deerGroupVelocity;

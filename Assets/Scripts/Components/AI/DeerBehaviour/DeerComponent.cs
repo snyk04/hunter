@@ -15,6 +15,11 @@ namespace Hunter.AI.DeerBehaviour
         [SerializeField] private float _fleeStartDistance;
         [SerializeField] private float _fleeStopDistance;
         
+        [Header("Boids settings")]
+        [SerializeField] private float _separationForce;
+        [SerializeField] private float _alignmentForce;
+        [SerializeField] private float _cohesionForce;
+        
         [Header("Other")]
         [SerializeField] private float _borderAvoidingStartDistance;
 
@@ -39,7 +44,10 @@ namespace Hunter.AI.DeerBehaviour
                 _wanderingSpeed,
                 _fleeSpeed, 
                 _fleeStartDistance, 
-                _fleeStopDistance
+                _fleeStopDistance,
+                _separationForce,
+                _alignmentForce,
+                _cohesionForce
                 );
         }
     }

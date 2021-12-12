@@ -9,11 +9,6 @@ namespace Hunter.AI.DeerBehaviour
 {
     public abstract class DeerState : State
     {
-        // TODO : to DeerInfo
-        protected const float SeparationForce = 1;
-        protected const float AlignmentForce = 1;
-        protected const float CohesionForce = 1;
-        
         private const float FriendsDetectionRadius = 50;
         
         protected DeerInfo DeerInfo { get; }
