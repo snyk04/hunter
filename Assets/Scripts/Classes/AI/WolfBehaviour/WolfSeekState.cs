@@ -21,6 +21,20 @@ namespace Hunter.AI.WolfBehaviour
                 WolfInfo.Animal.ChangeState(new WolfWanderingState(WolfInfo));
             }
 
+            if (TargetNearby(out Transform target))
+            {
+                if (target != _target)
+                {
+                    float distanceToOldTarget = (_target.Position() - WolfInfo.Position).magnitude;
+                    float distanceToNewTarget = (target.Position() - WolfInfo.Position).magnitude;
+                    if (distanceToNewTarget < distanceToOldTarget)
+                    {
+                        WolfInfo.Animal.ChangeState(new WolfSeekState(WolfInfo, target));
+                        return;
+                    }
+                }
+            }
+            
             Vector2 seekDirection = _target.Position() - WolfInfo.Position;
             if (seekDirection.magnitude >= WolfInfo.SeekStopDistance)
             {
