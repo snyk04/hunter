@@ -1,12 +1,13 @@
-﻿using Hunter.AI.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Hunter.AI.RabbitBehaviour
 {
     public class RabbitWanderingState : RabbitState
     {
-        private Vector2 _currentVelocity;
-
+        // TODO : to AnimalInfo
+        private const float CircleDistance = 1;
+        private const float CircleRadius = 1;
+        
         public RabbitWanderingState(RabbitInfo rabbitInfo) : base(rabbitInfo) { }
         
         public override void Update()
@@ -16,15 +17,28 @@ namespace Hunter.AI.RabbitBehaviour
                 RabbitInfo.Animal.ChangeState(new RabbitFleeState(RabbitInfo, pursuers));
                 return;
             }
+
+            CurrentVelocity = RabbitInfo.Rigidbody2D.velocity.magnitude > 0
+                ? RabbitInfo.Rigidbody2D.velocity.normalized
+                : Random.insideUnitCircle;
+            CurrentVelocity += ComputeWanderVelocity();
             
-            _currentVelocity = RabbitInfo.Rigidbody2D.velocity.normalized;
+            AvoidBorders();
+            Move();
+        }
 
-            while (!RabbitInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, RabbitInfo.BorderAvoidingStartDistance)))
-            {
-                _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
-            }
+        private Vector2 ComputeWanderVelocity()
+        {
+            Vector2 circleCenter = RabbitInfo.Position + CurrentVelocity * CircleDistance;
+            Vector3 displacement = Quaternion.Euler(0, 0, Random.Range(-2f, 2f)) * CurrentVelocity * CircleRadius;
+            Vector2 displacementPosition = circleCenter + new Vector2(displacement.x, displacement.y);
+            Vector2 wanderVelocity = displacementPosition - circleCenter;
 
-            RabbitInfo.Mover.Move(_currentVelocity.normalized, RabbitInfo.WanderingSpeed);
+            return wanderVelocity - CurrentVelocity;
+        }
+        private void Move()
+        {
+            RabbitInfo.Mover.Move(CurrentVelocity.normalized, RabbitInfo.WanderingSpeed);
         }
     }
 }

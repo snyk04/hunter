@@ -9,6 +9,7 @@ namespace Hunter.AI.RabbitBehaviour
     public abstract class RabbitState : State
     {
         protected RabbitInfo RabbitInfo { get; }
+        protected Vector2 CurrentVelocity;
         
         private readonly Collider2D[] _nearbyObjects;
 
@@ -39,9 +40,17 @@ namespace Hunter.AI.RabbitBehaviour
             pursuers = pursuersList.ToArray();
             return pursuersList.Any();
         }
-        protected Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
+        private Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
         {
             return RabbitInfo.Position + currentVelocity * distanceFromCurrentPosition;
+        }
+        
+        protected void AvoidBorders()
+        {
+            while (!RabbitInfo.Field.Contains(PredictPosition(CurrentVelocity.normalized, RabbitInfo.BorderAvoidingStartDistance)))
+            {
+                CurrentVelocity = Quaternion.Euler(0, 0, 15) * CurrentVelocity;
+            }
         }
     }
 }

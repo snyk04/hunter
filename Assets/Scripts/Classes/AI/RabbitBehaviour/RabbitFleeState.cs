@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hunter.AI.Common;
 using Hunter.Common;
 using UnityEngine;
 
@@ -30,7 +29,7 @@ namespace Hunter.AI.RabbitBehaviour
             _currentVelocity = RabbitInfo.Rigidbody2D.velocity.normalized;
             _currentVelocity += ComputeFleeVelocity();
 
-            AvoidWalls();
+            AvoidBorders();
             Move();
         }
 
@@ -89,14 +88,6 @@ namespace Hunter.AI.RabbitBehaviour
             }
 
             return desiredVelocity.normalized - _currentVelocity;
-        }
-
-        private void AvoidWalls()
-        {
-            while (!RabbitInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, RabbitInfo.BorderAvoidingStartDistance)))
-            {
-                _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
-            }
         }
         private void Move()
         {

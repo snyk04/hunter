@@ -4,8 +4,10 @@ namespace Hunter.AI.WolfBehaviour
 {
     public class WolfWanderingState : WolfState
     {
-        private Vector2 _currentVelocity;
-
+        // TODO : to AnimalInfo
+        private const float CircleDistance = 1;
+        private const float CircleRadius = 1;
+        
         public WolfWanderingState(WolfInfo wolfInfo) : base(wolfInfo) { }
         
         public override void Update()
@@ -18,14 +20,27 @@ namespace Hunter.AI.WolfBehaviour
                 return;
             }
             
-            _currentVelocity = WolfInfo.Rigidbody2D.velocity.normalized;
+            CurrentVelocity = WolfInfo.Rigidbody2D.velocity.magnitude > 0
+                ? WolfInfo.Rigidbody2D.velocity.normalized
+                : Random.insideUnitCircle;            
+            CurrentVelocity += ComputeWanderVelocity();
 
-            while (!WolfInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, WolfInfo.BorderAvoidingStartDistance)))
-            {
-                _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
-            }
+            AvoidBorders();
+            Move();
+        }
+        
+        private Vector2 ComputeWanderVelocity()
+        {
+            Vector2 circleCenter = WolfInfo.Position + CurrentVelocity * CircleDistance;
+            Vector3 displacement = Quaternion.Euler(0, 0, Random.Range(-2f, 2f)) * CurrentVelocity * CircleRadius;
+            Vector2 displacementPosition = circleCenter + new Vector2(displacement.x, displacement.y);
+            Vector2 wanderVelocity = displacementPosition - circleCenter;
 
-            WolfInfo.Mover.Move(_currentVelocity.normalized, WolfInfo.WanderingSpeed);
+            return wanderVelocity - CurrentVelocity;
+        }
+        private void Move()
+        {
+            WolfInfo.Mover.Move(CurrentVelocity.normalized, WolfInfo.WanderingSpeed);
         }
     }
 }

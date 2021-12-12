@@ -1,5 +1,4 @@
-﻿using Hunter.AI.Common;
-using Hunter.Common;
+﻿using Hunter.Common;
 using UnityEngine;
 
 namespace Hunter.AI.WolfBehaviour
@@ -7,9 +6,7 @@ namespace Hunter.AI.WolfBehaviour
     public class WolfSeekState : WolfState
     {
         private readonly Transform _target;
-
-        private Vector2 _currentVelocity;
-
+        
         public WolfSeekState(WolfInfo wolfInfo, Transform target) : base(wolfInfo)
         {
             _target = target;
@@ -35,16 +32,22 @@ namespace Hunter.AI.WolfBehaviour
                 WolfInfo.Animal.ChangeState(new WolfKillingState(WolfInfo, _target));
             }
             
-            _currentVelocity = WolfInfo.Rigidbody2D.velocity.normalized;
-            Vector2 desiredVelocity = seekDirection.normalized;
-            _currentVelocity += desiredVelocity - _currentVelocity;
+            CurrentVelocity = WolfInfo.Rigidbody2D.velocity.normalized;
+            CurrentVelocity += ComputeSeekVelocity();
 
-            while (!WolfInfo.Field.Contains(PredictPosition(_currentVelocity.normalized, WolfInfo.BorderAvoidingStartDistance)))
-            {
-                _currentVelocity = Quaternion.Euler(0, 0, 15) * _currentVelocity;
-            }
-            
-            WolfInfo.Mover.Move(seekDirection.normalized, WolfInfo.SeekSpeed);
+            AvoidBorders();
+            Move();
+        }
+
+        private Vector2 ComputeSeekVelocity()
+        {
+            Vector2 seekDirection = _target.Position() - WolfInfo.Position;
+            Vector2 desiredVelocity = seekDirection.normalized;
+            return desiredVelocity - CurrentVelocity;
+        }
+        private void Move()
+        {
+            WolfInfo.Mover.Move(CurrentVelocity.normalized, WolfInfo.SeekSpeed);
         }
     }
 }

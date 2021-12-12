@@ -1,5 +1,4 @@
 ﻿using System;
-using Hunter.AI.Common;
 using Hunter.Common;
 using Hunter.Creatures.Common;
 using UnityEngine;

@@ -9,6 +9,7 @@ namespace Hunter.AI.WolfBehaviour
     public abstract class WolfState : State
     {
         protected WolfInfo WolfInfo { get; }
+        protected Vector2 CurrentVelocity;
         
         private readonly Collider2D[] _nearbyObjects;
         protected DateTime LastMealTime;
@@ -51,7 +52,14 @@ namespace Hunter.AI.WolfBehaviour
             return false;
         }
         
-        protected Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
+        protected void AvoidBorders()
+        {
+            while (!WolfInfo.Field.Contains(PredictPosition(CurrentVelocity.normalized, WolfInfo.BorderAvoidingStartDistance)))
+            {
+                CurrentVelocity = Quaternion.Euler(0, 0, 15) * CurrentVelocity;
+            }
+        }
+        private Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
         {
             return WolfInfo.Position + currentVelocity * distanceFromCurrentPosition;
         }

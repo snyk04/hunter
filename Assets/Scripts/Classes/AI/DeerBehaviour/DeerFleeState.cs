@@ -87,7 +87,6 @@ namespace Hunter.AI.DeerBehaviour
 
             return desiredVelocity.normalized - CurrentVelocity;
         }
-        
         private void Move()
         {
             DeerInfo.Mover.Move(CurrentVelocity.normalized, DeerInfo.FleeSpeed);
