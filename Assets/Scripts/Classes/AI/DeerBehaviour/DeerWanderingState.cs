@@ -17,11 +17,11 @@ namespace Hunter.AI.DeerBehaviour
             }
             
             _currentVelocity = DeerInfo.Rigidbody2D.velocity.normalized;
-            if (DeerNearby(out Deer[] deer))
+            if (DeerNearby(out DeerInfo[] deerInfos))
             {
-                Vector2 separation = ComputeSeparation(deer);
-                Vector2 alignment = ComputeAlignment(deer);
-                Vector2 cohesion = ComputeCohesion(deer);
+                Vector2 separation = ComputeSeparation(deerInfos);
+                Vector2 alignment = ComputeAlignment(deerInfos);
+                Vector2 cohesion = ComputeCohesion(deerInfos);
 
                 _currentVelocity += separation * DeerInfo.SeparationForce
                                     + alignment * DeerInfo.AlignmentForce 

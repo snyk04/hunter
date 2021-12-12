@@ -12,7 +12,7 @@ namespace Hunter.AI.DeerBehaviour
             float borderAvoidingStartDistance,
             float wanderingSpeed,
             float fleeSpeed, float fleeStartDistance, float fleeStopDistance,
-            float separationForce, float alignmentForce, float cohesionForce)
+            float separationForce, float alignmentForce, float cohesionForce, DeerGroup deerGroup)
         {
             DeerInfo = new DeerInfo(
                 this,
@@ -27,7 +27,8 @@ namespace Hunter.AI.DeerBehaviour
                 fleeStopDistance,
                 separationForce,
                 alignmentForce,
-                cohesionForce
+                cohesionForce,
+                deerGroup
             );
 
             State = new DeerWanderingState(DeerInfo);

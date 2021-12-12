@@ -9,8 +9,6 @@ namespace Hunter.AI.DeerBehaviour
 {
     public abstract class DeerState : State
     {
-        private const float FriendsDetectionRadius = 50;
-        
         protected DeerInfo DeerInfo { get; }
         
         private readonly Collider2D[] _nearbyObjects;
@@ -44,59 +42,62 @@ namespace Hunter.AI.DeerBehaviour
             pursuers = pursuersList.ToArray();
             return pursuersList.Any();
         }
-        protected bool DeerNearby(out Deer[] deer)
+        protected bool DeerNearby(out DeerInfo[] deerInfos)
         {
-            var deerList = new List<Deer>();
+            var deerInfoList = new List<DeerInfo>(DeerInfo.DeerGroup.DeerInfos);
             
-            Physics2D.OverlapCircleNonAlloc(DeerInfo.Position, FriendsDetectionRadius, _nearbyObjects);
-            
-            foreach (Collider2D nearbyObject in _nearbyObjects)
+            for (int i = deerInfoList.Count - 1; i >= 0; i--)
             {
-                if (nearbyObject == null 
-                    || nearbyObject.gameObject == DeerInfo.Transform.gameObject 
-                    || !nearbyObject.TryGetComponent(out DeerComponent deerComponent))
+                if (deerInfoList[i].Transform == null)
                 {
-                    continue;
+                    Debug.Log("deleted");
+                    deerInfoList.RemoveAt(i);
+                    DeerInfo.DeerGroup.DeerInfos.RemoveAt(i);
                 }
-
-                deerList.Add(deerComponent.Deer);
             }
 
-            deer = deerList.ToArray();
+            for (int i = deerInfoList.Count - 1; i >= 0; i--)
+            {
+                if (deerInfoList[i] == DeerInfo)
+                {
+                    deerInfoList.RemoveAt(i);
+                }
+            }
 
-            return deerList.Any();
+            deerInfos = deerInfoList.ToArray();
+            return deerInfoList.Any();
         }
         
-        protected Vector2 ComputeSeparation(IEnumerable<Deer> deer)
+        protected Vector2 ComputeSeparation(IEnumerable<DeerInfo> deerInfos)
         {
             Vector2 separation = Vector2.zero;
-            foreach (Deer neighbourDeer in deer)
+            foreach (DeerInfo neighbourDeer in deerInfos)
             {
-                separation += neighbourDeer.DeerInfo.Position - DeerInfo.Position;
+                separation += neighbourDeer.Position - DeerInfo.Position;
             }
 
             separation *= -1;
             return separation.normalized;
         }
-        protected Vector2 ComputeAlignment(Deer[] deer)
+        protected Vector2 ComputeAlignment(DeerInfo[] deerInfos)
         {
             Vector2 alignment = Vector2.zero;
-            foreach (Deer neighbourDeer in deer)
+            foreach (DeerInfo neighbourDeer in deerInfos)
             {
-                alignment += neighbourDeer.DeerInfo.Transform.GetComponent<Rigidbody2D>().velocity;
+                alignment += neighbourDeer.Transform.GetComponent<Rigidbody2D>().velocity;
             }
-            alignment /= deer.Count();
+            alignment /= deerInfos.Count();
 
             return alignment.normalized;
         }
-        protected Vector2 ComputeCohesion(Deer[] deer)
+        protected Vector2 ComputeCohesion(DeerInfo[] deerInfos)
         {
             Vector2 cohesion = Vector2.zero;
-            foreach (Deer neighbourDeer in deer)
+            foreach (DeerInfo neighbourDeer in deerInfos)
             {
-                cohesion += neighbourDeer.DeerInfo.Position;
+                cohesion += neighbourDeer.Position;
             }
-            cohesion /= deer.Count();
+            cohesion /= deerInfos.Count();
             cohesion -= DeerInfo.Position;
 
             return cohesion.normalized;

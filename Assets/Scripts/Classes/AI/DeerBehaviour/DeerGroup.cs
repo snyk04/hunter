@@ -1,4 +1,5 @@
-﻿using Hunter.AI.Common;
+﻿using System.Collections.Generic;
+using Hunter.AI.Common;
 using UnityEngine;
 using Random = System.Random;
 
@@ -14,12 +15,16 @@ namespace Hunter.AI.DeerBehaviour
         private readonly GameObject _deerPrefab;
         private readonly Vector2 _groupPosition;
         private readonly Field _field;
+
+        public readonly List<DeerInfo> DeerInfos;
         
         public DeerGroup(GameObject deerPrefab, Vector2 groupPosition, Field field)
         {
             _deerPrefab = deerPrefab;
             _groupPosition = groupPosition;
             _field = field;
+
+            DeerInfos = new List<DeerInfo>();
         }
 
         public void SpawnDeer()
@@ -34,7 +39,10 @@ namespace Hunter.AI.DeerBehaviour
                 Vector2 deerPosition = _groupPosition + UnityEngine.Random.insideUnitCircle * SpawnDispersion;
 
                 GameObject deer = Object.Instantiate(_deerPrefab, deerPosition, Quaternion.identity, container);
-                deer.GetComponent<DeerComponent>().Initialize(_field);
+                var deerComponent = deer.GetComponent<DeerComponent>();
+                deerComponent.Initialize(_field, this);
+                
+                DeerInfos.Add(deerComponent.Deer.DeerInfo);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Hunter.AI.Common;
+﻿using System;
+using Hunter.AI.Common;
 using Hunter.Creatures.Common;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ namespace Hunter.AI.DeerBehaviour
             Deer.Update();
         }
 
-        public void Initialize(Field field)
+        public void Initialize(Field field, DeerGroup deerGroup)
         {
             Mover mover = GetComponent<MoverComponent>().Mover;
             var rb2D = GetComponent<Rigidbody2D>();
@@ -47,7 +48,8 @@ namespace Hunter.AI.DeerBehaviour
                 _fleeStopDistance,
                 _separationForce,
                 _alignmentForce,
-                _cohesionForce
+                _cohesionForce,
+                deerGroup
                 );
         }
     }

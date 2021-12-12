@@ -92,11 +92,11 @@ namespace Hunter.AI.DeerBehaviour
         private Vector2 ComputeDeerGroupVelocity()
         {
             Vector2 deerGroupVelocity = Vector2.zero;
-            if (DeerNearby(out Deer[] deer))
+            if (DeerNearby(out DeerInfo[] deerInfos))
             {
-                Vector2 separation = ComputeSeparation(deer);
-                Vector2 alignment = ComputeAlignment(deer);
-                Vector2 cohesion = ComputeCohesion(deer);
+                Vector2 separation = ComputeSeparation(deerInfos);
+                Vector2 alignment = ComputeAlignment(deerInfos);
+                Vector2 cohesion = ComputeCohesion(deerInfos);
 
                 deerGroupVelocity += separation * DeerInfo.SeparationForce
                                      + alignment * DeerInfo.AlignmentForce 

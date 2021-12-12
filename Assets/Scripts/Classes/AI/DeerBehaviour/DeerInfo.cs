@@ -15,12 +15,13 @@ namespace Hunter.AI.DeerBehaviour
         public readonly float SeparationForce;
         public readonly float AlignmentForce;
         public readonly float CohesionForce;
+        public readonly DeerGroup DeerGroup;
         
         public DeerInfo(IAnimal animal, Transform transform, Mover mover, Rigidbody2D rigidbody2D, Field field,
             float borderAvoidingStartDistance,
             float wanderingSpeed,
             float fleeSpeed, float fleeStartDistance, float fleeStopDistance,
-            float separationForce, float alignmentForce, float cohesionForce)
+            float separationForce, float alignmentForce, float cohesionForce, DeerGroup deerGroup)
             : base(animal, transform, mover, rigidbody2D, field, borderAvoidingStartDistance)
         {
             WanderingSpeed = wanderingSpeed;
@@ -32,6 +33,7 @@ namespace Hunter.AI.DeerBehaviour
             SeparationForce = separationForce;
             AlignmentForce = alignmentForce;
             CohesionForce = cohesionForce;
+            DeerGroup = deerGroup;
         }
     }
 }
