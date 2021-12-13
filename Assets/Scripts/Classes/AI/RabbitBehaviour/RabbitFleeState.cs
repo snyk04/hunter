@@ -8,8 +8,6 @@ namespace Hunter.AI.RabbitBehaviour
     public class RabbitFleeState : RabbitState
     {
         private readonly List<Transform> _pursuers;
-
-        private Vector2 _currentVelocity;
         
         public RabbitFleeState(RabbitInfo rabbitInfo, IEnumerable<Transform> pursuers) : base(rabbitInfo)
         {
@@ -26,8 +24,8 @@ namespace Hunter.AI.RabbitBehaviour
 
             TryToAddNewPursuers();
             
-            _currentVelocity = RabbitInfo.Rigidbody2D.velocity.normalized;
-            _currentVelocity += ComputeFleeVelocity();
+            CurrentVelocity = RabbitInfo.Rigidbody2D.velocity.normalized;
+            CurrentVelocity += ComputeFleeVelocity();
 
             AvoidBorders();
             Move();
@@ -87,11 +85,11 @@ namespace Hunter.AI.RabbitBehaviour
                 desiredVelocity += pursuerToRabbitVector.normalized * coefficient;
             }
 
-            return desiredVelocity.normalized - _currentVelocity;
+            return desiredVelocity.normalized - CurrentVelocity;
         }
         private void Move()
         {
-            RabbitInfo.Mover.Move(_currentVelocity.normalized, RabbitInfo.FleeSpeed);
+            RabbitInfo.Mover.Move(CurrentVelocity.normalized, RabbitInfo.FleeSpeed);
         }
     }
 }
