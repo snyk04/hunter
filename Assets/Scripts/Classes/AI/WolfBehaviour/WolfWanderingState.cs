@@ -21,7 +21,7 @@ namespace Hunter.AI.WolfBehaviour
             }
             
             CurrentVelocity = WolfInfo.Rigidbody2D.velocity.magnitude > 0
-                ? WolfInfo.Rigidbody2D.velocity.normalized
+                ? WolfInfo.Rigidbody2D.velocity
                 : Random.insideUnitCircle;            
             CurrentVelocity += ComputeWanderVelocity();
 
@@ -31,13 +31,12 @@ namespace Hunter.AI.WolfBehaviour
         
         private Vector2 ComputeWanderVelocity()
         {
-            Vector2 circleCenter = WolfInfo.Position + CurrentVelocity * CircleDistance;
-            Vector3 displacement = Quaternion.Euler(0, 0, Random.Range(-2f, 2f)) * CurrentVelocity * CircleRadius;
-            Vector2 displacementPosition = circleCenter + new Vector2(displacement.x, displacement.y);
-            Vector2 wanderVelocity = displacementPosition - circleCenter;
+            Vector2 circleCenterVector = CurrentVelocity * CircleDistance;
+            Vector3 displacement = Quaternion.Euler(0, 0, Random.Range(-15f, 15f)) * CurrentVelocity * CircleRadius;
 
-            return wanderVelocity - CurrentVelocity;
+            return circleCenterVector + (Vector2)displacement;
         }
+
         private void Move()
         {
             WolfInfo.Mover.Move(CurrentVelocity.normalized, WolfInfo.WanderingSpeed);

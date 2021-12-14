@@ -9,6 +9,9 @@ namespace Hunter.AI.DeerBehaviour
 {
     public abstract class DeerState : State
     {
+        // TODO : to AnimalInfo
+        private const float BorderAvoidMaxForce = 1.5f;
+        
         protected DeerInfo DeerInfo { get; }
         protected Vector2 CurrentVelocity;
 
@@ -142,14 +145,30 @@ namespace Hunter.AI.DeerBehaviour
         
         protected void AvoidBorders()
         {
-            while (!DeerInfo.Field.Contains(PredictPosition(CurrentVelocity.normalized, DeerInfo.BorderAvoidingStartDistance)))
+            Vector2 desiredVelocity = Vector2.zero;
+            if (DeerInfo.Position.x - DeerInfo.BorderAvoidingStartDistance <= DeerInfo.Field.XLeftBorder)
             {
-                CurrentVelocity = Quaternion.Euler(0, 0, 15) * CurrentVelocity;
+                desiredVelocity += Vector2.right;
             }
-        }
-        private Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
-        {
-            return DeerInfo.Position + currentVelocity * distanceFromCurrentPosition;
+            if (DeerInfo.Position.x + DeerInfo.BorderAvoidingStartDistance >= DeerInfo.Field.XRightBorder)
+            {
+                desiredVelocity += Vector2.left;
+            }
+            if (DeerInfo.Position.y - DeerInfo.BorderAvoidingStartDistance <= DeerInfo.Field.YBotBorder)
+            {
+                desiredVelocity += Vector2.up;
+            }
+            if (DeerInfo.Position.y + DeerInfo.BorderAvoidingStartDistance >= DeerInfo.Field.YTopBorder)
+            {
+                desiredVelocity += Vector2.down;
+            }
+            
+            if (desiredVelocity != Vector2.zero)
+            {
+                // TODO : to const
+                Vector2 steeringVector = (desiredVelocity - CurrentVelocity).normalized * DeerInfo.FleeSpeed * 0.5f;
+                CurrentVelocity += steeringVector;
+            }
         }
     }
 }

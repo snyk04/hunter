@@ -24,7 +24,7 @@ namespace Hunter.AI.DeerBehaviour
 
             TryToAddNewPursuers();
             
-            CurrentVelocity = DeerInfo.Rigidbody2D.velocity.normalized;
+            CurrentVelocity = DeerInfo.Rigidbody2D.velocity;
             CurrentVelocity += ComputeFleeVelocity();
             CurrentVelocity += ComputeDeerGroupVelocity();
             
@@ -85,8 +85,10 @@ namespace Hunter.AI.DeerBehaviour
                 desiredVelocity += pursuerToRabbitVector.normalized * coefficient;
             }
 
-            return desiredVelocity.normalized - CurrentVelocity;
+            // TODO : to const
+            return (desiredVelocity - CurrentVelocity).normalized * DeerInfo.FleeSpeed * 0.25f;
         }
+
         private void Move()
         {
             DeerInfo.Mover.Move(CurrentVelocity.normalized, DeerInfo.FleeSpeed);

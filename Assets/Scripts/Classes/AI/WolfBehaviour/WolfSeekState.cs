@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Hunter.AI.WolfBehaviour
 {
     public class WolfSeekState : WolfState
-    {
+    { 
         private readonly Transform _target;
         
         public WolfSeekState(WolfInfo wolfInfo, Transform target) : base(wolfInfo)
@@ -19,6 +19,7 @@ namespace Hunter.AI.WolfBehaviour
             if (_target == null)
             {
                 WolfInfo.Animal.ChangeState(new WolfWanderingState(WolfInfo));
+                return;
             }
 
             if (TargetNearby(out Transform target))
@@ -46,7 +47,7 @@ namespace Hunter.AI.WolfBehaviour
                 WolfInfo.Animal.ChangeState(new WolfKillingState(WolfInfo, _target));
             }
             
-            CurrentVelocity = WolfInfo.Rigidbody2D.velocity.normalized;
+            CurrentVelocity = WolfInfo.Rigidbody2D.velocity;
             CurrentVelocity += ComputeSeekVelocity();
 
             AvoidBorders();
@@ -55,9 +56,9 @@ namespace Hunter.AI.WolfBehaviour
 
         private Vector2 ComputeSeekVelocity()
         {
-            Vector2 seekDirection = _target.Position() - WolfInfo.Position;
-            Vector2 desiredVelocity = seekDirection.normalized;
-            return desiredVelocity - CurrentVelocity;
+            Vector2 desiredVelocity = _target.Position() - WolfInfo.Position;
+            // TODO : to const
+            return (desiredVelocity - CurrentVelocity).normalized * WolfInfo.SeekSpeed * 0.25f;
         }
         private void Move()
         {

@@ -164,7 +164,7 @@ MonoBehaviour:
   _separationForce: 1
   _alignmentForce: 1
   _cohesionForce: 1
-  _borderAvoidingStartDistance: 5
+  _borderAvoidingStartDistance: 2.5
 --- !u!114 &1640396546547421941
 MonoBehaviour:
   m_ObjectHideFlags: 0

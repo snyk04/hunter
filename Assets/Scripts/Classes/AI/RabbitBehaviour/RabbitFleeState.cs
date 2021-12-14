@@ -16,7 +16,13 @@ namespace Hunter.AI.RabbitBehaviour
 
         public override void Update()
         {
-            if (AllPursuersAreNull() || AllPursuersAreFarAway())
+            if (AllPursuersAreNull())
+            {
+                RabbitInfo.Animal.ChangeState(new RabbitWanderingState(RabbitInfo));
+                return;
+            }
+
+            if (AllPursuersAreFarAway())
             {
                 RabbitInfo.Animal.ChangeState(new RabbitWanderingState(RabbitInfo));
                 return;
@@ -24,7 +30,7 @@ namespace Hunter.AI.RabbitBehaviour
 
             TryToAddNewPursuers();
             
-            CurrentVelocity = RabbitInfo.Rigidbody2D.velocity.normalized;
+            CurrentVelocity = RabbitInfo.Rigidbody2D.velocity;
             CurrentVelocity += ComputeFleeVelocity();
 
             AvoidBorders();
@@ -49,7 +55,6 @@ namespace Hunter.AI.RabbitBehaviour
         {
             for (int i = _pursuers.Count - 1; i >= 0; i--)
             {
-                // TODO : possible NullReferenceException
                 Vector2 pursuerToRabbitVector = RabbitInfo.Position - _pursuers[i].Position();
                 if (pursuerToRabbitVector.magnitude > RabbitInfo.FleeStopDistance)
                 {
@@ -85,7 +90,8 @@ namespace Hunter.AI.RabbitBehaviour
                 desiredVelocity += pursuerToRabbitVector.normalized * coefficient;
             }
 
-            return desiredVelocity.normalized - CurrentVelocity;
+            // TODO : to const
+            return (desiredVelocity - CurrentVelocity).normalized * RabbitInfo.FleeSpeed * 0.25f;
         }
         private void Move()
         {

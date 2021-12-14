@@ -40,40 +40,32 @@ namespace Hunter.AI.RabbitBehaviour
             pursuers = pursuersList.ToArray();
             return pursuersList.Any();
         }
-        private Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
-        {
-            return RabbitInfo.Position + currentVelocity * distanceFromCurrentPosition;
-        }
         
         protected void AvoidBorders()
         {
-            // Vector2 desiredVelocity = Vector2.zero;
-            // if (RabbitInfo.Position.x - RabbitInfo.BorderAvoidingStartDistance <= RabbitInfo.Field.XLeftBorder)
-            // {
-            //     desiredVelocity += Vector2.right;
-            // }
-            // if (RabbitInfo.Position.x + RabbitInfo.BorderAvoidingStartDistance >= RabbitInfo.Field.XRightBorder)
-            // {
-            //     desiredVelocity += Vector2.left;
-            // }
-            // if (RabbitInfo.Position.y - RabbitInfo.BorderAvoidingStartDistance <= RabbitInfo.Field.YBotBorder)
-            // {
-            //     desiredVelocity += Vector2.up;
-            // }
-            // if (RabbitInfo.Position.y + RabbitInfo.BorderAvoidingStartDistance >= RabbitInfo.Field.YTopBorder)
-            // {
-            //     desiredVelocity += Vector2.down;
-            // }
-            //
-            // if (desiredVelocity != Vector2.zero)
-            // {
-            //     CurrentVelocity += (desiredVelocity - CurrentVelocity) / 5;
-            //     Debug.Log($"{CurrentVelocity}");
-            // }
-            
-            while (!RabbitInfo.Field.Contains(PredictPosition(CurrentVelocity.normalized, RabbitInfo.BorderAvoidingStartDistance)))
+            Vector2 desiredVelocity = Vector2.zero;
+            if (RabbitInfo.Position.x - RabbitInfo.BorderAvoidingStartDistance <= RabbitInfo.Field.XLeftBorder)
             {
-                CurrentVelocity = Quaternion.Euler(0, 0, 15) * CurrentVelocity;
+                desiredVelocity += Vector2.right;
+            }
+            if (RabbitInfo.Position.x + RabbitInfo.BorderAvoidingStartDistance >= RabbitInfo.Field.XRightBorder)
+            {
+                desiredVelocity += Vector2.left;
+            }
+            if (RabbitInfo.Position.y - RabbitInfo.BorderAvoidingStartDistance <= RabbitInfo.Field.YBotBorder)
+            {
+                desiredVelocity += Vector2.up;
+            }
+            if (RabbitInfo.Position.y + RabbitInfo.BorderAvoidingStartDistance >= RabbitInfo.Field.YTopBorder)
+            {
+                desiredVelocity += Vector2.down;
+            }
+            
+            if (desiredVelocity != Vector2.zero)
+            {
+                // TODO : to const
+                Vector2 steeringVector = (desiredVelocity - CurrentVelocity).normalized * RabbitInfo.FleeSpeed * 0.3f;
+                CurrentVelocity += steeringVector;
             }
         }
     }

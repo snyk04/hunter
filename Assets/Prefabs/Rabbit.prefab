@@ -120,7 +120,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -161,7 +161,7 @@ MonoBehaviour:
   _fleeSpeed: 3
   _fleeStartDistance: 2
   _fleeStopDistance: 5
-  _borderAvoidingStartDistance: 5
+  _borderAvoidingStartDistance: 2.5
 --- !u!114 &7244748573183470655
 MonoBehaviour:
   m_ObjectHideFlags: 0

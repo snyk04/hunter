@@ -54,14 +54,30 @@ namespace Hunter.AI.WolfBehaviour
         
         protected void AvoidBorders()
         {
-            while (!WolfInfo.Field.Contains(PredictPosition(CurrentVelocity.normalized, WolfInfo.BorderAvoidingStartDistance)))
+            Vector2 desiredVelocity = Vector2.zero;
+            if (WolfInfo.Position.x - WolfInfo.BorderAvoidingStartDistance <= WolfInfo.Field.XLeftBorder)
             {
-                CurrentVelocity = Quaternion.Euler(0, 0, 15) * CurrentVelocity;
+                desiredVelocity += Vector2.right;
             }
-        }
-        private Vector2 PredictPosition(Vector2 currentVelocity, float distanceFromCurrentPosition)
-        {
-            return WolfInfo.Position + currentVelocity * distanceFromCurrentPosition;
+            if (WolfInfo.Position.x + WolfInfo.BorderAvoidingStartDistance >= WolfInfo.Field.XRightBorder)
+            {
+                desiredVelocity += Vector2.left;
+            }
+            if (WolfInfo.Position.y - WolfInfo.BorderAvoidingStartDistance <= WolfInfo.Field.YBotBorder)
+            {
+                desiredVelocity += Vector2.up;
+            }
+            if (WolfInfo.Position.y + WolfInfo.BorderAvoidingStartDistance >= WolfInfo.Field.YTopBorder)
+            {
+                desiredVelocity += Vector2.down;
+            }
+            
+            if (desiredVelocity != Vector2.zero)
+            {
+                // TODO : to const
+                Vector2 steeringVector = (desiredVelocity - CurrentVelocity).normalized * WolfInfo.SeekSpeed * 0.3f;
+                CurrentVelocity += steeringVector;
+            }
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Hunter.AI.RabbitBehaviour
             }
 
             CurrentVelocity = RabbitInfo.Rigidbody2D.velocity.magnitude > 0
-                ? RabbitInfo.Rigidbody2D.velocity.normalized
-                : Random.insideUnitCircle;
+                ? RabbitInfo.Rigidbody2D.velocity
+                : Random.insideUnitCircle * RabbitInfo.WanderingSpeed;
             CurrentVelocity += ComputeWanderVelocity();
             
             AvoidBorders();
@@ -29,12 +29,10 @@ namespace Hunter.AI.RabbitBehaviour
 
         private Vector2 ComputeWanderVelocity()
         {
-            Vector2 circleCenter = RabbitInfo.Position + CurrentVelocity * CircleDistance;
-            Vector3 displacement = Quaternion.Euler(0, 0, Random.Range(-2f, 2f)) * CurrentVelocity * CircleRadius;
-            Vector2 displacementPosition = circleCenter + new Vector2(displacement.x, displacement.y);
-            Vector2 wanderVelocity = displacementPosition - circleCenter;
+            Vector2 circleCenterVector = CurrentVelocity * CircleDistance;
+            Vector3 displacement = Quaternion.Euler(0, 0, Random.Range(-15f, 15f)) * CurrentVelocity * CircleRadius;
 
-            return wanderVelocity - CurrentVelocity;
+            return circleCenterVector + (Vector2)displacement;
         }
         private void Move()
         {

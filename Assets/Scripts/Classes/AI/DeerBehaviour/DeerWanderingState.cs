@@ -30,13 +30,12 @@ namespace Hunter.AI.DeerBehaviour
         
         private Vector2 ComputeWanderVelocity()
         {
-            Vector2 circleCenter = DeerInfo.Position + CurrentVelocity * CircleDistance;
-            Vector3 displacement = Quaternion.Euler(0, 0, Random.Range(-0.1f, 0.1f)) * CurrentVelocity * CircleRadius;
-            Vector2 displacementPosition = circleCenter + new Vector2(displacement.x, displacement.y);
-            Vector2 wanderVelocity = displacementPosition - circleCenter;
+            Vector2 circleCenterVector = CurrentVelocity * CircleDistance;
+            Vector3 displacement = Quaternion.Euler(0, 0, Random.Range(-15f, 15f)) * CurrentVelocity * CircleRadius;
 
-            return wanderVelocity - CurrentVelocity;
+            return circleCenterVector + (Vector2)displacement;
         }
+
         private void Move()
         {
             DeerInfo.Mover.Move(CurrentVelocity.normalized, DeerInfo.WanderingSpeed);
