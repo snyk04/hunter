@@ -13,8 +13,8 @@ namespace Hunter.Creatures.Shooters
         private readonly GameObject _bulletPrefab;
         private readonly float _bulletSpeed;
         private readonly int _bulletDamage;
-        private readonly float _reloadTime;
-        private readonly float _shotDelay;
+        public float ReloadTime { get; }
+        public float ShotDelay { get; }
         private readonly int _maxAmountOfBulletsInBackpack;
         private readonly int _maxAmountOfBulletsInMagazine;
         private readonly Transform _transform;
@@ -25,8 +25,10 @@ namespace Hunter.Creatures.Shooters
 
         public int AmountOfBulletsInBackpack { get; private set; }
         public int AmountOfBulletsInMagazine { get; private set; }
+        
         public event Action OnShot;
-        public event Action OnReload;
+        public event Action OnReloadStart;
+        public event Action OnReloadEnd;
 
         public Shooter(GameObject bulletPrefab, float bulletSpeed, int bulletDamage, float reloadTime, float shotDelay,
             int maxAmountOfBulletsInBackpack, int maxAmountOfBulletsInMagazine, Transform transform)
@@ -34,8 +36,8 @@ namespace Hunter.Creatures.Shooters
             _bulletPrefab = bulletPrefab;
             _bulletSpeed = bulletSpeed;
             _bulletDamage = bulletDamage;
-            _reloadTime = reloadTime;
-            _shotDelay = shotDelay;
+            ReloadTime = reloadTime;
+            ShotDelay = shotDelay;
             _maxAmountOfBulletsInBackpack = maxAmountOfBulletsInBackpack;
             _maxAmountOfBulletsInMagazine = maxAmountOfBulletsInMagazine;
             _transform = transform;
@@ -65,7 +67,7 @@ namespace Hunter.Creatures.Shooters
         }
         private bool CanShoot()
         {
-            if (_lastShotTime.GetPassedSeconds() < _shotDelay || _isReloading)
+            if (_lastShotTime.GetPassedSeconds() < ShotDelay || _isReloading)
             {
                 return false;
             }
@@ -86,12 +88,13 @@ namespace Hunter.Creatures.Shooters
                 return;
             }
             
+            OnReloadStart?.Invoke();
             _coroutineStarter.StartCoroutine(ReloadingRoutine());
             _isReloading = true;
         }
         private IEnumerator ReloadingRoutine()
         {
-            yield return new WaitForSeconds(_reloadTime);
+            yield return new WaitForSeconds(ReloadTime);
             Reload();
         }
         private void Reload()
@@ -104,7 +107,7 @@ namespace Hunter.Creatures.Shooters
             }
 
             _isReloading = false;
-            OnReload?.Invoke();
+            OnReloadEnd?.Invoke();
         }
     }
 }

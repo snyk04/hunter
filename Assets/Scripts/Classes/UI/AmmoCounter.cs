@@ -16,7 +16,7 @@ namespace Hunter.UI
             Update();
 
             _shooter.OnShot += Update;
-            _shooter.OnReload += Update;
+            _shooter.OnReloadEnd += Update;
         }
 
         private void Update()
