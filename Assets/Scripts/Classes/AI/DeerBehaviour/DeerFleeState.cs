@@ -16,12 +16,18 @@ namespace Hunter.AI.DeerBehaviour
 
         public override void Update()
         {
-            if (AllPursuersAreNull() || AllPursuersAreFarAway())
+            if (AllPursuersAreNull() )
             {
                 DeerInfo.Animal.ChangeState(new DeerWanderingState(DeerInfo));
                 return;
             }
-
+            
+            if (AllPursuersAreFarAway())
+            {
+                DeerInfo.Animal.ChangeState(new DeerWanderingState(DeerInfo));
+                return;
+            }
+            
             TryToAddNewPursuers();
             
             CurrentVelocity = DeerInfo.Rigidbody2D.velocity;
