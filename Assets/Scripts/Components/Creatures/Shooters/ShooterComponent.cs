@@ -11,13 +11,14 @@ namespace Hunter.Creatures.Shooters
         [SerializeField] private float _shotDelay;
         [SerializeField] private int _maxAmountOfBulletsInBackpack;
         [SerializeField] private int _maxAmountOfBulletsInMagazine;
+        [SerializeField] private Transform _muzzleHole;
 
         public Shooter Shooter { get; private set; }
 
         private void Awake()
         {
             Shooter = new Shooter(_bulletPrefab, _bulletSpeed, _bulletDamage, _reloadTime, _shotDelay,
-                _maxAmountOfBulletsInBackpack, _maxAmountOfBulletsInMagazine, transform);
+                _maxAmountOfBulletsInBackpack, _maxAmountOfBulletsInMagazine, transform, _muzzleHole);
         }
     }
 }

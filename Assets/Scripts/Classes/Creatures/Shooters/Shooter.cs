@@ -18,6 +18,7 @@ namespace Hunter.Creatures.Shooters
         private readonly int _maxAmountOfBulletsInBackpack;
         private readonly int _maxAmountOfBulletsInMagazine;
         private readonly Transform _transform;
+        private readonly Transform _muzzleHole;
         private readonly MonoBehaviour _coroutineStarter;
         
         private DateTime _lastShotTime;
@@ -31,7 +32,7 @@ namespace Hunter.Creatures.Shooters
         public event Action OnReloadEnd;
 
         public Shooter(GameObject bulletPrefab, float bulletSpeed, int bulletDamage, float reloadTime, float shotDelay,
-            int maxAmountOfBulletsInBackpack, int maxAmountOfBulletsInMagazine, Transform transform)
+            int maxAmountOfBulletsInBackpack, int maxAmountOfBulletsInMagazine, Transform transform, Transform muzzleHole)
         {
             _bulletPrefab = bulletPrefab;
             _bulletSpeed = bulletSpeed;
@@ -41,6 +42,7 @@ namespace Hunter.Creatures.Shooters
             _maxAmountOfBulletsInBackpack = maxAmountOfBulletsInBackpack;
             _maxAmountOfBulletsInMagazine = maxAmountOfBulletsInMagazine;
             _transform = transform;
+            _muzzleHole = muzzleHole;
             _coroutineStarter = _transform.GetComponent<MonoBehaviour>();
 
             _isReloading = false;
@@ -56,10 +58,10 @@ namespace Hunter.Creatures.Shooters
                 return;
             }
 
-            GameObject bullet = Object.Instantiate(_bulletPrefab, _transform.position, Quaternion.identity);
+            GameObject bullet = Object.Instantiate(_bulletPrefab, _muzzleHole.position, Quaternion.identity);
             bullet.name = BulletName;
             bullet.GetComponent<BulletComponent>().Initialize(_bulletDamage, _transform.gameObject);
-            bullet.GetComponent<Rigidbody2D>().velocity = _transform.up * _bulletSpeed;
+            bullet.GetComponent<Rigidbody2D>().velocity = _muzzleHole.up * _bulletSpeed;
 
             _lastShotTime = DateTime.Now;
             AmountOfBulletsInMagazine--;

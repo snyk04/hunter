@@ -25,10 +25,11 @@ namespace Creatures.Shooters
 
             var shooterObject = new GameObject();
             transform = shooterObject.transform;
+            Transform muzzleHole = new GameObject().transform;
             shooterObject.AddComponent<ShooterComponent>();
 
             shooter = new Shooter(bulletPrefab, BulletSpeed, BulletDamage, ReloadTime, ShotDelay,
-                MaxAmountOfBulletsInBackpack, MaxAmountOfBulletsInMagazine, transform);
+                MaxAmountOfBulletsInBackpack, MaxAmountOfBulletsInMagazine, transform, muzzleHole);
         }
         
         [UnityTest]
