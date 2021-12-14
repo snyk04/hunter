@@ -86,7 +86,7 @@ namespace Hunter.AI.DeerBehaviour
             }
 
             // TODO : to const
-            return (desiredVelocity - CurrentVelocity).normalized * DeerInfo.FleeSpeed * 0.25f;
+            return (desiredVelocity - CurrentVelocity).normalized * DeerInfo.FleeSpeed * 0.45f;
         }
 
         private void Move()
