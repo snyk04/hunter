@@ -159,8 +159,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wanderingSpeed: 1
   _seekSpeed: 2.5
-  _seekStartDistance: 3
-  _seekStopDistance: 7
+  _seekStartDistance: 5
+  _seekStopDistance: 9
   _killingStartDistance: 1
   _killingStopDistance: 1.5
   _killingAmountOfDamage: 1

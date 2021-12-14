@@ -159,8 +159,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wanderingSpeed: 1
   _fleeSpeed: 2
-  _fleeStartDistance: 4
-  _fleeStopDistance: 7
+  _fleeStartDistance: 6
+  _fleeStopDistance: 9
   _separationForce: 1
   _alignmentForce: 1
   _cohesionForce: 1
