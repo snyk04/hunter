@@ -6,7 +6,7 @@ You can open it in browser via this [link](https://snyk04.github.io/hunter/).
 
 Or you can download it on your PC and play offline:
 1. Open "Releases" folder.
-2. Go to the latest release and download "Hunter.zip" archive.
+2. Go to the latest release and download "Hunter.7z" archive.
 3. Unzip downloaded archive.
 4. Execute Hunter.exe.
 
